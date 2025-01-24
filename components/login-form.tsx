@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -104,10 +103,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button asChild variant="link" className="w-full">
-          <Link href="/reset-password">Reset Password</Link>
-        </Button>
-        <Button type="submit" disabled={isLoading} className="w-full">
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>

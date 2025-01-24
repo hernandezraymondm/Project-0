@@ -7,29 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        String    @id @default(cuid())
-  slug      String    @unique
-  title     String
-  content   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  authorId  String
-  author    User      @relation(fields: [authorId], references: [id])
-  comments  Comment[]
-}
-
-model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id])
-}
-
 model User {
   id                String    @id @default(cuid())
   email             String    @unique
@@ -42,6 +19,4 @@ model User {
   resetTokenExpiry  DateTime?
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
-  posts             Post[]
-  comments          Comment[]
 }
