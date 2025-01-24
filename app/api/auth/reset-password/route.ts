@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import * as z from "zod";
 import { Resend } from "resend";
-import { ResetPasswordEmail } from "@/components/emails/reset-password-email";
+import ResetPasswordEmail from "@/components/emails/reset-password-email";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY);

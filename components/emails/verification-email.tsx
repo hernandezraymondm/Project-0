@@ -12,7 +12,9 @@ interface VerificationEmailProps {
   verificationUrl: string;
 }
 
-export function VerificationEmail({ verificationUrl }: VerificationEmailProps) {
+export default function VerificationEmail({
+  verificationUrl,
+}: VerificationEmailProps) {
   return (
     <Html>
       <Head />
