@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
 
     await resend.emails.send({
-      from: "noreply@example.com",
+      from: "onboarding@resend.dev",
       to: email,
       subject: "Verify Your Email",
       react: VerificationEmail({ verificationUrl }),

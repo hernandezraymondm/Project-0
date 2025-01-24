@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password/${resetToken}`;
 
     await resend.emails.send({
-      from: "noreply@example.com",
+      from: "onboarding@resend.dev",
       to: email,
       subject: "Reset Your Password",
       react: ResetPasswordEmail({ resetUrl }),
