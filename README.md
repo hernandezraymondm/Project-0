@@ -2,6 +2,8 @@
 
 `A NEXT.js starter kit so you don't have to start from scratch. Equipped with secure session management, TOTP 2FA, and email verification.`
 
+![Demo](public/demo.gif)
+
 ### Key Features
 
 - Two-factor authentication(2FA)
