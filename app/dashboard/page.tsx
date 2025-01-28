@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { verify } from "jsonwebtoken";
 import { UserStats } from "./user-stats";
 import { Setup2FA } from "@/components/setup-2fa";
-import { LogoutButton } from "@/components/logout-button";
 import { RecentActivity } from "@/components/recent-activity";
 import { SecurityOverview } from "@/components/security-overview";
 import { QuickActions } from "@/components/quick-actions";
@@ -30,7 +29,6 @@ export default async function DashboardPage() {
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Dashboard
           </h1>
-          <LogoutButton />
         </div>
 
         {/* Grid Layout */}

@@ -34,5 +34,9 @@ export function LogoutButton() {
     }
   };
 
-  return <Button onClick={handleLogout}>Logout</Button>;
+  return (
+    <Button variant="secondary" onClick={handleLogout}>
+      Logout
+    </Button>
+  );
 }
