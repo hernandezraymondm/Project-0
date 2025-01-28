@@ -148,7 +148,7 @@ Scroll bar
     transform: translateY(100%);
   }
   100% {
-    transform: translateY(-300%);
+    transform: translateY(-60%);
   }
 }
 
@@ -176,5 +176,5 @@ Scroll bar
 
 .crawl-text {
   @apply relative w-full;
-  animation: text-crawl-scroll 200s linear infinite;
+  animation: text-crawl-scroll 60s linear infinite;
 }
