@@ -50,7 +50,7 @@ export default function Home() {
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full animate-star"
+            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-star"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,

@@ -24,7 +24,7 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-space-800 to-black p-6 pt-24">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Dashboard
@@ -58,6 +58,22 @@ export default async function DashboardPage() {
             <Setup2FA />
           </div>
         </div>
+      </div>
+      {/* Floating stars animation */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-star"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDuration: `${Math.random() * 5 + 5}s`,
+              animationDelay: `${Math.random() * 2}s`,
+              opacity: `${Math.random() * 0.5 + 0.2}`, // Random opacity for subtlety
+            }}
+          ></div>
+        ))}
       </div>
     </div>
   );
