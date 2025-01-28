@@ -13,7 +13,10 @@ export function QuickActions() {
       action: () => alert("Change Password Clicked"),
     },
     { label: "Update Profile", action: () => alert("Update Profile Clicked") },
-    { label: "View Logs", action: () => alert("View Logs Clicked") },
+    {
+      label: "View Audit Logs",
+      action: () => alert("View Audit Logs Clicked"),
+    },
   ];
 
   return (
