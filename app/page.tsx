@@ -1,22 +1,24 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { TextCrawl } from "@/components/text-crawl";
 
 export default function Home() {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black p-6">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden pb-40">
       {/* Glowing background effect */}
       <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center space-y-8 max-w-2xl">
         {/* Futuristic title with gradient text */}
-        <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient">
-          Space Shield
+        <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient p-1">
+          Project Zero
         </h1>
 
         {/* Subtitle with glowing effect */}
         <h2 className="text-xl font-medium text-gray-300">
-          Your trusted solution for{" "}
+          A NEXT.js starter kit so you don&apos;t have to start from scratch.
+          Equipped with{" "}
           <span className="text-purple-400 font-semibold">
             secure session management
           </span>
@@ -44,6 +46,9 @@ export default function Home() {
           </Button>
         </div>
       </div>
+
+      {/* Text Crawl */}
+      <TextCrawl />
 
       {/* Floating stars animation */}
       <div className="absolute inset-0 overflow-hidden">

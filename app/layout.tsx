@@ -9,7 +9,7 @@ import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Space Shield",
+  title: "Project Zero",
   description:
     "Your trusted solution for secure session management, TOTP 2FA, and email verification.",
 };

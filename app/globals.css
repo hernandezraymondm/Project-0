@@ -141,3 +141,40 @@ Scroll bar
 ::-webkit-scrollbar-thumb:hover {
   background-color: #b32084;
 }
+
+/* TEXT CRAWL */
+@keyframes text-crawl-scroll {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
+
+.text-crawl-container {
+  @apply absolute inset-0 overflow-hidden flex justify-center items-end pb-2;
+}
+
+.fade-overlay {
+  @apply absolute inset-0 pointer-events-none;
+  background: linear-gradient(to top, black 10%, transparent 60%);
+}
+
+.crawl {
+  @apply relative w-full max-w-[40em] text-[#694c7259] text-[1.5rem] font-bold text-justify;
+  perspective: 300px;
+  height: 45vh;
+  overflow: hidden;
+}
+
+.crawl-content {
+  @apply absolute bottom-0 w-full;
+  transform-origin: 50% 100%;
+  transform: perspective(1500px) rotateX(25deg);
+}
+
+.crawl-text {
+  @apply relative w-full;
+  animation: text-crawl-scroll 200s linear infinite;
+}
