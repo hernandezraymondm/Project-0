@@ -60,15 +60,27 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
     <div className="text-center">
       {isVerified ? (
         <>
-          <p className="mb-4">Your email has been successfully verified.</p>
-          <Button onClick={() => router.push("/login")}>Go to Login</Button>
+          <p className="mb-4 text-white">
+            Your email has been successfully verified.
+          </p>
+          <Button
+            onClick={() => router.push("/login")}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+          >
+            Go to Login
+          </Button>
         </>
       ) : (
         <>
-          <p className="mb-4">
+          <p className="mb-4 text-white">
             Email verification failed. Please try again or contact support.
           </p>
-          <Button onClick={() => router.push("/")}>Go to Home</Button>
+          <Button
+            onClick={() => router.push("/")}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+          >
+            Go to Home
+          </Button>
         </>
       )}
     </div>

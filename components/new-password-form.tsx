@@ -89,15 +89,16 @@ export function NewPasswordForm({ token }: NewPasswordFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel className="text-gray-300">New Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   placeholder="Enter your new password"
                   {...field}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -106,19 +107,26 @@ export function NewPasswordForm({ token }: NewPasswordFormProps) {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm New Password</FormLabel>
+              <FormLabel className="text-gray-300">
+                Confirm New Password
+              </FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   placeholder="Confirm your new password"
                   {...field}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+        >
           {isLoading ? "Resetting..." : "Reset Password"}
         </Button>
       </form>
