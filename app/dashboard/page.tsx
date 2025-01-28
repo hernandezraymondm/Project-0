@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { verify } from "jsonwebtoken";
-import { UserStats } from "./user-stats";
+import { UserStats } from "../components/user-stats";
 import { Setup2FA } from "@/components/setup-2fa";
 import { RecentActivity } from "@/components/recent-activity";
 import { SecurityOverview } from "@/components/security-overview";

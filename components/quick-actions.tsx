@@ -12,7 +12,7 @@ export function QuickActions() {
       label: "Change Password",
       action: () => alert("Change Password Clicked"),
     },
-    { label: "Update Email", action: () => alert("Update Email Clicked") },
+    { label: "Update Profile", action: () => alert("Update Profile Clicked") },
     { label: "View Logs", action: () => alert("View Logs Clicked") },
   ];
 
