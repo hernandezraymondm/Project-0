@@ -4,15 +4,23 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("session")?.value;
 
-  if (
-    (token && request.nextUrl.pathname.startsWith("/login")) ||
-    request.nextUrl.pathname.startsWith("/register")
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  // If token is valid and user is trying to access login or register, redirect to dashboard
+  if (token) {
+    if (
+      request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/register")
+    ) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
   }
 
   // Allow public access to login, register, and blog posts
-  if (request.nextUrl.pathname.startsWith("/")) {
+  if (
+    request.nextUrl.pathname.startsWith("/") ||
+    request.nextUrl.pathname.startsWith("/login") ||
+    request.nextUrl.pathname.startsWith("/register") ||
+    request.nextUrl.pathname.startsWith("/api/auth")
+  ) {
     return NextResponse.next();
   }
 
@@ -20,8 +28,6 @@ export function middleware(request: NextRequest) {
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
-  // If token is valid and user is trying to access login or register, redirect to dashboard
 
   // For all other routes, allow access if token is present
   return NextResponse.next();

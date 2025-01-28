@@ -48,8 +48,6 @@ export function Setup2FA() {
     }
   };
 
-  console.log(JSON.stringify({ token }));
-
   const verify2FA = async () => {
     try {
       const response = await fetch("/api/auth/verify-2fa", {
@@ -113,18 +111,22 @@ export function Setup2FA() {
   };
 
   return (
-    <div className="space-y-4 bg-white p-6 rounded-lg shadow">
-      <h2 className="text-2xl font-bold">Two-Factor Authentication</h2>
+    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
+      <h2 className="text-2xl font-bold text-pink-400 mb-6">
+        Two-Factor Authentication
+      </h2>
       {is2FAEnabled ? (
         <div>
-          <p className="mb-4">2FA is currently enabled for your account.</p>
+          <p className="mb-4 text-gray-300">
+            2FA is currently enabled for your account.
+          </p>
           <Button onClick={disable2FA} variant="destructive">
             Disable 2FA
           </Button>
         </div>
       ) : !secret ? (
         <div>
-          <p className="mb-4">
+          <p className="mb-4 text-gray-300">
             2FA is currently disabled. Enable it to add an extra layer of
             security to your account.
           </p>
@@ -132,7 +134,9 @@ export function Setup2FA() {
         </div>
       ) : (
         <div className="space-y-4">
-          <p>Scan this QR code with your authenticator app:</p>
+          <p className="text-gray-300">
+            Scan this QR code with your authenticator app:
+          </p>
           <Image
             width={256}
             height={256}
@@ -145,14 +149,22 @@ export function Setup2FA() {
             in your authenticator app:
           </p>
           <p className="text-xs text-gray-600 break-all">{otpauth}</p>
-          <p>Or enter this secret manually: {secret}</p>
+          <p className="text-gray-300">
+            Or enter this secret manually: {secret}
+          </p>
           <Input
             type="text"
             placeholder="Enter 6-digit code"
             value={token}
             onChange={(e) => setToken(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
           />
-          <Button onClick={verify2FA}>Verify and Enable 2FA</Button>
+          <Button
+            onClick={verify2FA}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+          >
+            Verify and Enable 2FA
+          </Button>
         </div>
       )}
     </div>

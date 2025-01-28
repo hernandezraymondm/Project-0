@@ -14,16 +14,18 @@ export async function UserStats() {
   const { totalUsers, verifiedUsers } = await getUserStats();
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-4">User Statistics</h2>
+    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
+      <h2 className="text-2xl font-bold text-purple-400 mb-6">
+        User Statistics
+      </h2>
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-gray-600">Total Users</p>
-          <p className="text-3xl font-bold">{totalUsers}</p>
+        <div className="p-4 bg-gray-800/50 rounded-lg">
+          <p className="text-gray-300">Total Users</p>
+          <p className="text-3xl font-bold text-white">{totalUsers}</p>
         </div>
-        <div>
-          <p className="text-gray-600">Verified Users</p>
-          <p className="text-3xl font-bold">{verifiedUsers}</p>
+        <div className="p-4 bg-gray-800/50 rounded-lg">
+          <p className="text-gray-300">Verified Users</p>
+          <p className="text-3xl font-bold text-white">{verifiedUsers}</p>
         </div>
       </div>
     </div>

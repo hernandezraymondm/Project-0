@@ -70,3 +70,54 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Ladning page */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-star {
+  animation:
+    float 6s ease-in-out infinite,
+    twinkle 3s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle, rgba(128, 0, 128, 0.2), transparent 70%);
+}

@@ -87,59 +87,86 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-gray-300">Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" {...field} />
+                <Input
+                  placeholder="Enter your email"
+                  {...field}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
+
+        {/* Password Field */}
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="text-gray-300">Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   placeholder="Enter your password"
                   {...field}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
+
+        {/* 2FA Field (Conditional) */}
         {require2FA && (
           <FormField
             control={form.control}
             name="otpToken"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>2FA Code</FormLabel>
+                <FormLabel className="text-gray-300">2FA Code</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your 2FA code" {...field} />
+                  <Input
+                    placeholder="Enter your 2FA code"
+                    {...field}
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
         )}
-        <Button className="w-full" type="submit" disabled={isLoading}>
+
+        {/* Login Button */}
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+        >
           {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
-      <Link href="/reset-password" className="hover:text-blue-500 underline">
-        Reset Password
-      </Link>
+
+      {/* Reset Password Link */}
+      <div className="mt-6 text-center">
+        <Link
+          href="/reset-password"
+          className="text-purple-400 hover:text-pink-500 transition-all duration-300 underline"
+        >
+          Reset Password
+        </Link>
+      </div>
     </Form>
   );
 }
