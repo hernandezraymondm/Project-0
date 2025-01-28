@@ -144,7 +144,7 @@ export function Setup2FA() {
             height={256}
             src={qrCode || "/placeholder.svg"}
             alt="2FA QR Code"
-            className="w-64 h-64"
+            className="w-64 h-64 mx-auto"
           />
           <p className="text-sm text-gray-500 break-all">
             If you can&apos;t scan the QR code, you can manually enter this URL
