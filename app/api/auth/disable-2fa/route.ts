@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 
@@ -17,11 +18,14 @@ export async function POST() {
     const decoded = verify(token, process.env.JWT_SECRET!) as {
       userId: string;
     };
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const user = await prisma.user.update({
+    const result = await prisma.user.update({
       where: { id: decoded.userId },
       data: { twoFactorEnabled: false, twoFactorSecret: null },
     });
+
+    if (result) {
+      logActivity(decoded.userId, "Disabled 2FA");
+    }
 
     return NextResponse.json({ message: "2FA has been disabled" });
   } catch (error) {

@@ -24,12 +24,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={
-          (inter.className,
-          "min-h-full bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden")
-        }
-      >
+      <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar token={token} />
           {children}

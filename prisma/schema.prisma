@@ -21,4 +21,16 @@ model User {
   twoFactorEnabled  Boolean   @default(false)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
+
+  ActivityLog Log[]
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, action])
 }

@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import * as z from "zod";
 import { sign } from "jsonwebtoken";
 import * as OTPAuth from "otpauth";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 
@@ -73,6 +74,8 @@ export async function POST(req: Request) {
     const token = sign({ userId: user.id }, process.env.JWT_SECRET!, {
       expiresIn: "1d",
     });
+
+    logActivity(user.id, "Logged in");
 
     const response = NextResponse.json(
       { message: "Login successful" },

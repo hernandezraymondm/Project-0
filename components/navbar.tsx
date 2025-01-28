@@ -21,7 +21,7 @@ export default function Navbar({ token }: { token?: string }) {
   };
 
   return (
-    <nav className="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 text-white p-4 sticky top-0 z-50 dark:bg-gray-900/80 dark:border-gray-800">
+    <nav className="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 text-white p-4 fixed w-full top-0 z-50 dark:bg-gray-900/80 dark:border-gray-800">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo with gradient text */}
         <Link

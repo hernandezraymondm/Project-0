@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import * as z from "zod";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 
@@ -24,13 +25,17 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.user.update({
+    const result = await prisma.user.update({
       where: { id: user.id },
       data: {
         isEmailVerified: true,
         verificationToken: null,
       },
     });
+
+    if (result) {
+      logActivity(user.id, "Verified email");
+    }
 
     return NextResponse.json(
       { message: "Email verified successfully" },

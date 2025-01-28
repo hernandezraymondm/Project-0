@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import * as z from "zod";
 import { Resend } from "resend";
 import VerificationEmail from "@/components/emails/verification-email";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -29,7 +30,6 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = Math.random().toString(36).substring(2, 15);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const user = await prisma.user.create({
       data: {
         email,
@@ -37,6 +37,10 @@ export async function POST(req: Request) {
         verificationToken,
       },
     });
+
+    if (user) {
+      logActivity(user.id, "Registered account");
+    }
 
     const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
 

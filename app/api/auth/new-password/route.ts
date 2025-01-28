@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.update({
+    const result = await prisma.user.update({
       where: { id: user.id },
       data: {
         password: hashedPassword,
@@ -39,6 +40,10 @@ export async function POST(req: Request) {
         resetTokenExpiry: null,
       },
     });
+
+    if (result) {
+      logActivity(user.id, "Reset password");
+    }
 
     return NextResponse.json(
       { message: "Password reset successful" },

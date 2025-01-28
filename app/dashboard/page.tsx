@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-space-800 to-black p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-space-800 to-black p-6 pt-24">
       {/* Header */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">

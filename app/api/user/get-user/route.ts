@@ -1,12 +1,13 @@
+// api/user.js
+
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import * as OTPAuth from "otpauth";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
-export async function POST() {
+export async function GET() {
   const cookieStore = cookies();
   const token = (await cookieStore).get("session")?.value;
 
@@ -22,34 +23,25 @@ export async function POST() {
       where: { id: decoded.userId },
     });
 
+    const log = await prisma.log.findFirst({
+      where: {
+        userId: decoded.userId,
+        action: "Logged in",
+      },
+      orderBy: {
+        timestamp: "desc",
+      },
+    });
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const totp = new OTPAuth.TOTP({
-      issuer: process.env.NEXT_PUBLIC_APP_NAME,
-      label: user.email,
-      algorithm: "SHA1",
-      digits: 6,
-      period: 30,
-      secret: new OTPAuth.Secret(),
+    return NextResponse.json({
+      user: { ...user, lastLogin: log?.timestamp },
     });
-
-    const secret = totp.secret.base32;
-    const otpauth = totp.toString();
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { twoFactorSecret: secret },
-    });
-
-
-    return NextResponse.json({ secret, otpauth });
   } catch (error) {
-    console.error("Enable 2FA error:", error);
-    return NextResponse.json(
-      { error: "An error occurred while enabling 2FA" },
-      { status: 500 }
-    );
+    console.error("Error fetching user data:", error);
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }

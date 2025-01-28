@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import * as OTPAuth from "otpauth";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { logActivity } from "@/app/api/logs/add-activity/route";
 
 const prisma = new PrismaClient();
 
@@ -42,10 +43,14 @@ export async function POST(req: Request) {
     const delta = totp.validate({ token: otpToken });
 
     if (delta !== null) {
-      await prisma.user.update({
+      const result = await prisma.user.update({
         where: { id: user.id },
         data: { twoFactorEnabled: true },
       });
+
+      if (result) {
+        logActivity(user.id, "Enabled 2FA");
+      }
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json({ error: "Invalid token" }, { status: 400 });
