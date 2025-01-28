@@ -158,7 +158,7 @@ Scroll bar
 
 .fade-overlay {
   @apply absolute inset-0 pointer-events-none;
-  background: linear-gradient(to top, black 10%, transparent 60%);
+  background: linear-gradient(to top, black 2%, transparent 50%);
 }
 
 .crawl {
