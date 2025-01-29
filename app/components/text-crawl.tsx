@@ -1,8 +1,6 @@
 export function TextCrawl() {
   return (
     <div className="text-crawl-container select-none">
-      <div className="fade-overlay"></div>
-
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text">
@@ -21,7 +19,7 @@ export function TextCrawl() {
 
             <p className="mb-8 text-6xl leading-tight">
               During the battle, Rebel spies managed to steal secret plans to
-              the Empire&apos;s ultimate weapon, UNKNOWN PROJECT, an advanced
+              the Empire&apos;s ultimate weapon, Unknown Project, an advanced
               starter kit with enough power to revolutionize an entire
               development process.
             </p>
@@ -42,7 +40,7 @@ export function TextCrawl() {
             </p>
 
             <p className="mb-8 text-6xl leading-tight">
-              The UNKNOWN PROJECT team works tirelessly, integrating
+              The Unknown Project team works tirelessly, integrating
               cutting-edge libraries and frameworks to ensure the Rebel Alliance
               remains at the forefront of innovation. Their mission is clear: to
               empower developers everywhere with the tools they need to build
@@ -54,7 +52,7 @@ export function TextCrawl() {
               superweapon, capable of crippling even the most advanced
               development workflows, spread fear across the galaxy. But the
               Rebels are prepared, ready to face any challenge with the power of
-              the UNKNOWN PROJECT.
+              the Unknown Project.
             </p>
 
             <p className="mb-8 text-6xl leading-tight">
