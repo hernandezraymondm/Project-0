@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { AppLogo } from "@/components/app-logo";
 import { TextCrawl } from "@/components/text-crawl";
 
 export default function Home() {
@@ -11,12 +12,11 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 text-center space-y-8 max-w-2xl">
         {/* Futuristic title with gradient text */}
-        <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient p-1">
-          Project Zero
-        </h1>
+
+        <AppLogo size="xl" />
 
         {/* Subtitle with glowing effect */}
-        <h2 className="text-xl font-medium text-gray-300">
+        <h2 className="text-xl font-medium text-gray-300 pt-20">
           A NEXT.js starter kit so you don&apos;t have to start from scratch.
           Equipped with{" "}
           <span className="text-purple-400 font-semibold">

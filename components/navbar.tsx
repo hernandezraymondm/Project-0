@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AppLogo } from "@/components/app-logo";
 
 export default function Navbar({ token }: { token?: string }) {
   const { theme, setTheme } = useTheme();
@@ -21,14 +22,11 @@ export default function Navbar({ token }: { token?: string }) {
   };
 
   return (
-    <nav className="bg-card backdrop-blur-md border-b border-gray-800 text-primary p-4 fixed w-full top-0 z-50">
+    <nav className="bg-card backdrop-blur-md border-b border-gray-800 text-primary p-2 fixed w-full top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo with gradient text */}
-        <Link
-          href="/"
-          className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 hover:from-pink-600 hover:to-purple-400 transition-all duration-300"
-        >
-          Project Zero
+        <Link href="/">
+          <AppLogo size="xs" />
         </Link>
 
         {/* Navigation links with hover effects */}

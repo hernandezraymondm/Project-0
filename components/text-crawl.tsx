@@ -6,7 +6,7 @@ export function TextCrawl() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 1000);
+    const timer = setTimeout(() => setIsVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,7 +20,7 @@ export function TextCrawl() {
         <div className="crawl-content">
           <div className="crawl-text">
             <div className="text-center mb-16">
-              <p className="mb-5 text-4xl">Episode I</p>
+              <p className="mb-10 text-4xl">Episode I</p>
               <h1 className="text-6xl uppercase mb-8">
                 THE TECH STACK AWAKENS
               </h1>
