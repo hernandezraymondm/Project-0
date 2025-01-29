@@ -4,8 +4,8 @@ import { verify } from "jsonwebtoken";
 import { UserStats } from "../components/user-stats";
 import { Setup2FA } from "@/components/setup-2fa";
 import { RecentActivity } from "@/components/recent-activity";
-import { SecurityOverview } from "@/components/security-overview";
 import { QuickActions } from "@/components/quick-actions";
+import { SecurityOverview } from "../components/security-overview";
 
 export default async function DashboardPage() {
   const cookieStore = cookies();
