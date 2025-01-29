@@ -22,12 +22,12 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
       {/* UNKNOWN with stylized lines */}
       <div className="relative flex items-center">
         {/* Left stylized line */}
-        <div className="absolute right-[61px] h-[1px] bg-gradient-to-r from-purple-400 to-pink-600 animate-line-expand-left" />
+        <div className="absolute right-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400 animate-line-expand-left" />
         <span className="text-[9px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient hover:from-pink-600 hover:to-purple-400 transition-all duration-300 p-1">
           UNKNOWN
         </span>
         {/* Right stylized line */}
-        <div className="absolute left-[61px] h-[1px] bg-gradient-to-r from-purple-400 to-pink-600 animate-line-expand-right" />
+        <div className="absolute left-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400 animate-line-expand-right" />
       </div>
 
       {/* AWAKENING with stylized line below */}
