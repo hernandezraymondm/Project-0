@@ -7,7 +7,7 @@ export function TextCrawl() {
         <div className="crawl-content">
           <div className="crawl-text">
             <div className="text-center mb-16">
-              <p className="pt-12 mb-7 text-4xl">Episode I</p>
+              <p className="pt-12 mb-5 text-4xl">Episode I</p>
               <h1 className="text-6xl uppercase mb-8">
                 THE TECH STACK AWAKENS
               </h1>
@@ -21,7 +21,7 @@ export function TextCrawl() {
 
             <p className="mb-8 text-4xl leading-normal">
               During the battle, Rebel spies managed to steal secret plans to
-              the Empire&apos;s ultimate weapon, PROJECT ZERO, an advanced
+              the Empire&apos;s ultimate weapon, UNKNOWN PROJECT, an advanced
               starter kit with enough power to revolutionize an entire
               development process.
             </p>
@@ -34,11 +34,11 @@ export function TextCrawl() {
             </p>
 
             <p className="mb-8 text-4xl leading-normal">
-              The project harnesses the power of: Next.js for lightning-fast
-              rendering, Secure session management for ironclad protection, TOTP
-              2FA for unbreakable authentication, Email verification to ensure
-              user legitimacy, Tailwind CSS for stylish and responsive designs,
-              and TypeScript for enhanced code quality.
+              The project harnesses the power of Next.js for lightning-fast
+              rendering, secure session management for ironclad protection, TOTP
+              2-factor authentication for unbreakable security, Email
+              verification to ensure user legitimacy, Tailwind CSS for stylish
+              and responsive designs, and TypeScript for enhanced code quality.
             </p>
           </div>
         </div>

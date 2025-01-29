@@ -28,7 +28,7 @@ export function SecurityOverview() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl h-full">
-      <h2 className="text-2xl font-bold text-purple-400 mb-6">
+      <h2 className="text-2xl font-bold text-purple-400 mb-6 font-jura">
         Security Overview
       </h2>
       <div className="space-y-4">

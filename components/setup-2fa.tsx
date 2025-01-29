@@ -112,7 +112,7 @@ export function Setup2FA() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-pink-400 mb-6">
+      <h2 className="text-2xl font-bold text-pink-400 mb-6 font-jura">
         Two-Factor Authentication
       </h2>
       {is2FAEnabled ? (

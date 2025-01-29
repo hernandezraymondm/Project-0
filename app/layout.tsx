@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import "./globals.css";
-import { Inter, Audiowide } from "next/font/google"; // Import Audiowide
+import { Inter, Audiowide, Jura } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "next-themes";
@@ -14,6 +14,13 @@ const audiowide = Audiowide({
   subsets: ["latin"],
   weight: "400", // Audiowide only has one weight (400)
   variable: "--font-audiowide", // Define a CSS variable for Audiowide
+});
+
+// Initialize Jura font
+const jura = Jura({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-jura",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +40,9 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       {/* Apply both Inter and Audiowide fonts to the body */}
-      <body className={`${inter.className} ${audiowide.variable}`}>
+      <body
+        className={`${inter.className} ${audiowide.variable} ${jura.variable}`}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar token={token} />
           {children}

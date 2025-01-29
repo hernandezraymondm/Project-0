@@ -21,7 +21,9 @@ export function QuickActions() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-pink-400 mb-6">Quick Actions</h2>
+      <h2 className="text-2xl font-bold text-pink-400 mb-6 font-jura">
+        Quick Actions
+      </h2>
       <div className="space-y-4">
         {actions.map((action, index) => (
           <Button

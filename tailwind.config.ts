@@ -53,6 +53,7 @@ module.exports = {
       },
       fontFamily: {
         audiowide: "var(--font-audiowide)",
+        jura: "var(--font-jura)",
       },
       borderRadius: {
         lg: "var(--radius)",

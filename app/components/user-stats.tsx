@@ -15,17 +15,21 @@ export async function UserStats() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl h-full">
-      <h2 className="text-2xl font-bold text-purple-400 mb-6">
+      <h2 className="text-2xl font-bold text-purple-400 mb-6 font-jura">
         User Statistics
       </h2>
       <div className="grid grid-cols-2 gap-4">
         <div className="p-4 bg-gray-800/50 rounded-lg space-y-5">
           <p className="text-gray-300">Total Users</p>
-          <p className="text-3xl font-bold text-white">{totalUsers}</p>
+          <p className="text-3xl font-bold text-white font-audiowide">
+            {totalUsers}
+          </p>
         </div>
         <div className="p-4 bg-gray-800/50 rounded-lg space-y-5">
           <p className="text-gray-300">Verified Users</p>
-          <p className="text-3xl font-bold text-white">{verifiedUsers}</p>
+          <p className="text-3xl font-bold text-white font-audiowide">
+            {verifiedUsers}
+          </p>
         </div>
       </div>
     </div>

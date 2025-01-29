@@ -41,7 +41,9 @@ export function RecentActivity() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-blue-400 mb-6">Recent Activity</h2>
+      <h2 className="text-2xl font-bold text-blue-400 mb-6 font-jura">
+        Recent Activity
+      </h2>
       <div className="space-y-4">
         {activities.length > 0 ? (
           activities.map((activity) => (

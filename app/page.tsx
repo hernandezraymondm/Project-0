@@ -13,10 +13,10 @@ export default function Home() {
       <div className="relative z-10 text-center space-y-8 max-w-2xl">
         {/* Futuristic title with gradient text */}
 
-        <AppLogo size="xl" />
+        <AppLogo size="lg" />
 
         {/* Subtitle with glowing effect */}
-        <h2 className="text-xl font-medium text-gray-300 pt-20">
+        <h2 className="text-xl font-medium text-gray-300 pt-14 font-jura">
           A NEXT.js starter kit so you don&apos;t have to start from scratch.
           Equipped with{" "}
           <span className="text-purple-400 font-semibold">
