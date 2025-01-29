@@ -165,7 +165,7 @@ Scroll bar
 }
 
 .crawl {
-  @apply relative w-full max-w-[54em] text-[#4c3f5862] text-[1.5rem] font-bold text-justify;
+  @apply relative w-full max-w-[54em] text-[#4c3f5828] text-[1.5rem] font-bold text-justify;
   perspective: 300px;
   height: 38vh;
   overflow: hidden;
@@ -179,7 +179,7 @@ Scroll bar
 
 .crawl-text {
   @apply relative w-full;
-  animation: text-crawl-scroll 80s linear infinite;
+  animation: text-crawl-scroll 150s linear infinite;
 }
 
 /* APP LOGO */
