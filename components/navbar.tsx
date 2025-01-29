@@ -5,17 +5,10 @@ import { LogoutButton } from "@/components/logout-button";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
 import { AppLogo } from "@/app/components/app-logo";
 
 export default function Navbar({ token }: { token?: string }) {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Ensure the component is mounted before rendering theme-dependent content
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -32,20 +25,19 @@ export default function Navbar({ token }: { token?: string }) {
         {/* Navigation links with hover effects */}
         <div className="flex items-center space-x-6">
           {/* Theme Toggle Button */}
-          {mounted && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="text-gray-300 hover:text-white"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </Button>
-          )}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="text-gray-300 hover:text-white"
+          >
+            {theme && theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </Button>
           {!token && (
             <>
               <Link
