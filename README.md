@@ -38,7 +38,7 @@
 
 ```bash
 git clone https://github.com/hernandezraymondm/Project-0.git
-cd project-0
+cd Project-0
 ```
 
 2. Install Dependencies:

@@ -71,7 +71,7 @@ body {
   }
 }
 
-/* Ladning page */
+/* Landing page */
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -176,5 +176,5 @@ Scroll bar
 
 .crawl-text {
   @apply relative w-full;
-  animation: text-crawl-scroll 60s linear infinite;
+  animation: text-crawl-scroll 80s linear infinite;
 }
