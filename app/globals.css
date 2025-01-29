@@ -148,10 +148,10 @@ Scroll bar
     transform: translateY(100%);
   }
   90% {
-    transform: translateY(-10%);
+    transform: translateY(-15%);
   }
   100% {
-    transform: translateY(-2000%);
+    transform: translateY(-1500%);
   }
 }
 
