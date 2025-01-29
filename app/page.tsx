@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AppLogo } from "@/components/app-logo";
-import { TextCrawl } from "@/components/text-crawl";
+import { AppLogo } from "./components/app-logo";
+import { TextCrawl } from "./components/text-crawl";
 
 export default function Home() {
   return (

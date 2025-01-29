@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import * as z from "zod";
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "../../logs/add-activity/route";
 
 const prisma = new PrismaClient();
 

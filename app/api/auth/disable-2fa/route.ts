@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "../../logs/add-activity/route";
 
 const prisma = new PrismaClient();
 

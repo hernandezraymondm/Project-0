@@ -1,26 +1,13 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 export function TextCrawl() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isVisible) return null;
-
   return (
-    <div className="text-crawl-container">
+    <div className="text-crawl-container select-none">
       <div className="fade-overlay"></div>
 
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text">
             <div className="text-center mb-16">
-              <p className="mb-10 text-4xl">Episode I</p>
+              <p className="pt-12 mb-7 text-4xl">Episode I</p>
               <h1 className="text-6xl uppercase mb-8">
                 THE TECH STACK AWAKENS
               </h1>

@@ -178,3 +178,53 @@ Scroll bar
   @apply relative w-full;
   animation: text-crawl-scroll 80s linear infinite;
 }
+
+/* APP LOGO */
+@keyframes lineExpandLeft {
+  0% {
+    width: 0;
+    clip-path: polygon(100% 0, 70% 50%, 100% 100%);
+  }
+  100% {
+    width: 100%;
+    clip-path: polygon(100% 0, 70% 50%, 100% 100%);
+  }
+}
+
+@keyframes lineExpandRight {
+  0% {
+    width: 0;
+    clip-path: polygon(0 0, 30% 50%, 0 100%);
+  }
+  100% {
+    width: 100%;
+    clip-path: polygon(0 0, 30% 50%, 0 100%);
+  }
+}
+
+@keyframes lineExpandCenter {
+  0% {
+    width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(0 0, 100% 0, 90% 30%, 10% 30%);
+  }
+  100% {
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(0 0, 100% 0, 90% 30%, 10% 30%);
+  }
+}
+
+.animate-line-expand-left {
+  animation: lineExpandLeft 2s ease-in-out forwards;
+}
+
+.animate-line-expand-right {
+  animation: lineExpandRight 2s ease-in-out forwards;
+}
+
+.animate-line-expand-center {
+  animation: lineExpandCenter 2s ease-in-out forwards;
+}

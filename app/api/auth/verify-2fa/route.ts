@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import * as OTPAuth from "otpauth";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "../../logs/add-activity/route";
 
 const prisma = new PrismaClient();
 

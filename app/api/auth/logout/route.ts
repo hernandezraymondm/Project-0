@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verify } from "jsonwebtoken";
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "../../logs/add-activity/route";
 
 export async function POST() {
   const cookieStore = cookies();

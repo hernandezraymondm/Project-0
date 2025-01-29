@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { AppLogo } from "@/components/app-logo";
+import { AppLogo } from "@/app/components/app-logo";
 
 export default function Navbar({ token }: { token?: string }) {
   const { theme, setTheme } = useTheme();

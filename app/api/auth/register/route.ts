@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import * as z from "zod";
 import { Resend } from "resend";
 import VerificationEmail from "@/components/emails/verification-email";
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "../../logs/add-activity/route";
 
 const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY);
