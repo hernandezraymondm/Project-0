@@ -50,7 +50,7 @@ npm install
 3. Setup .env file
 
 ```bash
-NEXT_PUBLIC_APP_NAME="Project Zero"
+NEXT_PUBLIC_APP_NAME=your_project_name
 
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
