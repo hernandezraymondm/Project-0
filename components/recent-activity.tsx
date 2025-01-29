@@ -3,6 +3,7 @@
 import { formatDateTime } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 
 async function fetchActivityLogs(page = 1, limit = 4) {
   const response = await fetch(
@@ -18,8 +19,10 @@ export function RecentActivity() {
   >([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetchActivityLogs(page)
       .then(({ activities, totalPages }) => {
         setActivities(activities);
@@ -28,6 +31,9 @@ export function RecentActivity() {
       .catch((error) => {
         console.error("Error fetching activity logs:", error);
         setActivities([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [page]);
 
@@ -44,23 +50,27 @@ export function RecentActivity() {
       <h2 className="text-2xl font-bold text-blue-400 mb-6 font-jura">
         Recent Activity
       </h2>
-      <div className="space-y-4">
-        {activities.length > 0 ? (
-          activities.map((activity) => (
-            <div
-              key={activity.id}
-              className="flex justify-between items-center p-4 bg-gray-800/50 rounded-lg"
-            >
-              <p className="text-gray-300">{activity.action}</p>
-              <p className="text-gray-400 text-sm">
-                {formatDateTime(activity.timestamp)}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-400">No recent activities found.</p>
-        )}
-      </div>
+      {loading && <Loader size="lg" />}
+      {!loading && (
+        <div className="space-y-4">
+          {activities.length > 0 ? (
+            activities.map((activity) => (
+              <div
+                key={activity.id}
+                className="flex justify-between items-center p-4 bg-gray-800/50 rounded-lg"
+              >
+                <p className="text-gray-300">{activity.action}</p>
+                <p className="text-gray-400 text-sm">
+                  {formatDateTime(activity.timestamp)}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No recent activities found.</p>
+          )}
+        </div>
+      )}
+
       <div className="flex justify-between mt-6">
         <Button onClick={handlePrev} disabled={page === 1} variant="secondary">
           Previous
