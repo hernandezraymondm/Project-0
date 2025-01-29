@@ -5,7 +5,7 @@ import { TextCrawl } from "./components/text-crawl";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden pb-40">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden">
       {/* Glowing background effect */}
       <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
 

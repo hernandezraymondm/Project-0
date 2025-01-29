@@ -165,9 +165,9 @@ Scroll bar
 }
 
 .crawl {
-  @apply relative w-full max-w-[40em] text-[#694c7259] text-[1.5rem] font-bold text-justify;
+  @apply relative w-full max-w-[54em] text-[#4c3f5862] text-[1.5rem] font-bold text-justify;
   perspective: 300px;
-  height: 41vh;
+  height: 38vh;
   overflow: hidden;
 }
 
