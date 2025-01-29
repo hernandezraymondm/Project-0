@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +35,8 @@ export function RegisterForm() {
   const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,6 +46,14 @@ export function RegisterForm() {
       confirmPassword: "",
     },
   });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -88,11 +99,16 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel className="text-gray-300">Email</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your email"
-                  {...field}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
-                />
+                <div className="relative">
+                  <Input
+                    placeholder="Enter your email"
+                    {...field}
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 pr-10"
+                  />
+                  <div className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent flex items-center">
+                    <IdCard className="h-4 w-4 text-gray-600" strokeWidth="3" />
+                  </div>
+                </div>
               </FormControl>
               <FormMessage className="text-red-400" />
             </FormItem>
@@ -107,12 +123,37 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel className="text-gray-300">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Enter your password"
-                  {...field}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    {...field}
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 pr-10"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={togglePasswordVisibility}
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon
+                        className="h-4 w-4 text-gray-600"
+                        strokeWidth="3"
+                      />
+                    ) : (
+                      <EyeIcon
+                        className="h-4 w-4 text-gray-500"
+                        strokeWidth="3"
+                      />
+                    )}
+                    <span className="sr-only">
+                      {showPassword ? "Hide password" : "Show password"}
+                    </span>
+                  </Button>
+                </div>
               </FormControl>
               <FormMessage className="text-red-400" />
             </FormItem>
@@ -127,12 +168,37 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel className="text-gray-300">Confirm Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Confirm your password"
-                  {...field}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
-                />
+                <div className="relative">
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm your password"
+                    {...field}
+                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 pr-10"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={toggleConfirmPasswordVisibility}
+                    disabled={isLoading}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOffIcon
+                        className="h-4 w-4 text-gray-600"
+                        strokeWidth="3"
+                      />
+                    ) : (
+                      <EyeIcon
+                        className="h-4 w-4 text-gray-500"
+                        strokeWidth="3"
+                      />
+                    )}
+                    <span className="sr-only">
+                      {showConfirmPassword ? "Hide password" : "Show password"}
+                    </span>
+                  </Button>
+                </div>
               </FormControl>
               <FormMessage className="text-red-400" />
             </FormItem>
