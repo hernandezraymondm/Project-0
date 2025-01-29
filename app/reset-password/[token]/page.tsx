@@ -1,4 +1,4 @@
-import { NewPasswordForm } from "@/components/new-password-form";
+import { NewPasswordForm } from "@/components/auth/new-password-form";
 import Link from "next/link";
 
 export default async function ResetPasswordPage({

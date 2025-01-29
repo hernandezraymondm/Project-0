@@ -1,4 +1,4 @@
-import { VerifyEmail } from "@/components/verify-email";
+import { VerifyEmail } from "@/components/auth/verify-email";
 import Link from "next/link";
 
 export default async function VerifyEmailPage({
