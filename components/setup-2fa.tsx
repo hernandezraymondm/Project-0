@@ -112,12 +112,12 @@ export function Setup2FA() {
 
   return (
     <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-pink-400 mb-6 font-jura">
+      <h2 className="text-2xl font-bold text-pink-400 mb-6">
         Two-Factor Authentication
       </h2>
       {is2FAEnabled ? (
         <div>
-          <p className="mb-4 text-gray-300">
+          <p className="mb-5 text-gray-300">
             2FA is currently enabled for your account.
           </p>
           <Button onClick={disable2FA} variant="destructive">
@@ -126,7 +126,7 @@ export function Setup2FA() {
         </div>
       ) : !secret ? (
         <div>
-          <p className="mb-4 text-gray-300">
+          <p className="mb-5 text-gray-300">
             2FA is currently disabled. Enable it to add an extra layer of
             security to your account.
           </p>
@@ -151,8 +151,9 @@ export function Setup2FA() {
             in your authenticator app:
           </p>
           <p className="text-xs text-gray-600 break-all">{otpauth}</p>
-          <p className="text-gray-300">
-            Or enter this secret manually: {secret}
+          <p className="text-gray-300 break-words">
+            Or enter this secret manually:{" "}
+            <span className="text-violet-400">{secret}</span>
           </p>
           <Input
             type="text"

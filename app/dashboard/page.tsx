@@ -10,11 +10,9 @@ import { QuickActions } from "@/components/quick-actions";
 export default async function DashboardPage() {
   const cookieStore = cookies();
   const token = (await cookieStore).get("session")?.value;
-
   if (!token) {
     redirect("/login");
   }
-
   try {
     verify(token, process.env.JWT_SECRET!);
   } catch {
@@ -26,36 +24,32 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="font-jura text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Dashboard
           </h1>
         </div>
-
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* User Stats */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <UserStats />
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column */}
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 content-start">
+            <div className="flex flex-col md:col-span-1">
+              <UserStats />
+            </div>
+            <div className="flex flex-col md:col-span-1">
+              <SecurityOverview />
+            </div>
+            <div className="flex flex-col md:col-span-2">
+              <RecentActivity />
+            </div>
           </div>
-
-          {/* Security Overview */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <SecurityOverview />
-          </div>
-
-          {/* Quick Actions */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <QuickActions />
-          </div>
-
-          {/* Recent Activity */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <RecentActivity />
-          </div>
-
-          {/* 2FA Setup */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <Setup2FA />
+          {/* Right Column */}
+          <div className="lg:col-span-1 grid grid-cols-1 gap-8 content-start">
+            <div className="flex flex-col">
+              <Setup2FA />
+            </div>
+            <div className="flex flex-col">
+              <QuickActions />
+            </div>
           </div>
         </div>
       </div>
