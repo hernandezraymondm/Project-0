@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 import { useToast } from "@/hooks/use-toast";
 
 interface VerifyEmailProps {
@@ -53,7 +54,7 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
   }, [token]);
 
   if (isLoading) {
-    return <div>Verifying your email...</div>;
+    return <Loader size="lg" />;
   }
 
   return (

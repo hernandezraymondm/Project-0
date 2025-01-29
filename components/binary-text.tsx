@@ -33,7 +33,7 @@ export function BinaryText() {
   }, []);
 
   return (
-    <div className="text-crawl-container select-none opacity-20">
+    <div className="text-crawl-container select-none opacity-40">
       <div className="fade-overlay"></div>
 
       <div className="crawl">

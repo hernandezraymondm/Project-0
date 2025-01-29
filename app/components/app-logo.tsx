@@ -11,7 +11,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
     sm: "scale(2)",
     md: "scale(3)",
     lg: "scale(4)",
-    xl: "scale(5)",
+    xl: "scale(10)",
   }[size];
 
   return (
