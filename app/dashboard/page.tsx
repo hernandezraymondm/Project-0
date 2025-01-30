@@ -8,8 +8,9 @@ import { QuickActions } from "@/components/quick-actions";
 import { SecurityOverview } from "../components/security-overview";
 import { NotificationsPanel } from "../components/notification-panel";
 import { SalesAnalytics } from "@/components/sales-analytics";
+import React from "react";
 
-export default async function DashboardPage() {
+const DashboardPage = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("session")?.value;
   if (!token) {
@@ -22,9 +23,9 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 pt-20">
+    <div className="min-h-screen bg-background m-0 ">
       {/* Dashboard Content */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="mx-auto p-0 relative z-10">
         {/* Main Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
           {/* Left Column */}
@@ -58,4 +59,6 @@ export default async function DashboardPage() {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

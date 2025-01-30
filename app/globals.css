@@ -49,6 +49,14 @@ body {
     --gradient-table: linear-gradient(to bottom right, #a8ff78, #78ffd6);
     --gradient-card: linear-gradient(to bottom right, #f857a6, #ff5858);
     --gradient-button: linear-gradient(to bottom right, #4e54c8, #8f94fb);
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -97,6 +105,14 @@ body {
       #b21f1f,
       #fdbb2d
     );
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -232,23 +248,50 @@ body {
 /* ===========
 Scroll bar 
 ============*/
-::-webkit-scrollbar {
-  width: 10px;
+/* Scrollbar Style */
+::-webkit-scrollbar-track {
+  border-radius: 2px;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #0f131d;
+::-webkit-scrollbar {
+  width: 7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #181f31;
-  border-radius: 20px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #bfbfbf;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #b32084;
+#sidebar ::-webkit-scrollbar {
+  width: 0;
 }
 
+#sidebar:hover ::-webkit-scrollbar {
+  width: 6px;
+}
+
+#sidebar ::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+  margin: 8px 0;
+}
+
+#sidebar ::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+#sidebar:hover ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-color: #f1f5f9;
+}
+
+#sidebar:hover ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+/* Scrollbar End */
 /* TEXT CRAWL */
 @keyframes text-crawl-scroll {
   0% {

@@ -50,7 +50,7 @@ export function SalesAnalytics() {
         <CardTitle className="card-title">Sales Analytics</CardTitle>
       </CardHeader>
       <CardContent>
-        <div style={{ height: 350 }}>
+        <div style={{ height: 330 }}>
           <ResponsiveLine
             data={data}
             margin={{ top: 10, right: 15, bottom: 50, left: 50 }}
