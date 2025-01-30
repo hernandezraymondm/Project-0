@@ -24,7 +24,7 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 font-jura">
             Dashboard
           </h1>
         </div>
