@@ -4,8 +4,15 @@ import { formatDateTime } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 
-async function fetchActivityLogs(page = 1, limit = 4) {
+async function fetchActivityLogs(page = 1, limit = 2) {
   const response = await fetch(
     `/api/logs/get-activity?page=${page}&limit=${limit}`
   );
@@ -46,21 +53,18 @@ export function RecentActivity() {
   };
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-blue-400 mb-6 font-jura">
-        Recent Activity
-      </h2>
+    <Card className="card">
+      <CardHeader>
+        <CardTitle className="card-title">Recent Activity</CardTitle>
+      </CardHeader>
       {loading && <Loader size="lg" />}
       {!loading && (
-        <div className="space-y-4">
+        <CardContent className="space-y-4">
           {activities.length > 0 ? (
             activities.map((activity) => (
-              <div
-                key={activity.id}
-                className="flex justify-between items-center p-4 bg-gray-800/50 rounded-lg"
-              >
+              <div key={activity.id} className="card-content text-sm">
                 <p className="text-gray-300">{activity.action}</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-xs">
                   {formatDateTime(activity.timestamp)}
                 </p>
               </div>
@@ -68,10 +72,10 @@ export function RecentActivity() {
           ) : (
             <p className="text-gray-400">No recent activities found.</p>
           )}
-        </div>
+        </CardContent>
       )}
 
-      <div className="flex justify-between mt-6">
+      <CardFooter className="flex justify-between mt-6">
         <Button onClick={handlePrev} disabled={page === 1} variant="secondary">
           Previous
         </Button>
@@ -82,7 +86,7 @@ export function RecentActivity() {
         >
           Next
         </Button>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }

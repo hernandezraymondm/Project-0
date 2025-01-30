@@ -1,6 +1,8 @@
 export function TextCrawl() {
   return (
-    <div className="text-crawl-container select-none">
+    <div className="text-crawl-container select-none ">
+      <div className="fade-overlay" />
+
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text">

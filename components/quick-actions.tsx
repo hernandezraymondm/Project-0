@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export function QuickActions() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,21 +21,17 @@ export function QuickActions() {
   ];
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-pink-400 mb-6 font-jura">
-        Quick Actions
-      </h2>
-      <div className="space-y-4">
+    <Card className="card">
+      <CardHeader>
+        <CardTitle className="card-title">Quick Actions</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
         {actions.map((action, index) => (
-          <Button
-            key={index}
-            onClick={action.action}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
-          >
+          <Button key={index} onClick={action.action} className="button w-full">
             {action.label}
           </Button>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -14,24 +15,24 @@ export async function UserStats() {
   const { totalUsers, verifiedUsers } = await getUserStats();
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl h-full flex flex-col">
-      <h2 className="text-2xl font-bold text-purple-400 mb-7 font-jura">
-        User Statistics
-      </h2>
-      <div className="grid grid-cols-2 gap-4 flex-grow">
-        <div className="p-4 bg-gray-800/50 rounded-lg space-y-2 flex flex-col grow">
-          <p className="text-gray-300 w-[80%]">Total Users</p>
-          <p className="text-3xl font-bold text-white font-audiowide">
+    <Card className="card h-full flex flex-col">
+      <CardHeader>
+        <CardTitle className="card-title">User Statistics</CardTitle>
+      </CardHeader>
+      <CardContent className="grid grid-cols-2 gap-4 flex-grow">
+        <div className="card-content">
+          <p className="text-primary w-[80%] text-sm">Total Users</p>
+          <p className="text-2xl font-bold text-primary font-audiowide">
             {totalUsers}
           </p>
         </div>
-        <div className="p-4 bg-gray-800/50 rounded-lg space-y-2 flex flex-col grow">
-          <p className="text-gray-300">Verified Users</p>
-          <p className="text-3xl font-bold text-white font-audiowide">
+        <div className="card-content">
+          <p className="text-primary text-sm">Verified Users</p>
+          <p className="text-2xl font-bold text-primary font-audiowide">
             {verifiedUsers}
           </p>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

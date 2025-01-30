@@ -5,7 +5,7 @@ import { TextCrawl } from "./components/text-crawl";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-background overflow-hidden">
       {/* Glowing background effect */}
       <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
 
@@ -16,7 +16,7 @@ export default function Home() {
         <AppLogo size="lg" />
 
         {/* Subtitle with glowing effect */}
-        <h2 className="text-xl font-medium text-gray-300 pt-14 font-jura">
+        <h2 className="text-xl font-medium text-primary pt-14 font-jura">
           A NEXT.js starter kit so you don&apos;t have to start from scratch.
           Equipped with{" "}
           <span className="text-purple-400 font-semibold">

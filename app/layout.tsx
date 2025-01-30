@@ -4,7 +4,7 @@ import "./globals.css";
 import { Inter, Audiowide, Jura } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/navbar";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 // Initialize Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -39,15 +39,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* Apply both Inter and Audiowide fonts to the body */}
       <body
         className={`${inter.className} ${audiowide.variable} ${jura.variable}`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           <Navbar token={token} />
           {children}
           <Toaster />
-        </ThemeProvider>
+        </NextThemesProvider>
       </body>
     </html>
   );
