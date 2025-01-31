@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { BreadCrumb } from "@/app/components/breadcrumb";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
 import { SearchBar } from "./search-bar";
+import { LogoutButton } from "../logout-button";
 
 export function DashboardNavbar() {
   const { theme, setTheme } = useTheme();
@@ -76,7 +77,9 @@ export function DashboardNavbar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogoutButton />
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>

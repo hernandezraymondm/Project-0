@@ -21,7 +21,7 @@ export default function Navbar({ token }: { token?: string }) {
   };
 
   return (
-    <nav className="glassmorphism border-b border-border p-2 fixed w-full top-0 z-50">
+    <nav className="bg-transparent border-b border-[#1e293b] p-2 fixed w-full top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo with gradient text */}
         <Link href="/">
