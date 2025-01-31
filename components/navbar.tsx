@@ -36,7 +36,7 @@ export default function Navbar({ token }: { token?: string }) {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="text-primary"
+            className="text-white"
           >
             {mounted && theme === "dark" ? (
               <Sun className="h-5 w-5" />
@@ -68,7 +68,7 @@ export default function Navbar({ token }: { token?: string }) {
             <>
               <Link
                 href="/dashboard"
-                className="relative text-primary transition-all duration-300 group"
+                className="relative text-white transition-all duration-300 group"
               >
                 Dashboard
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
