@@ -43,7 +43,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
   }, [showSeconds]);
 
   return (
-    <div className="flex items-center justify-between gap-7 text-sm text-primary/75">
+    <div className="hidden lg:flex items-center justify-between gap-7 text-sm text-primary/75 flex-nowrap text-nowrap">
       <div className="flex items-center space-x-2">
         <Clock className="h-4 w-4" strokeWidth={3} />
         <span>{formatTime(dateTime)}</span>
