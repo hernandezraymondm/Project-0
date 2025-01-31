@@ -30,7 +30,7 @@ export function DashboardNavbar() {
   };
 
   return (
-    <header className="sticky top-0 w-full bg-navbar flex justify-end lg:inline-block ">
+    <header className="sticky top-0 w-full bg-navbar flex justify-end lg:inline-block border-b border-border">
       <div className="px-12 flex h-14 items-center justify-between">
         <div className="mr-4 hidden xl:flex">
           <span className="font-bold mr-6 items-center space-x-2">

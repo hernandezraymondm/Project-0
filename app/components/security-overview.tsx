@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { formatDateTime } from "@/lib/utils";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatLastLogin } from "@/lib/utils";
 
 const prisma = new PrismaClient();
 
@@ -39,9 +39,7 @@ export async function SecurityOverview() {
     { label: "2FA Enabled", value: user?.twoFactorEnabled ? "Yes" : "No" },
     {
       label: "Last Login",
-      value: log?.timestamp
-        ? formatDateTime(log.timestamp.toDateString())
-        : "N/A",
+      value: log?.timestamp ? formatLastLogin(new Date(log.timestamp)) : "N/A",
     },
   ];
 
