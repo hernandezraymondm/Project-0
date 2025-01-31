@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { formatDateTime } from "@/lib/utils";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const prisma = new PrismaClient();
 
@@ -45,21 +46,22 @@ export async function SecurityOverview() {
   ];
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-purple-400 mb-6 font-jura">
-        Security Overview
-      </h2>
+    <Card className="card">
+      <CardHeader>
+        <CardTitle className="card-title">Security Overview</CardTitle>
+      </CardHeader>
 
-      <div className="space-y-4">
+      <CardContent className="space-y-4">
         {securityData.map((item, index) => (
-          <div key={index} className="flex justify-between items-start gap-2">
-            <p className="text-gray-300 text-nowrap">{item.label}</p>
-            <p className="text-white font-semibold text-right">
-              {item.value || "N/A"}
-            </p>
+          <div
+            key={index}
+            className="flex justify-between items-start gap-2 text-sm"
+          >
+            <p className="text-primary text-nowrap">{item.label}</p>
+            <p className="text-primary text-right">{item.value || "N/A"}</p>
           </div>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

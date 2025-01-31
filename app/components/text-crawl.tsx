@@ -1,6 +1,8 @@
 export function TextCrawl() {
   return (
-    <div className="text-crawl-container select-none">
+    <div className="text-crawl-container select-none ">
+      <div className="fade-overlay" />
+
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text">
@@ -58,15 +60,15 @@ export function TextCrawl() {
             <p className="mb-8 text-6xl leading-tight">
               The battle for the future of development rages on. With every line
               of code, the Rebel Alliance grows stronger, inching closer to a
-              galaxy free from the tyranny of legacy systems. The UNKNOWN
-              PROJECT is their beacon of hope, a symbol of what can be achieved
+              galaxy free from the tyranny of legacy systems. The Unknown
+              Project is their beacon of hope, a symbol of what can be achieved
               when innovation and determination come together.
             </p>
 
             <p className="mb-8 text-6xl leading-tight">
               As the code fades into the stars, one thing is certain: the Rebel
-              Alliance will never stop fighting for a better future. The UNKNOWN
-              PROJECT is their greatest weapon, and with it, they will bring
+              Alliance will never stop fighting for a better future. The Unknown
+              Project is their greatest weapon, and with it, they will bring
               freedom to the galaxy.
             </p>
           </div>

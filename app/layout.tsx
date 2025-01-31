@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import "./globals.css";
 import { Inter, Audiowide, Jura } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/navbar";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 // Initialize Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -34,20 +32,19 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("session")?.value;
-
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* Apply both Inter and Audiowide fonts to the body */}
       <body
         className={`${inter.className} ${audiowide.variable} ${jura.variable}`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar token={token} />
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           {children}
           <Toaster />
-        </ThemeProvider>
+        </NextThemesProvider>
       </body>
     </html>
   );

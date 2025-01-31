@@ -1,25 +1,25 @@
 import Link from "next/link";
-import { ResetPasswordForm } from "@/components/reset-password-form";
+import { LoginForm } from "@/components/auth/login-form";
 
-export default function ResetPasswordPage() {
+export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black p-6">
       {/* Glowing background effect */}
       <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
 
-      {/* Reset Password container */}
+      {/* Login container */}
       <div className="relative z-10 w-full max-w-md bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-8 shadow-2xl">
         <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-6">
-          Reset Password
+          Login
         </h1>
-        <ResetPasswordForm />
+        <LoginForm />
         <p className="mt-6 text-center text-gray-300">
-          Remember your password?{" "}
+          Don&apos;t have an account?{" "}
           <Link
-            href="/login"
+            href="/register"
             className="text-purple-400 hover:text-pink-500 transition-all duration-300"
           >
-            Login here
+            Register here
           </Link>
         </p>
       </div>

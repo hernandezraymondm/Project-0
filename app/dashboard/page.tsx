@@ -6,8 +6,11 @@ import { Setup2FA } from "@/components/setup-2fa";
 import { RecentActivity } from "@/components/recent-activity";
 import { QuickActions } from "@/components/quick-actions";
 import { SecurityOverview } from "../components/security-overview";
+import { NotificationsPanel } from "../components/notification-panel";
+import { SalesAnalytics } from "@/components/sales-analytics";
+import React from "react";
 
-export default async function DashboardPage() {
+const DashboardPage = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("session")?.value;
   if (!token) {
@@ -20,55 +23,42 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-space-800 to-black p-6 pt-24">
-      {/* Header */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-            Dashboard
-          </h1>
-        </div>
+    <div className="min-h-screen bg-background m-0 ">
+      {/* Dashboard Content */}
+      <div className="mx-auto p-0 relative z-10">
         {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
           {/* Left Column */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 content-start">
-            <div className="flex flex-col md:col-span-1">
+          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5 content-start">
+            {/* Top Row */}
+            <div className="md:col-span-2">
+              <NotificationsPanel />
+            </div>
+
+            {/* Middle Row */}
+            <div className="md:col-span-1">
               <UserStats />
             </div>
-            <div className="flex flex-col md:col-span-1">
+            <div className="md:col-span-1">
               <SecurityOverview />
             </div>
-            <div className="flex flex-col md:col-span-2">
-              <RecentActivity />
+
+            {/* Additional Sections */}
+            <div className="md:col-span-2">
+              <SalesAnalytics />
             </div>
           </div>
+
           {/* Right Column */}
-          <div className="lg:col-span-1 grid grid-cols-1 gap-8 content-start">
-            <div className="flex flex-col">
-              <Setup2FA />
-            </div>
-            <div className="flex flex-col">
-              <QuickActions />
-            </div>
+          <div className="lg:col-span-1 grid grid-cols-1 gap-5 content-start">
+            <QuickActions />
+            <Setup2FA />
+            <RecentActivity />
           </div>
         </div>
-      </div>
-      {/* Floating stars animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-star"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${Math.random() * 5 + 5}s`,
-              animationDelay: `${Math.random() * 2}s`,
-              opacity: `${Math.random() * 0.5 + 0.2}`, // Random opacity for subtlety
-            }}
-          ></div>
-        ))}
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

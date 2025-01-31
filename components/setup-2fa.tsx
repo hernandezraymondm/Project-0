@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -111,32 +112,32 @@ export function Setup2FA() {
   };
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-xl p-6 shadow-2xl">
-      <h2 className="text-2xl font-bold text-pink-400 mb-6">
-        Two-Factor Authentication
-      </h2>
+    <Card className="card">
+      <CardHeader>
+        <CardTitle className="card-title">Two-Factor Authentication</CardTitle>
+      </CardHeader>
       {is2FAEnabled ? (
-        <div>
-          <p className="mb-5 text-gray-300">
+        <CardContent>
+          <p className="mb-5 text-primary text-sm">
             2FA is currently enabled for your account.
           </p>
           <Button onClick={disable2FA} variant="destructive">
             Disable 2FA
           </Button>
-        </div>
+        </CardContent>
       ) : !secret ? (
-        <div>
-          <p className="mb-5 text-gray-300">
+        <CardContent>
+          <p className="mb-5 text-primary text-sm">
             2FA is currently disabled. Enable it to add an extra layer of
             security to your account.
           </p>
-          <Button onClick={enable2FA} variant="secondary">
+          <Button onClick={enable2FA} className="button">
             Enable 2FA
           </Button>
-        </div>
+        </CardContent>
       ) : (
-        <div className="space-y-4">
-          <p className="text-gray-300">
+        <CardContent className="space-y-4">
+          <p className="text-primary text-sm">
             Scan this QR code with your authenticator app:
           </p>
           <Image
@@ -150,26 +151,23 @@ export function Setup2FA() {
             If you can&apos;t scan the QR code, you can manually enter this URL
             in your authenticator app:
           </p>
-          <p className="text-xs text-gray-600 break-all">{otpauth}</p>
-          <p className="text-gray-300 break-words">
+          <p className="text-xs text-gray-500 break-all">{otpauth}</p>
+          <p className="text-primary break-words text-sm">
             Or enter this secret manually:{" "}
-            <span className="text-violet-400">{secret}</span>
+            <span className="text-violet-400 text-base">{secret}</span>
           </p>
           <Input
             type="text"
             placeholder="Enter 6-digit code"
             value={token}
             onChange={(e) => setToken(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+            className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
           />
-          <Button
-            onClick={verify2FA}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
-          >
+          <Button onClick={verify2FA} className="button w-full">
             Verify and Enable 2FA
           </Button>
-        </div>
+        </CardContent>
       )}
-    </div>
+    </Card>
   );
 }
