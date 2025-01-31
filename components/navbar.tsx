@@ -21,11 +21,11 @@ export default function Navbar({ token }: { token?: string }) {
   };
 
   return (
-    <nav className="glassmorphism backdrop-blur-md border-b border-border p-2 fixed w-full top-0 z-50">
+    <nav className="glassmorphism border-b border-border p-2 fixed w-full top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo with gradient text */}
         <Link href="/">
-          <AppLogo size="xs" />
+          <AppLogo />
         </Link>
 
         {/* Navigation links with hover effects */}

@@ -26,6 +26,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { AppLogo } from "@/app/components/app-logo";
 
 const colors = {
   primary: "#b046e5",
@@ -78,21 +79,10 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="w-64 border-r" id="sidebar">
-      <SidebarHeader className="px-6 py-3 border-b bg-accent-primary border-gray-700">
-        <Link href="/" className="flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: colors.primary }}
-          >
-            <span className="text-white font-semibold">AP</span>
-          </div>
-          <span
-            className="text-lg font-semibold"
-            style={{ color: colors.text }}
-          >
-            Admin Pro
-          </span>
+    <Sidebar className="w-64 border-r z-50" id="sidebar">
+      <SidebarHeader className="px-6 border-b bg-accent-primary border-[#6a5b83]">
+        <Link href="/" className="flex items-center">
+          <AppLogo />
         </Link>
       </SidebarHeader>
 

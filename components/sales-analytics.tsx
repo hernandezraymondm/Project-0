@@ -59,6 +59,7 @@ export function SalesAnalytics() {
               type: "linear",
               min: "auto",
               max: "auto",
+              clamp: true, // added
               stacked: false,
               reverse: false,
             }}
@@ -70,28 +71,32 @@ export function SalesAnalytics() {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Month",
+              legend: "", // Month
               legendOffset: 36,
               legendPosition: "middle",
             }}
             axisLeft={{
-              tickSize: 5,
+              tickValues: 5, // added
+              tickSize: 0,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Amount",
+              legend: "", // Amount
               legendOffset: -40,
               legendPosition: "middle",
             }}
             enableGridX={false}
             gridYValues="1"
             lineWidth={1}
-            colors={{ scheme: "pink_yellowGreen" }}
+            colors={{ scheme: "category10" }}
             pointSize={6}
             pointColor={{ from: "color", modifiers: [] }}
             pointBorderWidth={2}
             pointBorderColor={{ from: "serieColor" }}
             pointLabelYOffset={-12}
             useMesh={true}
+            enableArea={true}
+            // areaBaselineValue={2000}
+            areaOpacity={0.1}
             theme={{
               axis: {
                 ticks: {

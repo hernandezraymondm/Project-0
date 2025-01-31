@@ -1,4 +1,5 @@
 import type React from "react";
+import { Menu } from "lucide-react";
 import {
   SidebarProvider,
   SidebarInset,
@@ -18,11 +19,11 @@ export default function DashboardLayout({
         <AdminSidebar />
         <div className="flex flex-col h-screen overflow-hidden">
           <DashboardNavbar />
-          <SidebarInset className="flex-1 overflow-auto bg-background">
+          <SidebarInset className="flex-1 overflow-scroll">
             <header className="fixed top-[14px] z-10">
-              <SidebarTrigger />
+              <SidebarTrigger icon={<Menu />} />
             </header>
-            <main className="flex-1 p-6" id="main">
+            <main className="flex-1 p-7" id="main">
               {children}
             </main>
           </SidebarInset>
