@@ -1,6 +1,5 @@
 "use client";
 
-import { formatDateTime } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -11,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { formatDateTime } from "@/common/utils/format-date";
 
 async function fetchActivityLogs(page = 1, limit = 2) {
   const response = await fetch(

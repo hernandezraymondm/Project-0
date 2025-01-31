@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatLastLogin } from "@/lib/utils";
+import { formatLastLogin } from "@/common/utils/last-login";
 
 const prisma = new PrismaClient();
 
