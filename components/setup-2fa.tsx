@@ -131,9 +131,7 @@ export function Setup2FA() {
             2FA is currently disabled. Enable it to add an extra layer of
             security to your account.
           </p>
-          <Button onClick={enable2FA} variant="secondary">
-            Enable 2FA
-          </Button>
+          <Button onClick={enable2FA}>Enable 2FA</Button>
         </CardContent>
       ) : (
         <CardContent className="space-y-4">

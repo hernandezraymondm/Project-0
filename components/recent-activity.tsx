@@ -76,14 +76,10 @@ export function RecentActivity() {
       )}
 
       <CardFooter className="flex justify-between mt-6">
-        <Button onClick={handlePrev} disabled={page === 1} variant="secondary">
+        <Button onClick={handlePrev} disabled={page === 1}>
           Previous
         </Button>
-        <Button
-          onClick={handleNext}
-          disabled={page === totalPages}
-          variant="secondary"
-        >
+        <Button onClick={handleNext} disabled={page === totalPages}>
           Next
         </Button>
       </CardFooter>

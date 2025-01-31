@@ -51,8 +51,8 @@ const DashboardPage = async () => {
 
           {/* Right Column */}
           <div className="lg:col-span-1 grid grid-cols-1 gap-5 content-start">
-            <Setup2FA />
             <QuickActions />
+            <Setup2FA />
             <RecentActivity />
           </div>
         </div>
