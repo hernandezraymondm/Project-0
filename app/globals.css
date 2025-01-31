@@ -63,10 +63,10 @@ body {
   }
 
   .dark {
-    --background: 220, 18%, 20%;
+    --background: 225, 16%, 20%;
     --foreground: 210 40% 98%;
-    --card: 219, 22%, 15%;
-    --card-foreground: 220, 32%, 13%;
+    --card: 225 16.1% 23%;
+    --card-foreground: 225 16.1% 27%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
     --primary: 210 40% 98%;
@@ -172,7 +172,7 @@ body {
 }
 
 .dark .glassmorphism {
-  @apply bg-gray-950 bg-opacity-30;
+  @apply bg-gray-900 bg-opacity-30;
 }
 
 /* Neumorphism */

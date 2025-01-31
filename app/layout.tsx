@@ -47,7 +47,7 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          <Navbar token={token} />
+          {!token && <Navbar token={token} />}
           {children}
           <Toaster />
         </NextThemesProvider>
