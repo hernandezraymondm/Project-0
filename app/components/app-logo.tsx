@@ -16,7 +16,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center text-white font-audiowide select-none"
+      className="flex flex-col items-center justify-center text-white font-audiowide select-none mx-auto"
       style={{ transform: scale }} // Apply scaling
     >
       {/* UNKNOWN with stylized lines */}
