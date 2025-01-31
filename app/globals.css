@@ -22,15 +22,16 @@ body {
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --accent-primary: 219, 24%, 33%;
-    --accent-secondary: 324 66.4% 74.3%;
-    --accent-tertiary: 257 66.4% 74.3%;
+    --accent-primary: 212, 22%, 33%;
+    --accent-secondary: 257 66.4% 74.3%;
+    --accent-tertiary: 28, 100%, 70%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
+    --navbar: 0, 0%, 100%;
 
     --success: 120 60% 70%;
     --success-foreground: 0 0% 100%;
@@ -60,13 +61,18 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #425367;
+    }
   }
 
   .dark {
-    --background: 225, 16%, 20%;
+    --background: 227, 13%, 14%;
     --foreground: 210 40% 98%;
-    --card: 225 16.1% 23%;
-    --card-foreground: 225 16.1% 27%;
+    --card: 225, 11%, 16%;
+    --card-foreground: 222, 8%, 23%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
     --primary: 210 40% 98%;
@@ -77,14 +83,15 @@ body {
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --accent-primary: 219, 24%, 33%;
-    --accent-secondary: 324 66.4% 74.3%;
-    --accent-tertiary: 257 66.4% 74.3%;
+    --accent-primary: 212, 22%, 21%;
+    --accent-secondary: 257 66.4% 74.3%;
+    --accent-tertiary: 28, 100%, 59%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    --navbar: 224, 11%, 16%;
 
     --success: 120 60% 20%;
     --success-foreground: 0 0% 0%;
@@ -111,7 +118,7 @@ body {
       #b21f1f,
       #fdbb2d
     );
-    --sidebar-background: 240 5.9% 10%;
+    --sidebar-background: 224, 11%, 19%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -119,6 +126,11 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #2a3541;
+    }
   }
 }
 
@@ -130,6 +142,48 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* ===========
+Scroll bar 
+============*/
+/* Scrollbar Style */
+
+::-webkit-scrollbar-track {
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffa75b;
+}
+
+#sidebar ::-webkit-scrollbar {
+  width: 5px;
+}
+
+#sidebar ::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+  margin: 8px 0;
+}
+
+#sidebar ::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+#sidebar:hover ::-webkit-scrollbar-thumb {
+  background: #ffa75b;
+  border-color: #ffa75b;
+}
+
+#sidebar:hover ::-webkit-scrollbar-thumb:hover {
+  background: #ffa75b;
+}
+/* Scrollbar End */
 
 /* New gradient utilities */
 .bg-gradient-background {
@@ -168,11 +222,11 @@ body {
 
 /* Glassmorphism */
 .glassmorphism {
-  @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg;
+  @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-md shadow-lg;
 }
 
 .dark .glassmorphism {
-  @apply bg-gray-900 bg-opacity-30;
+  @apply bg-[#2b2e36] bg-opacity-10 backdrop-filter backdrop-blur-md shadow-lg;
 }
 
 /* Neumorphism */
@@ -197,7 +251,7 @@ body {
 }
 
 .button {
-  @apply bg-gradient-to-r bg-accent-tertiary hover:from-accent-primary hover:to-accent-secondary transition-all duration-300 text-sm;
+  @apply bg-gradient-to-r bg-accent-primary text-white hover:from-accent-tertiary hover:to-[#ffa85c] transition-all duration-300 text-sm;
 }
 
 /* Landing page */
@@ -251,47 +305,6 @@ body {
   background: radial-gradient(circle, rgba(128, 0, 128, 0.2), transparent 70%);
 }
 
-/* ===========
-Scroll bar 
-============*/
-/* Scrollbar Style */
-::-webkit-scrollbar-track {
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #404e68;
-}
-
-#sidebar ::-webkit-scrollbar {
-  width: 5px;
-}
-
-#sidebar ::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 3px;
-  margin: 8px 0;
-}
-
-#sidebar ::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-}
-
-#sidebar:hover ::-webkit-scrollbar-thumb {
-  background: #ab92e9;
-  border-color: #ab92e9;
-}
-
-#sidebar:hover ::-webkit-scrollbar-thumb:hover {
-  background: #ab92e9;
-}
-/* Scrollbar End */
 /* TEXT CRAWL */
 @keyframes text-crawl-scroll {
   0% {
