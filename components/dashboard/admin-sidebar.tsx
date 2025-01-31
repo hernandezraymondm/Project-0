@@ -92,18 +92,17 @@ export function AdminSidebar() {
             <SidebarMenuItem key={module.name}>
               <Collapsible defaultOpen>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton
-                    className="w-full justify-between rounded-lg py-3 hover:bg-gray-700 transition-colors wiggle-on-hover"
-                    style={{ color: colors.text }}
-                  >
+                  <SidebarMenuButton className="w-full justify-between rounded-lg py-3 transition-colors wiggle-on-hover text-gray-400 hover:text-white">
                     <div className="flex items-center gap-3">
-                      <div className="wiggle-icon">
+                      <div className="wiggle-icon drop-shadow-lg">
                         <module.icon
                           className="h-5 w-5 transition-transform duration-300"
                           style={{ color: module.color }}
                         />
                       </div>
-                      <span className="font-medium">{module.name}</span>
+                      <span className="font-semibold drop-shadow-lg">
+                        {module.name}
+                      </span>
                     </div>
                     <ChevronDown
                       className="h-4 w-4 transition-transform"
@@ -128,8 +127,8 @@ export function AdminSidebar() {
                             className={cn(
                               "w-full px-3 py-2 rounded-md text-sm transition-colors active:bg-violet-600",
                               isActive
-                                ? "font-semibold bg-violet-600"
-                                : "hover:bg-gray-700"
+                                ? "font-semibold bg-orange-300"
+                                : "hover:bg-[#28323f]"
                             )}
                             style={{
                               color: isActive ? colors.primary : colors.text,

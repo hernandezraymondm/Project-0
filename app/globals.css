@@ -22,7 +22,7 @@ body {
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --accent-primary: 212, 22%, 33%;
+    --accent-primary: 212, 22%, 26%;
     --accent-secondary: 257 66.4% 74.3%;
     --accent-tertiary: 28, 100%, 70%;
     --destructive: 0 84.2% 60.2%;
@@ -243,7 +243,7 @@ Scroll bar
 }
 
 .card-title {
-  @apply text-lg font-bold font-jura text-primary;
+  @apply text-lg font-medium text-primary;
 }
 
 .card-content {

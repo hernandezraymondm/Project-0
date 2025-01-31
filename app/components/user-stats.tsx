@@ -22,13 +22,13 @@ export async function UserStats() {
       <CardContent className="grid grid-cols-2 gap-4 flex-grow">
         <div className="card-content">
           <p className="text-primary w-[80%] text-sm">Total Users</p>
-          <p className="text-2xl font-bold text-primary font-audiowide">
+          <p className="text-2xl font-bold text-primary">
             {totalUsers}
           </p>
         </div>
         <div className="card-content">
           <p className="text-primary text-sm">Verified Users</p>
-          <p className="text-2xl font-bold text-primary font-audiowide">
+          <p className="text-2xl font-bold text-primary">
             {verifiedUsers}
           </p>
         </div>
