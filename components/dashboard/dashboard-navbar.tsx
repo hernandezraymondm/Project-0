@@ -1,9 +1,8 @@
 "use client";
 
-import { Bell, Moon, Search, Sun, User } from "lucide-react";
+import { Bell, Moon, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { BreadCrumb } from "@/app/components/breadcrumb";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
+import { SearchBar } from "./search-bar";
 
 export function DashboardNavbar() {
   const { theme, setTheme } = useTheme();
@@ -29,24 +29,16 @@ export function DashboardNavbar() {
   };
 
   return (
-    <header className="sticky top-0 w-full bg-navbar">
+    <header className="sticky top-0 w-full bg-navbar flex justify-end lg:inline-block ">
       <div className="px-12 flex h-14 items-center justify-between">
-        <div className="mr-4 hidden lg:flex">
+        <div className="mr-4 hidden xl:flex">
           <span className="font-bold mr-6 items-center space-x-2">
             <BreadCrumb />
           </span>
         </div>
         <DateTimeDisplay />
         <div className="flex items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
-            <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search"
-                className="pl-8 md:w-[300px] lg:w-[400px]"
-              />
-            </div>
-          </div>
+          <SearchBar />
           <nav className="flex items-center">
             <Button
               variant="ghost"
