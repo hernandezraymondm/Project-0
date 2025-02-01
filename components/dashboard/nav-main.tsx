@@ -3,7 +3,6 @@
 import { ChevronRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 import {
   Collapsible,
@@ -43,11 +42,6 @@ export function NavMain({
 }) {
   const pathname = usePathname();
   const { open } = useSidebar();
-  const [openItem, setOpenItem] = useState<string | null>(null);
-
-  const toggleItem = (title: string) => {
-    setOpenItem((prev) => (prev === title ? null : title));
-  };
 
   return (
     <SidebarGroup>
@@ -56,8 +50,8 @@ export function NavMain({
         {items.map((item) => (
           <Collapsible
             key={item.title}
-            open={openItem === item.title}
-            onOpenChange={() => toggleItem(item.title)}
+            asChild
+            defaultOpen={item.isActive || pathname.startsWith(item.url)}
             className="group/collapsible"
           >
             <SidebarMenuItem>
