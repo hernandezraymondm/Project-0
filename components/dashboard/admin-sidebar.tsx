@@ -27,6 +27,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { AppLogo } from "@/app/components/app-logo";
+import { useSidebar } from "@/components/ui/sidebar"; // Import useSidebar hook
 
 const colors = {
   primary: "#b046e5",
@@ -77,9 +78,16 @@ const modules = [
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const { state } = useSidebar(); // Get the sidebar state (expanded/collapsed)
 
   return (
-    <Sidebar className="w-64 border-r z-50" id="sidebar">
+    <Sidebar
+      className={cn(
+        "w-64 border-r z-50 transition-all duration-300 ease-in-out",
+        state === "collapsed" && "w-16" // Smaller width when collapsed
+      )}
+      id="sidebar"
+    >
       <SidebarHeader className="px-6 border-b bg-accent-primary border-[#6a5b83]">
         <Link href="/" className="flex items-center">
           <AppLogo />
@@ -92,7 +100,12 @@ export function AdminSidebar() {
             <SidebarMenuItem key={module.name}>
               <Collapsible defaultOpen>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="w-full justify-between rounded-lg py-3 transition-colors wiggle-on-hover text-gray-400 hover:text-white">
+                  <SidebarMenuButton
+                    className={cn(
+                      "w-full justify-between rounded-lg py-3 transition-colors wiggle-on-hover text-gray-400 hover:text-white",
+                      state === "collapsed" && "justify-center px-2" // Center content and reduce padding when collapsed
+                    )}
+                  >
                     <div className="flex items-center gap-3">
                       <div className="wiggle-icon drop-shadow-lg">
                         <module.icon
@@ -100,20 +113,30 @@ export function AdminSidebar() {
                           style={{ color: module.color }}
                         />
                       </div>
-                      <span className="font-semibold drop-shadow-lg">
-                        {module.name}
-                      </span>
+                      {/* Hide text when sidebar is collapsed */}
+                      {state === "expanded" && (
+                        <span className="font-semibold drop-shadow-lg">
+                          {module.name}
+                        </span>
+                      )}
                     </div>
-                    <ChevronDown
-                      className="h-4 w-4 transition-transform"
-                      style={{ color: colors.text }}
-                    />
+                    {/* Hide chevron when sidebar is collapsed */}
+                    {state === "expanded" && (
+                      <ChevronDown
+                        className="h-4 w-4 transition-transform"
+                        style={{ color: colors.text }}
+                      />
+                    )}
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
 
+                {/* Adjust submenu for collapsed state */}
                 <CollapsibleContent className="mt-2 ml-1 overflow-hidden">
                   <SidebarMenuSub
-                    className="space-y-1 border-l-2 pl-4"
+                    className={cn(
+                      "space-y-1 border-l-2 pl-4",
+                      state === "collapsed" && "pl-2" // Reduce padding when collapsed
+                    )}
                     style={{ borderColor: colors.border }}
                   >
                     {module.pages.map((page) => {
@@ -140,7 +163,8 @@ export function AdminSidebar() {
                                   className="w-2 h-2 rounded-full"
                                   style={{ backgroundColor: module.color }}
                                 />
-                                {page}
+                                {/* Hide submenu text when sidebar is collapsed */}
+                                {state === "expanded" && <span>{page}</span>}
                               </div>
                             </Link>
                           </SidebarMenuSubButton>

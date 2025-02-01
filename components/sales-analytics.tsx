@@ -1,156 +1,97 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResponsiveLine } from "@nivo/line";
-import { useTheme } from "next-themes";
+import { TrendingUp } from "lucide-react";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-const data = [
-  {
-    id: "Sales",
-    data: [
-      { x: "Jan", y: 4000 },
-      { x: "Feb", y: 3000 },
-      { x: "Mar", y: 2000 },
-      { x: "Apr", y: 2780 },
-      { x: "May", y: 1890 },
-      { x: "Jun", y: 2390 },
-      { x: "Jul", y: 3490 },
-      { x: "Aug", y: 3000 },
-      { x: "Sep", y: 2700 },
-      { x: "Oct", y: 3200 },
-      { x: "Nov", y: 4100 },
-      { x: "Dec", y: 4500 },
-    ],
-  },
-  {
-    id: "Target",
-    data: [
-      { x: "Jan", y: 2400 },
-      { x: "Feb", y: 2210 },
-      { x: "Mar", y: 2290 },
-      { x: "Apr", y: 2000 },
-      { x: "May", y: 2181 },
-      { x: "Jun", y: 2500 },
-      { x: "Jul", y: 2100 },
-      { x: "Aug", y: 2400 },
-      { x: "Sep", y: 2600 },
-      { x: "Oct", y: 2900 },
-      { x: "Nov", y: 3000 },
-      { x: "Dec", y: 3300 },
-    ],
-  },
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+const chartData = [
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
 ];
 
-export function SalesAnalytics() {
-  const { theme } = useTheme();
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "hsl(var(--chart-1))",
+  },
+  mobile: {
+    label: "Mobile",
+    color: "hsl(var(--chart-2))",
+  },
+} satisfies ChartConfig;
 
+export function SalesAnalytics() {
   return (
     <Card className="card">
       <CardHeader>
-        <CardTitle className="card-title">Sales Analytics</CardTitle>
+        <CardTitle className="card-title">Line Chart - Multiple</CardTitle>
+        <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
-        <div style={{ height: 330 }}>
-          <ResponsiveLine
-            data={data}
-            margin={{ top: 10, right: 15, bottom: 50, left: 50 }}
-            xScale={{ type: "point" }}
-            yScale={{
-              type: "linear",
-              min: "auto",
-              max: "auto",
-              clamp: true, // added
-              stacked: false,
-              reverse: false,
+        <ChartContainer config={chartConfig}>
+          <LineChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
             }}
-            yFormat=" >-$.2f"
-            curve="natural"
-            axisTop={null}
-            axisRight={null}
-            axisBottom={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "", // Month
-              legendOffset: 36,
-              legendPosition: "middle",
-            }}
-            axisLeft={{
-              tickValues: 5, // added
-              tickSize: 0,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "", // Amount
-              legendOffset: -40,
-              legendPosition: "middle",
-            }}
-            enableGridX={false}
-            gridYValues="1"
-            lineWidth={1}
-            colors={{ scheme: "category10" }}
-            pointSize={6}
-            pointColor={{ from: "color", modifiers: [] }}
-            pointBorderWidth={2}
-            pointBorderColor={{ from: "serieColor" }}
-            pointLabelYOffset={-12}
-            useMesh={true}
-            enableArea={true}
-            // areaBaselineValue={2000}
-            areaOpacity={0.1}
-            theme={{
-              axis: {
-                ticks: {
-                  text: {
-                    fill: theme === "dark" ? "#ffffff" : "#000000",
-                  },
-                },
-                legend: {
-                  text: {
-                    fill: theme === "dark" ? "#ffffff" : "#000000",
-                  },
-                },
-              },
-              legends: {
-                text: {
-                  fill: theme === "dark" ? "#ffffff" : "#000000",
-                },
-              },
-              tooltip: {
-                container: {
-                  background: theme === "dark" ? "#333" : "#fff",
-                  color: theme === "dark" ? "#fff" : "#333",
-                },
-              },
-            }}
-            legends={[
-              {
-                anchor: "top",
-                direction: "row",
-                justify: false,
-                translateX: 0,
-                translateY: 0,
-                itemsSpacing: 0,
-                itemDirection: "left-to-right",
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 18,
-                symbolShape: "circle",
-                symbolBorderColor: "rgba(0, 0, 0, .5)",
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemBackground: "rgba(0, 0, 0, .03)",
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
-              },
-            ]}
-          />
-        </div>
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Line
+              dataKey="desktop"
+              type="monotone"
+              stroke="var(--color-desktop)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="mobile"
+              type="monotone"
+              stroke="var(--color-mobile)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ChartContainer>
       </CardContent>
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-2 leading-none text-muted-foreground">
+              Showing total visitors for the last 6 months
+            </div>
+          </div>
+        </div>
+      </CardFooter>
     </Card>
   );
 }

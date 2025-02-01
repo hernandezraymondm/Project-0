@@ -16,6 +16,7 @@ import { BreadCrumb } from "@/app/components/breadcrumb";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
 import { SearchBar } from "./search-bar";
 import { LogoutButton } from "../logout-button";
+import { Separator } from "../ui/separator";
 
 export function DashboardNavbar() {
   const { theme, setTheme } = useTheme();
@@ -33,6 +34,7 @@ export function DashboardNavbar() {
     <header className="sticky top-0 w-full bg-navbar flex justify-end lg:inline-block border-b border-border">
       <div className="px-12 flex h-14 items-center justify-between">
         <div className="mr-4 hidden xl:flex">
+          <Separator orientation="vertical" className="mr-2 h-4" />
           <span className="font-bold mr-6 items-center space-x-2">
             <BreadCrumb />
           </span>
