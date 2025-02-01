@@ -4,8 +4,8 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { DashboardNavbar } from "@/components/dashboard2/dashboard-navbar";
-import { AppSidebar } from "@/components/dashboard2/app-sidebar";
+import { DashboardNavbar } from "@/components/backup/dashboard-navbar";
+import { AppSidebar } from "@/components/backup/app-sidebar";
 
 export default function DashboardLayout({
   children,

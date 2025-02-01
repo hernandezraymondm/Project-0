@@ -1,9 +1,17 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+import {
+  ChartSpline,
+  CircleAlert,
+  ShoppingCart,
+  UsersRound,
+} from "lucide-react";
+import { MdTimeline } from "react-icons/md";
 import { Overview } from "@/components/dashboard/overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { Header } from "@/components/header/header";
+import { Badge } from "@/components/ui/badge";
 
 export default function DashboardPage() {
   return (
@@ -11,9 +19,14 @@ export default function DashboardPage() {
       <Header />
       <main className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold tracking-tight">Overview</h2>
-          <Button>
-            <Star className="mr-2 h-4 w-4" />
+          <div className="flex justify-center items-center gap-2">
+            <span className="rounded-full bg-card p-3">
+              <MdTimeline className="h-6 w-6" />
+            </span>
+            <h2 className="text-3xl tracking-tight">Overview</h2>
+          </div>
+          <Button className="rounded-full">
+            <FaGithub className="mr-2 h-4 w-4" />
             Star on GitHub
           </Button>
         </div>
@@ -21,31 +34,59 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card className="p-6">
             <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <h3 className="text-sm font-medium">Clients</h3>
-              <span className="text-xs text-emerald-500">↑ 12%</span>
+              <Badge className="bg-emerald-400 rounded-full">
+                <span className="text-xs text-primary">↑ 12%</span>
+              </Badge>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Clients
+              </h3>
             </div>
-            <div className="text-2xl font-bold">512</div>
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 px-2">
+              <span className="text-2xl font-bold">512</span>
+              <UsersRound className="text-emerald-400" strokeWidth={3} />
+            </div>
           </Card>
           <Card className="p-6">
             <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <h3 className="text-sm font-medium">Sales</h3>
-              <span className="text-xs text-red-500">↓ 12%</span>
+              <Badge className="bg-red-400 rounded-full">
+                <span className="text-xs text-primary">↓ 12%</span>
+              </Badge>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Sales
+              </h3>
             </div>
-            <div className="text-2xl font-bold">$7,770</div>
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 px-2">
+              <span className="text-2xl font-bold">$7,770</span>
+              <ShoppingCart className="text-sky-400" strokeWidth={3} />
+            </div>
           </Card>
           <Card className="p-6">
             <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <h3 className="text-sm font-medium">Performance</h3>
-              <span className="text-xs text-amber-500">Overflow</span>
+              <Badge className="bg-purple-400 rounded-full">
+                <span className="text-xs text-primary">Overflow</span>
+              </Badge>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Performance
+              </h3>
             </div>
-            <div className="text-2xl font-bold">256%</div>
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 px-2">
+              <span className="text-2xl font-bold">256</span>
+              <ChartSpline className="text-purple-400" strokeWidth={3} />
+            </div>
           </Card>
           <Card className="p-6">
             <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <h3 className="text-sm font-medium">Alerts</h3>
-              <span className="text-xs text-blue-500">Last 24 Hours</span>
+              <Badge className="bg-amber-400 rounded-full">
+                <span className="text-xs text-primary">Last 24 Hours</span>
+              </Badge>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Alerts
+              </h3>
             </div>
-            <div className="text-2xl font-bold">24</div>
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2 px-2">
+              <span className="text-2xl font-bold">24</span>
+              <CircleAlert className="text-amber-400" strokeWidth={3} />
+            </div>
           </Card>
         </div>
 
