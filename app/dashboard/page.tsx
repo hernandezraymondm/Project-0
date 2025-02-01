@@ -12,6 +12,9 @@ import { Overview } from "@/components/dashboard/overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { Header } from "@/components/header/header";
 import { Badge } from "@/components/ui/badge";
+import { SecurityOverview } from "../components/security-overview";
+import { UserStats } from "../components/user-stats";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
 
 export default function DashboardPage() {
   return (
@@ -25,7 +28,7 @@ export default function DashboardPage() {
             </span>
             <h2 className="text-3xl tracking-tight">Overview</h2>
           </div>
-          <Button className="rounded-full">
+          <Button>
             <FaGithub className="mr-2 h-4 w-4" />
             Star on GitHub
           </Button>
@@ -107,6 +110,11 @@ export default function DashboardPage() {
               <RecentTransactions />
             </div>
           </Card>
+          {/* <Setup2FA />
+          <QuickActions /> */}
+          <UserStats />
+          <SecurityOverview />
+          <RecentActivity />
         </div>
       </main>
     </div>

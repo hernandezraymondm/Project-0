@@ -19,18 +19,14 @@ export async function UserStats() {
       <CardHeader>
         <CardTitle className="card-title">User Statistics</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-2 gap-4 flex-grow">
-        <div className="card-content">
-          <p className="text-primary w-[80%] text-sm">Total Users</p>
-          <p className="text-2xl font-bold text-primary">
-            {totalUsers}
-          </p>
+      <CardContent className="flex flex-col gap-4 flex-grow">
+        <div className="flex justify-between items-start gap-2 text-sm">
+          <p className="text-primary w-[80%]">Total Users</p>
+          <p className=" text-primary">{totalUsers}</p>
         </div>
-        <div className="card-content">
-          <p className="text-primary text-sm">Verified Users</p>
-          <p className="text-2xl font-bold text-primary">
-            {verifiedUsers}
-          </p>
+        <div className="flex justify-between items-start gap-2 text-sm">
+          <p className="text-primary">Verified Users</p>
+          <p className=" text-primary">{verifiedUsers}</p>
         </div>
       </CardContent>
     </Card>

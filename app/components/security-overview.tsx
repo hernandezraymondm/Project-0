@@ -44,7 +44,7 @@ export async function SecurityOverview() {
   ];
 
   return (
-    <Card className="card">
+    <Card className="card col-span-2">
       <CardHeader>
         <CardTitle className="card-title">Security Overview</CardTitle>
       </CardHeader>

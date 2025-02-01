@@ -22,7 +22,7 @@ const lineVariants = cva("transform rotate-45 rounded-full", {
     size: {
       sm: "w-[2px] h-3",
       md: "w-1 h-6",
-      lg: "w-[4px] h-7",
+      lg: "w-[5px] h-10",
     },
   },
   defaultVariants: {
@@ -53,7 +53,7 @@ const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
             className={cn(lineVariants({ size }))}
             style={{
               backgroundColor: color,
-              animation: `bounce .5s ${index * 0.3}s infinite alternate`,
+              animation: `bounce .8s ${index * 0.5}s infinite alternate`,
             }}
           ></div>
         ))}
