@@ -44,8 +44,10 @@ export function NavMain({
   const { open } = useSidebar();
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+    <SidebarGroup className="text-sidebar-text">
+      <SidebarGroupLabel className="text-sidebar-text-foreground">
+        Platform
+      </SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -115,6 +117,7 @@ export function NavMain({
                           <SidebarMenuSubButton
                             asChild
                             isActive={pathname === subItem.url}
+                            className="text-sidebar-text"
                           >
                             <Link href={subItem.url}>
                               <span>{subItem.title}</span>

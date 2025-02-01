@@ -49,8 +49,10 @@ export function NavProjects({
   const pathname = usePathname();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden text-sidebar-text">
+      <SidebarGroupLabel className="text-sidebar-text-foreground">
+        Projects
+      </SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -98,8 +100,8 @@ export function NavProjects({
         <SidebarMenuItem>
           <Dialog>
             <DialogTrigger asChild>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <Plus className="text-sidebar-foreground/70" />
+              <SidebarMenuButton className="text-sidebar-text-foreground">
+                <Plus className="text-sidebar-text-foreground" />
                 <span>More</span>
               </SidebarMenuButton>
             </DialogTrigger>

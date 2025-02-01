@@ -20,7 +20,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-async function fetchActivityLogs(page = 1, limit = 2) {
+async function fetchActivityLogs(page = 1, limit = 4) {
   const response = await fetch(
     `/api/logs/get-activity?page=${page}&limit=${limit}`
   );

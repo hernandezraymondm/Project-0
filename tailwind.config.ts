@@ -80,6 +80,8 @@ module.exports = {
           ring: "hsl(var(--sidebar-ring))",
           "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          text: "hsl(var(--sidebar-text))",
+          "text-foreground": "hsl(var(--sidebar-text-foreground))",
         },
       },
       fontFamily: {

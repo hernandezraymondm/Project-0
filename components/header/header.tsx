@@ -11,7 +11,7 @@ export function Header() {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="border-b bg-card/50">
+    <header className="border-b bg-card/50 rounded-b-xl">
       <div className="flex h-14 items-center px-4 gap-4">
         <Button
           variant="ghost"

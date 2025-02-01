@@ -55,8 +55,8 @@ export async function SecurityOverview() {
             key={index}
             className="flex justify-between items-start gap-2 text-sm"
           >
-            <p className="text-primary text-nowrap">{item.label}</p>
-            <p className="text-primary text-right">{item.value || "N/A"}</p>
+            <p className="text-nowrap">{item.label}</p>
+            <p className="text-right">{item.value || "N/A"}</p>
           </div>
         ))}
       </CardContent>
