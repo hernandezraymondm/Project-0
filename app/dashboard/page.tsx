@@ -1,64 +1,73 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { verify } from "jsonwebtoken";
-import { UserStats } from "../components/user-stats";
-import { Setup2FA } from "@/components/setup-2fa";
-import { RecentActivity } from "@/components/recent-activity";
-import { QuickActions } from "@/components/quick-actions";
-import { SecurityOverview } from "../components/security-overview";
-import { NotificationsPanel } from "../components/notification-panel";
-import { SalesAnalytics } from "@/components/sales-analytics";
-import React from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import { Overview } from "@/components/dashboard/overview";
+import { RecentTransactions } from "@/components/dashboard/recent-transactions";
+import { Header } from "@/components/dashboard/header";
 
-const DashboardPage = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("session")?.value;
-  if (!token) {
-    redirect("/login");
-  }
-  try {
-    verify(token, process.env.JWT_SECRET!);
-  } catch {
-    redirect("/login");
-  }
-
+export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-background m-0 ">
-      {/* Dashboard Content */}
-      <div className="mx-auto p-0 relative z-10">
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-          {/* Left Column */}
-          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5 content-start">
-            {/* Top Row */}
-            <div className="md:col-span-2">
-              <NotificationsPanel />
-            </div>
-
-            {/* Middle Row */}
-            <div className="md:col-span-1">
-              <UserStats />
-            </div>
-            <div className="md:col-span-1">
-              <SecurityOverview />
-            </div>
-
-            {/* Additional Sections */}
-            <div className="md:col-span-2">
-              <SalesAnalytics />
-            </div>
-          </div>
-
-          {/* Right Column */}
-          <div className="lg:col-span-1 grid grid-cols-1 gap-5 content-start">
-            <QuickActions />
-            <Setup2FA />
-            <RecentActivity />
-          </div>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">Overview</h2>
+          <Button>
+            <Star className="mr-2 h-4 w-4" />
+            Star on GitHub
+          </Button>
         </div>
-      </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card className="p-6">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <h3 className="text-sm font-medium">Clients</h3>
+              <span className="text-xs text-emerald-500">↑ 12%</span>
+            </div>
+            <div className="text-2xl font-bold">512</div>
+          </Card>
+          <Card className="p-6">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <h3 className="text-sm font-medium">Sales</h3>
+              <span className="text-xs text-red-500">↓ 12%</span>
+            </div>
+            <div className="text-2xl font-bold">$7,770</div>
+          </Card>
+          <Card className="p-6">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <h3 className="text-sm font-medium">Performance</h3>
+              <span className="text-xs text-amber-500">Overflow</span>
+            </div>
+            <div className="text-2xl font-bold">256%</div>
+          </Card>
+          <Card className="p-6">
+            <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <h3 className="text-sm font-medium">Alerts</h3>
+              <span className="text-xs text-blue-500">Last 24 Hours</span>
+            </div>
+            <div className="text-2xl font-bold">24</div>
+          </Card>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <Card className="col-span-4">
+            <div className="p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Overview</h3>
+              </div>
+              <Overview />
+            </div>
+          </Card>
+          <Card className="col-span-3">
+            <div className="p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Recent Transactions</h3>
+              </div>
+              <RecentTransactions />
+            </div>
+          </Card>
+        </div>
+      </main>
     </div>
   );
-};
-
-export default DashboardPage;
+}

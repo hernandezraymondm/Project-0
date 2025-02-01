@@ -1,33 +1,34 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import type React from "react";
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { DashboardNavbar } from "@/components/dashboard/dashboard-navbar";
+import { ThemeProvider } from "@/components/dashboard/theme-provider";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 
-export default function DashboardLayout({
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Modern dashboard with dark theme",
+};
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <div className="flex flex-1 overflow-hidden">
-        <AppSidebar />
-        <div className="flex flex-col h-screen overflow-hidden">
-          <DashboardNavbar />
-          <SidebarInset className="flex-1 overflow-scroll">
-            <header className="fixed top-[14px] z-10">
-              <SidebarTrigger />
-            </header>
-            <main className="flex-1 p-7" id="main">
-              {children}
-            </main>
-          </SidebarInset>
-        </div>
-      </div>
-    </SidebarProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SidebarProvider>
+            <div className="flex min-h-screen">
+              <AppSidebar />
+              <div className="flex-1 overflow-auto">{children}</div>
+            </div>
+          </SidebarProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
