@@ -21,10 +21,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { TeamSwitcher } from "../dashboard/team-switcher";
-import { NavMain } from "../dashboard/nav-main";
-import { NavProjects } from "../dashboard/nav-projects";
-import { NavUser } from "../dashboard/nav-user";
+import { TeamSwitcher } from "./team-switcher";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
 
 // This is sample data.
 const data = {

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Overview } from "@/components/dashboard/overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
-import { Header } from "@/components/dashboard/header";
+import { Header } from "@/components/header/header";
 
 export default function DashboardPage() {
   return (

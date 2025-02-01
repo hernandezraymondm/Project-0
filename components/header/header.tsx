@@ -2,9 +2,9 @@
 
 import { Menu, Bell, Github } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
-import { Search } from "@/components/dashboard/search";
-import { ThemeToggle } from "@/components/dashboard/theme-toggle";
-import { UserNav } from "@/components/dashboard/user-nav";
+import { Search } from "@/components/header/search";
+import { ThemeToggle } from "@/components/header/theme-toggle";
+import { HeaderUser } from "@/components/header/header-user";
 import { Button } from "../ui/button";
 
 export function Header() {
@@ -30,7 +30,7 @@ export function Header() {
           <Button variant="ghost" size="icon">
             <Github className="h-5 w-5" />
           </Button>
-          <UserNav />
+          <HeaderUser />
         </div>
       </div>
     </header>

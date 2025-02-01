@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 
-export function UserNav() {
+export function HeaderUser() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

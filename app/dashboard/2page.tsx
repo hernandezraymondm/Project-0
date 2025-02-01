@@ -7,7 +7,7 @@ import { RecentActivity } from "@/components/recent-activity";
 import { QuickActions } from "@/components/quick-actions";
 import { SecurityOverview } from "../components/security-overview";
 import { NotificationsPanel } from "../components/notification-panel";
-import { SalesAnalytics } from "@/components/sales-analytics";
+import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
 import React from "react";
 
 const DashboardPage = async () => {
