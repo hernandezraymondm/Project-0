@@ -2,7 +2,7 @@
 
 import { Menu, Bell, Github } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
-import { Search } from "@/components/header/search";
+import { SearchBar } from "@/components/header/search-bar";
 import { ThemeToggle } from "@/components/header/theme-toggle";
 import { HeaderUser } from "@/components/header/header-user";
 import { Button } from "../ui/button";
@@ -21,7 +21,7 @@ export function Header() {
         >
           <Menu className="h-5 w-5" />
         </Button>
-        <Search />
+        <SearchBar />
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <Button variant="ghost" size="icon">
