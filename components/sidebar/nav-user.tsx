@@ -48,7 +48,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg bg-sidebar-primary">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={user.avatar} alt={user.name} loading="lazy" />
                 <AvatarFallback className="rounded-lg">
                   {user.name.charAt(0)}
                 </AvatarFallback>

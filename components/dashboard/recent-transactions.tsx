@@ -8,7 +8,7 @@ const transactions = [
     email: "percy64",
     name: "Howell Hand",
     date: "Mar 3, 2021",
-    avatarSrc: "/avatars/01.png",
+    avatarSrc: "/avatars/01.webp",
     progress: 70,
   },
   {
@@ -18,7 +18,7 @@ const transactions = [
     email: "dare.concepcion",
     name: "Hope Howe",
     date: "Dec 1, 2021",
-    avatarSrc: "/avatars/02.png",
+    avatarSrc: "/avatars/02.webp",
     progress: 68,
   },
   {
@@ -28,7 +28,7 @@ const transactions = [
     email: "geovanni.kessler",
     name: "Nelson Jerde",
     date: "May 18, 2021",
-    avatarSrc: "/avatars/03.png",
+    avatarSrc: "/avatars/03.webp",
     progress: 49,
   },
   {
@@ -38,7 +38,7 @@ const transactions = [
     email: "macejkovic.dashawn",
     name: "Kim Weimann",
     date: "May 4, 2021",
-    avatarSrc: "/avatars/04.png",
+    avatarSrc: "/avatars/04.webp",
     progress: 38,
   },
 ];
@@ -49,7 +49,11 @@ export function RecentTransactions() {
       {transactions.map((transaction) => (
         <div key={transaction.id} className="flex items-center">
           <Avatar className="h-9 w-9 bg-tertiary">
-            <AvatarImage src={transaction.avatarSrc} alt={transaction.name} />
+            <AvatarImage
+              src={transaction.avatarSrc}
+              alt={transaction.name}
+              loading="lazy"
+            />
             <AvatarFallback>{transaction.name[0]}</AvatarFallback>
           </Avatar>
           <div className="ml-4 space-y-1">

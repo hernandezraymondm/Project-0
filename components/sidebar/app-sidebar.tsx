@@ -30,7 +30,7 @@ const data = {
   user: {
     name: "Rayder",
     email: "ray@example.com",
-    avatar: "/avatars/08.png",
+    avatar: "/avatars/08.webp",
   },
   teams: [
     {
