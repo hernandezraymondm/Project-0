@@ -1,6 +1,6 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+const themes = [
+  { name: "light", icon: <Sun />, label: "Light" },
+  { name: "dark", icon: <Moon />, label: "Dark" },
+  { name: "system", icon: <SunMoon />, label: "System" },
+];
+
 export function ThemeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -24,15 +30,20 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
+        {themes.map(({ name, icon, label }) => (
+          <DropdownMenuItem
+            key={name}
+            onClick={() => setTheme(name)}
+            className="flex justify-between items-center"
+          >
+            <span className="flex items-center gap-2">
+              {icon} {label}
+            </span>
+            {theme === name && (
+              <div className="h-3 w-3 bg-tertiary rounded-full animate-pulse" />
+            )}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

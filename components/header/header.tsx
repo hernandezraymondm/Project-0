@@ -98,7 +98,7 @@ export function Header() {
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 space-y-3">
               <div className="flex items-center gap-3">
-                <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse" />
+                <div className="h-3 w-3 bg-tertiary rounded-full animate-pulse" />
                 Related Applications
               </div>
               <div className="grid grid-cols-3 gap-3">
