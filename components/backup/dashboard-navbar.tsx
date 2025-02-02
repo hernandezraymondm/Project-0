@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { BreadCrumb } from "@/app/components/breadcrumb";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
-import { SearchBar } from "../header/search-bar";
+import { SearchBar } from "../header/search-box";
 import { LogoutButton } from "../logout-button";
 import { Separator } from "../ui/separator";
 

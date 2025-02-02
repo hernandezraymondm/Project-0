@@ -4,9 +4,9 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Sparkles,
+  UserPen,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -98,9 +98,9 @@ export function NavUser({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/billing">
-                  <CreditCard className="mr-2" />
-                  Billing
+                <Link href="/profile">
+                  <UserPen className="mr-2" />
+                  Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>

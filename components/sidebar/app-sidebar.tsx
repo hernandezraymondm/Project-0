@@ -2,18 +2,17 @@
 
 import * as React from "react";
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
   Frame,
-  GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
 } from "lucide-react";
-
+import { SiRiotgames } from "react-icons/si";
+import { SiRockstargames } from "react-icons/si";
+import { SiNintendogamecube } from "react-icons/si";
 import {
   Sidebar,
   SidebarContent,
@@ -35,18 +34,18 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
+      name: "Riot Games",
+      logo: SiRiotgames,
       plan: "Enterprise",
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
+      name: "Rock Star",
+      logo: SiRockstargames,
       plan: "Startup",
     },
     {
-      name: "Evil Corp.",
-      logo: Command,
+      name: "Nintendo",
+      logo: SiNintendogamecube,
       plan: "Free",
     },
   ],

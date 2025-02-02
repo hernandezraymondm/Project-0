@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { cn } from "@/lib/utils"; // Adjust the import according to your project structure
 
-export function SearchBar() {
+export function SearchBox() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Toggle the search input on small screens

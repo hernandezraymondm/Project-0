@@ -18,6 +18,7 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import { JSX } from "react";
 import { UserStats } from "../components/user-stats";
 import { SecurityOverview } from "../components/security-overview";
+import { DateTimeDisplay } from "@/components/header/date-time-display";
 
 export default function DashboardPage() {
   return (
@@ -31,6 +32,7 @@ export default function DashboardPage() {
             </span>
             <h2 className="text-3xl tracking-tight">Overview</h2>
           </div>
+          <DateTimeDisplay />
           <Button>
             <FaGithub className="mr-2 h-4 w-4" />
             Star on GitHub

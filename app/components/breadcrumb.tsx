@@ -1,5 +1,4 @@
 import React from "react";
-import { Slash } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
   Breadcrumb,
@@ -16,7 +15,7 @@ export function BreadCrumb() {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="flex-nowrap">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
