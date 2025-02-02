@@ -48,14 +48,14 @@ export default function Navbar({ token }: { token?: string }) {
             <>
               <Link
                 href="/login"
-                className="relative text-primary transition-all duration-300 group"
+                className="relative text-white transition-all duration-300 group"
               >
                 Login
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
                 href="/register"
-                className="relative text-primary transition-all duration-300 group"
+                className="relative text-white transition-all duration-300 group"
               >
                 Register
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
