@@ -33,7 +33,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
         <div className="flex items-center space-x-2">
           <Clock className="h-4 w-4" strokeWidth={3} />
           <ScaleLoader
-            color="hsl(var(--primary))"
+            color="hsl(var(--tertiary))"
             height={15}
             aria-label="Loading Spinner"
             data-testid="loader"
@@ -42,7 +42,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
         <div className="flex items-center space-x-2">
           <CalendarDays className="h-4 w-4" strokeWidth={3} />
           <ScaleLoader
-            color="hsl(var(--primary))"
+            color="hsl(var(--tertiary))"
             height={15}
             aria-label="Loading Spinner"
             data-testid="loader"
