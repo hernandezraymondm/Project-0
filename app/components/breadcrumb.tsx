@@ -1,5 +1,4 @@
 import React from "react";
-import { Slash } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
   Breadcrumb,
@@ -16,7 +15,7 @@ export function BreadCrumb() {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="flex-nowrap select-none">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
@@ -27,9 +26,7 @@ export function BreadCrumb() {
 
           return (
             <React.Fragment key={href}>
-              <BreadcrumbSeparator>
-                <Slash />
-              </BreadcrumbSeparator>
+              <BreadcrumbSeparator />
               <BreadcrumbItem>
                 {isLast ? (
                   <BreadcrumbPage>{segment}</BreadcrumbPage>

@@ -1,12 +1,15 @@
-// import type { NextConfig } from "next";
+import type { NextConfig } from "next";
 
-// const nextConfig: NextConfig = {
-//   experimental: {
-//     serverActions: {
-//       bodySizeLimit: undefined,
-//       allowedOrigins: undefined,
-//     },
-//   },
-// };
+const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: undefined,
+      allowedOrigins: undefined,
+    },
+  },
+  devIndicators: {
+    buildActivityPosition: "bottom-right",
+  },
+};
 
-// export default nextConfig;
+export default nextConfig;

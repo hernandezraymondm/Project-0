@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { LogOut } from "lucide-react";
 
 export function LogoutButton() {
   const { toast } = useToast();
@@ -35,8 +36,8 @@ export function LogoutButton() {
   };
 
   return (
-    <Button variant="secondary" onClick={handleLogout}>
-      Logout
+    <Button variant="ghost" size="icon" onClick={handleLogout}>
+      <LogOut className="h-5 w-5" />
     </Button>
   );
 }

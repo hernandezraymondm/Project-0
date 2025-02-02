@@ -1,12 +1,13 @@
+import { Metadata } from "next";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type React from "react";
-import { Menu } from "lucide-react";
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { AdminSidebar } from "@/components/dashboard/admin-sidebar";
-import { DashboardNavbar } from "@/components/dashboard/dashboard-navbar";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { Header } from "@/components/header/header";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Overview of your dashboard activities and insights",
+};
 
 export default function DashboardLayout({
   children,
@@ -15,17 +16,12 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex flex-1 overflow-hidden">
-        <AdminSidebar />
+      <div className="flex flex-1 min-h-screen overflow-hidden ">
+        <AppSidebar />
         <div className="flex flex-col h-screen overflow-hidden">
-          <DashboardNavbar />
+          <Header />
           <SidebarInset className="flex-1 overflow-scroll">
-            <header className="fixed top-[14px] z-10">
-              <SidebarTrigger icon={<Menu />} />
-            </header>
-            <main className="flex-1 p-7" id="main">
-              {children}
-            </main>
+            <main className="flex-1">{children}</main>
           </SidebarInset>
         </div>
       </div>

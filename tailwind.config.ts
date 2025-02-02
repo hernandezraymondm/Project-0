@@ -30,6 +30,7 @@ module.exports = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        tertiary: "hsl(var(--tertiary))",
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -41,9 +42,6 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          primary: "hsl(var(--accent-primary))",
-          secondary: "hsl(var(--accent-secondary))",
-          tertiary: "hsl(var(--accent-tertiary))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -69,7 +67,6 @@ module.exports = {
           DEFAULT: "hsl(var(--neutral))",
           foreground: "hsl(var(--neutral-foreground))",
         },
-        navbar: "hsl(var(--navbar))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -78,7 +75,12 @@ module.exports = {
           accent: "hsl(var(--sidebar-accent))",
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
+          separator: "hsl(var(--sidebar-separator))",
           ring: "hsl(var(--sidebar-ring))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          text: "hsl(var(--sidebar-text))",
+          "text-foreground": "hsl(var(--sidebar-text-foreground))",
         },
       },
       fontFamily: {

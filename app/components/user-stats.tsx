@@ -15,22 +15,18 @@ export async function UserStats() {
   const { totalUsers, verifiedUsers } = await getUserStats();
 
   return (
-    <Card className="card h-full flex flex-col">
+    <Card className="h-full flex flex-col">
       <CardHeader>
-        <CardTitle className="card-title">User Statistics</CardTitle>
+        <CardTitle>User Statistics</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-2 gap-4 flex-grow">
-        <div className="card-content">
-          <p className="text-primary w-[80%] text-sm">Total Users</p>
-          <p className="text-2xl font-bold text-primary font-audiowide">
-            {totalUsers}
-          </p>
+      <CardContent className="flex flex-col gap-4 flex-grow">
+        <div className="flex justify-between items-start gap-2 text-sm">
+          <p>Total Users</p>
+          <p>{totalUsers}</p>
         </div>
-        <div className="card-content">
-          <p className="text-primary text-sm">Verified Users</p>
-          <p className="text-2xl font-bold text-primary font-audiowide">
-            {verifiedUsers}
-          </p>
+        <div className="flex justify-between items-start gap-2 text-sm">
+          <p>Verified Users</p>
+          <p>{verifiedUsers}</p>
         </div>
       </CardContent>
     </Card>

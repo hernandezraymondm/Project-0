@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { formatDateTime } from "@/lib/utils";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatLastLogin } from "@/common/utils/last-login";
 
 const prisma = new PrismaClient();
 
@@ -39,14 +39,12 @@ export async function SecurityOverview() {
     { label: "2FA Enabled", value: user?.twoFactorEnabled ? "Yes" : "No" },
     {
       label: "Last Login",
-      value: log?.timestamp
-        ? formatDateTime(log.timestamp.toDateString())
-        : "N/A",
+      value: log?.timestamp ? formatLastLogin(new Date(log.timestamp)) : "N/A",
     },
   ];
 
   return (
-    <Card className="card">
+    <Card className="card col-span-2">
       <CardHeader>
         <CardTitle className="card-title">Security Overview</CardTitle>
       </CardHeader>
@@ -57,8 +55,8 @@ export async function SecurityOverview() {
             key={index}
             className="flex justify-between items-start gap-2 text-sm"
           >
-            <p className="text-primary text-nowrap">{item.label}</p>
-            <p className="text-primary text-right">{item.value || "N/A"}</p>
+            <p className="text-nowrap">{item.label}</p>
+            <p className="text-right">{item.value || "N/A"}</p>
           </div>
         ))}
       </CardContent>
