@@ -15,7 +15,7 @@ export function BreadCrumb() {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className="flex-nowrap">
+      <BreadcrumbList className="flex-nowrap select-none">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>

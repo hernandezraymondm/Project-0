@@ -11,14 +11,14 @@ interface DateTimeDisplayProps {
 
 export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
   const [dateTime, setDateTime] = useState(new Date());
-  const [isClient, setIsClient] = useState(false); // Track if the component is on the client
+  const [isMounted, setIsMounted] = useState(false); // Track if the component is on the client
 
   const updateDateTime = useCallback(() => {
     setDateTime(new Date());
   }, []);
 
   useEffect(() => {
-    setIsClient(true); // Set isClient to true after hydration
+    setIsMounted(true); // Set setIsMounted to true after hydration
     updateDateTime();
     const intervalMs = showSeconds ? 1000 : 60000;
     const timer = setInterval(updateDateTime, intervalMs);
@@ -27,7 +27,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
   }, [showSeconds, updateDateTime]);
 
   // Render a placeholder on the server
-  if (!isClient) {
+  if (!isMounted) {
     return (
       <div className="hidden lg:flex items-center justify-between gap-6 text-sm text-muted-foreground flex-nowrap text-nowrap">
         <div className="flex items-center space-x-2">

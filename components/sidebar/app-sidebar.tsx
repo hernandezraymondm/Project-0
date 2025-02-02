@@ -158,7 +158,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      className="text-sidebar-text"
+      className="text-sidebar-text select-none"
       id="sidebar"
       variant="floating"
       collapsible="icon"

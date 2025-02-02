@@ -65,7 +65,7 @@ export function Header() {
   ];
 
   return (
-    <header className="border-b bg-card/50 rounded-b-xl">
+    <header className="border-b">
       <div className="flex h-14 items-center px-4 gap-4">
         <Button
           variant="ghost"
