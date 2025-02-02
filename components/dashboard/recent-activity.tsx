@@ -29,9 +29,9 @@ async function fetchActivityLogs(page = 1, limit = 4) {
 }
 
 export function RecentActivity() {
-  const [activities, setActivities] = useState<
-    { id: number; action: string; timestamp: string }[]
-  >([]);
+  const [activities, setActivities] = useState(
+    [] as { id: number; action: string; timestamp: string }[]
+  );
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -56,18 +56,19 @@ export function RecentActivity() {
     setPage(newPage);
   };
 
-  // PAGINATION CUSTOMIZATION
-  // Adjust these values to change the pagination behavior
-  const SHOW_FIRST_LAST = true; // Always show first and last page numbers
-  const MAX_VISIBLE_PAGES = 1; // Maximum number of page numbers to show (excluding first and last)
+  const SHOW_FIRST_LAST = true;
+  const MAX_VISIBLE_PAGES = 3;
 
   const renderPaginationItems = () => {
     const items = [];
+    const start = Math.max(1, page - Math.floor(MAX_VISIBLE_PAGES / 2));
+    const end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
 
-    if (SHOW_FIRST_LAST && page > 1) {
+    if (SHOW_FIRST_LAST && start > 1) {
       items.push(
         <PaginationItem key="first">
           <PaginationLink
+            size="xs"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -78,16 +79,14 @@ export function RecentActivity() {
           </PaginationLink>
         </PaginationItem>
       );
-      if (page > 2) items.push(<PaginationEllipsis key="ellipsis-start" />);
+      if (start > 2) items.push(<PaginationEllipsis key="ellipsis-start" />);
     }
-
-    const start = Math.max(1, page - Math.floor(MAX_VISIBLE_PAGES / 2));
-    const end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
 
     for (let i = start; i <= end; i++) {
       items.push(
         <PaginationItem key={i}>
           <PaginationLink
+            size="xs"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -101,12 +100,13 @@ export function RecentActivity() {
       );
     }
 
-    if (SHOW_FIRST_LAST && page < totalPages) {
-      if (page < totalPages - 1)
+    if (SHOW_FIRST_LAST && end < totalPages) {
+      if (end < totalPages - 1)
         items.push(<PaginationEllipsis key="ellipsis-end" />);
       items.push(
         <PaginationItem key="last">
           <PaginationLink
+            size="xs"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -148,6 +148,7 @@ export function RecentActivity() {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
+                size="xs"
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
@@ -158,6 +159,7 @@ export function RecentActivity() {
             {renderPaginationItems()}
             <PaginationItem>
               <PaginationNext
+                size="xs"
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
