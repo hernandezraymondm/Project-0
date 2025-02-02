@@ -186,6 +186,10 @@ Scroll bar
   }
 }
 
+.card-icon {
+  box-shadow: 0px 5px 5px 1px rgba(0, 0, 0, 0.103);
+}
+
 .animate-star {
   animation:
     float 6s ease-in-out infinite,

@@ -44,9 +44,9 @@ export async function SecurityOverview() {
   ];
 
   return (
-    <Card className="card col-span-2">
+    <Card>
       <CardHeader>
-        <CardTitle className="card-title">Security Overview</CardTitle>
+        <CardTitle>Security Overview</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-4">

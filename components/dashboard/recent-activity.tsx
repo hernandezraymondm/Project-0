@@ -57,7 +57,7 @@ export function RecentActivity() {
   };
 
   const SHOW_FIRST_LAST = true;
-  const MAX_VISIBLE_PAGES = 3;
+  const MAX_VISIBLE_PAGES = 1;
 
   const renderPaginationItems = () => {
     const items = [];
@@ -123,9 +123,9 @@ export function RecentActivity() {
   };
 
   return (
-    <Card className="card col-span-2">
+    <Card>
       <CardHeader>
-        <CardTitle className="card-title">Recent Activity</CardTitle>
+        <CardTitle>Recent Activity</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-4 min-h-[9.5em]">
