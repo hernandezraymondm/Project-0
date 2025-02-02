@@ -32,7 +32,7 @@ export default function DashboardPage() {
             </span>
             <h2 className="text-3xl tracking-tight">Overview</h2>
           </div>
-          <DateTimeDisplay />
+          <DateTimeDisplay showSeconds />
           <Button>
             <FaGithub className="mr-2 h-4 w-4" />
             Star on GitHub
@@ -145,7 +145,7 @@ function StatsCard({
     <Card className="p-6">
       <div className="flex flex-row items-center justify-between space-y-0 pb-2">
         <Badge className={`${badgeColor} rounded-full`}>
-          <span className="text-xs text-primary">{`${changePrefix} ${change}`}</span>
+          <span className="text-xs">{`${changePrefix} ${change}`}</span>
         </Badge>
         <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
       </div>
