@@ -48,7 +48,7 @@ export function RecentTransactions() {
     <div className="space-y-8">
       {transactions.map((transaction) => (
         <div key={transaction.id} className="flex items-center">
-          <Avatar className="h-9 w-9">
+          <Avatar className="h-9 w-9 bg-tertiary">
             <AvatarImage src={transaction.avatarSrc} alt={transaction.name} />
             <AvatarFallback>{transaction.name[0]}</AvatarFallback>
           </Avatar>

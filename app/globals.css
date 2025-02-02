@@ -36,7 +36,7 @@ body {
     --chart-5: 27 87% 67%;
     --sidebar-background: 215 27.9% 16.9%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 248 88% 59%;
+    --sidebar-primary: 256 62.2% 65%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 256 62.2% 72%;
     --sidebar-accent-foreground: 240 5.9% 10%;
@@ -81,7 +81,7 @@ body {
     --chart-2: 340 75% 55%;
     --sidebar-background: 235 24.4% 17.6%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 248 88% 59%;
+    --sidebar-primary: 256 62.2% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 256 62.2% 72%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
@@ -138,11 +138,11 @@ Scroll bar
 }
 
 #sidebar:hover ::-webkit-scrollbar-thumb {
-  background: hsl(var(--tertiary));
+  background: hsl(var(--sidebar-accent));
 }
 
 #sidebar:hover ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--tertiary));
+  background: hsl(var(--sidebar-accent));
 }
 /* Scrollbar End */
 
