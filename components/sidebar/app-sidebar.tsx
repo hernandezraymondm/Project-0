@@ -119,7 +119,7 @@ const data = {
       items: [
         {
           title: "General",
-          url: "/settings/general",
+          url: "/dashboard",
         },
         {
           title: "Team",
