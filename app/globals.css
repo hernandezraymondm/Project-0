@@ -47,6 +47,11 @@ body {
     --sidebar-text: 240 4% 90%;
     --sidebar-text-foreground: 240 5% 65%;
 
+    --success: 160 60% 50%;
+    --warning: 38 92% 50%;
+    --info: 199 89% 50%;
+    --neutral: 0 0% 45%;
+
     ::-webkit-scrollbar-thumb {
       border-radius: 10px;
       background-color: hsl(var(--sidebar-background));
@@ -88,6 +93,11 @@ body {
     --sidebar-border: 240 3.7% 15.9% / 0;
     --sidebar-separator: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --success: 142.1 76.2% 35%;
+    --warning: 38 92% 47%;
+    --info: 199 89% 40%;
+    --neutral: 0 0% 85%;
 
     ::-webkit-scrollbar-thumb {
       border-radius: 10px;
@@ -184,6 +194,10 @@ Scroll bar
   50% {
     opacity: 1;
   }
+}
+
+.card-icon {
+  box-shadow: 0px 5px 5px 1px rgba(0, 0, 0, 0.103);
 }
 
 .animate-star {

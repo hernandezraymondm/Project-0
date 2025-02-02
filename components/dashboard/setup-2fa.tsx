@@ -112,9 +112,9 @@ export function Setup2FA() {
   };
 
   return (
-    <Card className="card">
+    <Card>
       <CardHeader>
-        <CardTitle className="card-title">Two-Factor Authentication</CardTitle>
+        <CardTitle>Two-Factor Authentication</CardTitle>
       </CardHeader>
       {is2FAEnabled ? (
         <CardContent>

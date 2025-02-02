@@ -38,7 +38,7 @@ export interface LoaderProps
 
 const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
   (
-    { className, size = "md", color = "hsl(var(--primary))", ...props },
+    { className, size = "md", color = "hsl(var(--tertiary))", ...props },
     ref
   ) => {
     const lines = [0, 1, 2];

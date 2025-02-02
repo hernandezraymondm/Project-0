@@ -21,9 +21,9 @@ export function QuickActions() {
   ];
 
   return (
-    <Card className="card">
+    <Card>
       <CardHeader>
-        <CardTitle className="card-title">Quick Actions</CardTitle>
+        <CardTitle>Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {actions.map((action, index) => (

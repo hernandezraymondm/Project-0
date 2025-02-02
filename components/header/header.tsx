@@ -1,6 +1,13 @@
 "use client";
 
-import { Menu, Bell, Maximize, Minimize, LayoutGrid } from "lucide-react";
+import {
+  Menu,
+  Bell,
+  Maximize,
+  Minimize,
+  LayoutGrid,
+  SquareDashedMousePointer,
+} from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 import { useSidebar } from "@/components/ui/sidebar";
 import { SearchBox } from "@/components/header/search-box";
@@ -98,7 +105,7 @@ export function Header() {
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 space-y-3">
               <div className="flex items-center gap-3">
-                <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse" />
+                <SquareDashedMousePointer />
                 Related Applications
               </div>
               <div className="grid grid-cols-3 gap-3">
