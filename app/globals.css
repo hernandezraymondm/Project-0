@@ -43,6 +43,11 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
     --sidebar-text: 240 4% 90%;
     --sidebar-text-foreground: 240 5% 65%;
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #1f2937;
+    }
   }
 
   .dark {
@@ -79,6 +84,11 @@ body {
     --sidebar-border: 240 3.7% 15.9% / 0;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #0f1729;
+  }
 }
 
 @layer base {
@@ -104,7 +114,7 @@ Scroll bar
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffa75b;
+  background: #0f1729;
 }
 
 #sidebar ::-webkit-scrollbar {
