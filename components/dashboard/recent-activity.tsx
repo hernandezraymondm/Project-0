@@ -128,7 +128,7 @@ export function RecentActivity() {
         <CardTitle className="card-title">Recent Activity</CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-4 min-h-24">
+      <CardContent className="space-y-4 min-h-[9.5em]">
         {loading && <Loader size="lg" className="pt-6" />}
         {!loading &&
           activities.length > 0 &&
