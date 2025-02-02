@@ -41,7 +41,7 @@ export default function FloatingIconCard({
         <div>
           <h3 className="text-sm font-bold text-muted-foreground">{title}</h3>
           <span
-            className={`${textColor} text-xs`}
+            className={`${textColor} text-xs text-nowrap`}
           >{`${changePrefix} ${change}`}</span>
         </div>
         <p className="text-2xl font-bold">{value}</p>
