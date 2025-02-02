@@ -127,10 +127,13 @@ export function RecentActivity() {
       <CardHeader>
         <CardTitle>Recent Activity</CardTitle>
       </CardHeader>
-
-      <CardContent className="space-y-4 min-h-[9.5em]">
-        {loading && <Loader size="lg" className="pt-6" />}
-        {!loading &&
+      <CardContent className="space-y-4 min-h-[9.5em] flex flex-col">
+        {loading ? (
+          <Loader
+            size="lg"
+            className="flex flex-grow items-center justify-center w-full h-full"
+          />
+        ) : (
           activities.length > 0 &&
           activities.map((activity) => (
             <div
@@ -140,7 +143,8 @@ export function RecentActivity() {
               <p>{activity.action}</p>
               <p>{formatDateTime(activity.timestamp)}</p>
             </div>
-          ))}
+          ))
+        )}
       </CardContent>
 
       <CardFooter>
