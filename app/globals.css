@@ -14,7 +14,7 @@ body {
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 215 28% 17%;
+    --primary: 215 27.9% 16.9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -24,7 +24,7 @@ body {
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: 240 5.9% 90% / 0;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
@@ -33,31 +33,33 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --sidebar-background: 215 28% 17%;
+    --sidebar-background: 215 27.9% 16.9%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 248 88% 59%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
+    /* Added: Look for SidebarMenuSub */
+    --sidebar-separator: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --sidebar-text: 240 4% 90%;
     --sidebar-text-foreground: 240 5% 65%;
 
     ::-webkit-scrollbar-thumb {
       border-radius: 10px;
-      background-color: #1f2937;
+      background-color: #eff0f6;
     }
   }
 
   .dark {
-    --background: 217 33% 17%;
+    --background: 235 24.5% 20.8%;
     --foreground: 0 0% 98%;
-    --card: 222 40% 13%;
+    --card: 234 23.8% 24.7%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 13.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 250 86% 70%;
     --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -75,19 +77,20 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-2: 340 75% 55%;
-    --sidebar-background: 222 47% 11%;
+    --sidebar-background: 235 24.4% 17.6%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 248 88% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 256 62.2% 72%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9% / 0;
+    --sidebar-separator: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #0f1729;
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #0f1729;
+    }
   }
 }
 
