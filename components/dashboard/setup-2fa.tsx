@@ -118,7 +118,7 @@ export function Setup2FA() {
       </CardHeader>
       {is2FAEnabled ? (
         <CardContent>
-          <p className="mb-5 text-primary text-sm">
+          <p className="mb-5 text-sm">
             2FA is currently enabled for your account.
           </p>
           <Button onClick={disable2FA} variant="destructive">
@@ -127,7 +127,7 @@ export function Setup2FA() {
         </CardContent>
       ) : !secret ? (
         <CardContent>
-          <p className="mb-5 text-primary text-sm">
+          <p className="mb-5 text-sm">
             2FA is currently disabled. Enable it to add an extra layer of
             security to your account.
           </p>
@@ -137,7 +137,7 @@ export function Setup2FA() {
         </CardContent>
       ) : (
         <CardContent className="space-y-4">
-          <p className="text-primary text-sm">
+          <p className="text-sm">
             Scan this QR code with your authenticator app:
           </p>
           <Image
@@ -152,7 +152,7 @@ export function Setup2FA() {
             in your authenticator app:
           </p>
           <p className="text-xs text-gray-500 break-all">{otpauth}</p>
-          <p className="text-primary break-words text-sm">
+          <p className="break-words text-sm">
             Or enter this secret manually:{" "}
             <span className="text-violet-400 text-base">{secret}</span>
           </p>
