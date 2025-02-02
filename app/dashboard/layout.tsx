@@ -16,12 +16,12 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex flex-1 min-h-screen overflow-hidden ">
+      <div className="flex flex-1 min-h-screen overflow-hidden">
         <AppSidebar />
         <div className="flex flex-col h-screen overflow-hidden">
           <Header />
           <SidebarInset className="flex-1 overflow-scroll">
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-7">{children}</main>
           </SidebarInset>
         </div>
       </div>
