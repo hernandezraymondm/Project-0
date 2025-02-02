@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const transactions = [
   {
     id: 1,
-    amount: "$375.53",
+    amount: "$3705.53",
     status: "Deposit",
     email: "percy64",
     name: "Howell Hand",
@@ -13,7 +13,7 @@ const transactions = [
   },
   {
     id: 2,
-    amount: "$470.26",
+    amount: "$4700.26",
     status: "Payment",
     email: "dare.concepcion",
     name: "Hope Howe",
@@ -23,7 +23,7 @@ const transactions = [
   },
   {
     id: 3,
-    amount: "$971.34",
+    amount: "$9071.34",
     status: "Invoice",
     email: "geovanni.kessler",
     name: "Nelson Jerde",
@@ -33,7 +33,7 @@ const transactions = [
   },
   {
     id: 4,
-    amount: "$374.63",
+    amount: "$3074.63",
     status: "Withdrawal",
     email: "macejkovic.dashawn",
     name: "Kim Weimann",
@@ -65,7 +65,7 @@ export function RecentTransactions() {
             </p>
           </div>
           <div className="ml-auto font-medium">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
               <span
                 className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium
                   ${
