@@ -2,7 +2,7 @@ import FloatingIconCard from "@/components/floating-icon-card";
 import {
   UsersRound,
   ShoppingCart,
-  BarChartIcon as ChartSpline,
+  ChartNoAxesCombined,
   TriangleAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -59,7 +59,7 @@ export default function DashboardPage() {
               iconBgColor="bg-sky-400"
             />
             <FloatingIconCard
-              icon={ChartSpline}
+              icon={ChartNoAxesCombined}
               title="Performance"
               value="256"
               change="Overflow"
@@ -95,10 +95,12 @@ export default function DashboardPage() {
             </Card>
           </div>
           {/* Additional Components */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-            <UserStats />
-            <div className="xl:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-7 gap-5">
+            <div className="col-span-full lg:col-span-4">
               <SecurityOverview />
+            </div>
+            <div className="col-span-full lg:col-span-3">
+              <UserStats />
             </div>
           </div>
         </div>
