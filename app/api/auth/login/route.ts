@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       }
     }
     // Generate new session token
-    const accessToken = await encrypt({ userId: user.id }, "1m");
+    const accessToken = await encrypt({ userId: user.id }, "4h");
 
     // TODO: Capture Device Info and IP Address
     // const userAgent = req.headers.get("user-agent") || "Unknown Device";
@@ -90,7 +90,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60, // 15 minutes
+      maxAge: 4 * 60 * 60, // 4 hours
       path: "/",
     });
 
