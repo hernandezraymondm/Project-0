@@ -22,19 +22,21 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
-  RefreshToken RefreshToken?
+  RefreshToken RefreshToken[]
   ActivityLog  Log[]
 }
 
 model RefreshToken {
-  id      String   @id @default(cuid())
-  userId  String   @unique @map("user_id")
-  email   String
-  token   String   @unique
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  userId     String
+  email      String
+  token      String   @unique
+  expires    DateTime
+  deviceInfo String?
+  ipAddress  String?
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([email, token])
+  @@index([userId])
   @@map("refresh_token")
 }
 

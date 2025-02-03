@@ -7,19 +7,23 @@ export async function middleware(request: NextRequest) {
 
   // Allow public routes
   if (
+    request.nextUrl.pathname.startsWith("/") ||
     request.nextUrl.pathname.startsWith("/login") ||
-    request.nextUrl.pathname.startsWith("/register")
+    request.nextUrl.pathname.startsWith("/register") ||
+    request.nextUrl.pathname.startsWith("/verify-email") ||
+    request.nextUrl.pathname.startsWith("/reset-password") ||
+    request.nextUrl.pathname.startsWith("/new-password")
   ) {
     return NextResponse.next();
   }
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+  // if (!token) {
+  //   return NextResponse.redirect(new URL("/login", request.url));
+  // }
 
   try {
     const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
-    await jwtVerify(token, secretKey);
+    await jwtVerify(token!, secretKey);
     return NextResponse.next();
   } catch (error) {
     if (error instanceof Error && error.name === "JWTExpired") {

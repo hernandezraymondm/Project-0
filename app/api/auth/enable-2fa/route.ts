@@ -43,7 +43,6 @@ export async function POST() {
       data: { twoFactorSecret: secret },
     });
 
-
     return NextResponse.json({ secret, otpauth });
   } catch (error) {
     console.error("Enable 2FA error:", error);

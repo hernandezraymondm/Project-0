@@ -8,10 +8,9 @@ export async function POST() {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  // Optionally invalidate the refresh token in the database
   if (refreshToken) {
     try {
-      // Assuming you have a RefreshToken model in your Prisma schema
+      // invalidate the refresh token in the database
       await prisma.refreshToken.delete({ where: { token: refreshToken } });
     } catch (error) {
       console.error("Error invalidating refresh token:", error);
