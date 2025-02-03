@@ -14,7 +14,7 @@ import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { UserStats } from "../components/user-stats";
-import { SecurityOverview } from "../components/security-overview";
+import { SecurityOverview } from "../../components/dashboard/security-overview";
 import { DateTimeDisplay } from "@/components/date-time-display";
 import { Card } from "@/components/ui/card";
 

@@ -1,24 +1,29 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { PrismaClient } from "@prisma/client";
+import { decrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("session")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
 
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
+    const payload = await decrypt(token);
+    if (typeof payload.userId !== "string") {
+      return NextResponse.json(
+        { message: "Invalid token payload" },
+        { status: 401 }
+      );
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: payload.userId },
     });
 
     if (!user) {

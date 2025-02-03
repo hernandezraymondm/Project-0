@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatDateTime } from "@/common/utils/format-date";
+import { formatDateTime } from "@/lib/utils/format-date";
 import {
   Pagination,
   PaginationContent,
@@ -139,7 +139,7 @@ export function RecentActivity() {
             />
           </div>
         ) : (
-          activities.length > 0 &&
+          activities?.length > 0 &&
           activities.map((activity) => (
             <div
               key={activity.id}

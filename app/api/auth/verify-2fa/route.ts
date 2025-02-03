@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import * as OTPAuth from "otpauth";
-import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { logActivity } from "../../logs/add-activity/route";
+import { decrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 
@@ -17,9 +17,13 @@ export async function POST(req: Request) {
 
   try {
     const { token: otpToken } = await req.json();
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
+    const decoded = await decrypt(token);
+    if (typeof decoded.userId !== "string") {
+      return NextResponse.json(
+        { message: "Invalid token payload" },
+        { status: 401 }
+      );
+    }
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
     });

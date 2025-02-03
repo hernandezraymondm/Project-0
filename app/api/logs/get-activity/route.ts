@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { decrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 
@@ -19,9 +19,13 @@ export async function GET(req: Request) {
   const offset = (page - 1) * limit;
 
   try {
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
+    const decoded = await decrypt(token);
+    if (typeof decoded.userId !== "string") {
+      return NextResponse.json(
+        { message: "Invalid token payload" },
+        { status: 401 }
+      );
+    }
     const activities = await prisma.log.findMany({
       where: { userId: decoded.userId },
       orderBy: { timestamp: "desc" },

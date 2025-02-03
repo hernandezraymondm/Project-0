@@ -1,41 +1,46 @@
-// api/user.js
-
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { verify } from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("session")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
 
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
+    const secretKey = new TextEncoder().encode(process.env.JWT_SECRET!);
+    const { payload } = await jwtVerify(token, secretKey);
+
+    if (typeof payload.userId !== "string") {
+      return NextResponse.json(
+        { message: "Invalid token payload" },
+        { status: 401 }
+      );
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: payload.userId },
     });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
     const log = await prisma.log.findFirst({
       where: {
-        userId: decoded.userId,
+        userId: payload.userId,
         action: "Logged in",
       },
       orderBy: {
         timestamp: "desc",
       },
     });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
 
     return NextResponse.json({
       user: { ...user, lastLogin: log?.timestamp },

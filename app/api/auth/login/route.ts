@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { SignJWT } from "jose";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 import * as OTPAuth from "otpauth";
 import { logActivity } from "../../logs/add-activity/route";
+import { encrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 
@@ -70,43 +70,16 @@ export async function POST(req: Request) {
         );
       }
     }
+    // Generate new session token
+    const accessToken = await encrypt({ userId: user.id }, "1m");
 
-    const accessToken = await new SignJWT({ userId: user.id })
-      .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("15m")
-      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
-
-    const refreshToken = await new SignJWT({ userId: user.id })
-      .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("7d")
-      .sign(new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET));
-
-    // Capture Device Info and IP Address
-    const userAgent = req.headers.get("user-agent") || "Unknown Device";
-    const ipAddress =
-      req.headers.get("x-forwarded-for") ||
-      req.headers.get("cf-connecting-ip") ||
-      req.headers.get("x-real-ip") ||
-      "Unknown IP";
-
-    // Create or update refresh token in the database
-    await prisma.refreshToken.upsert({
-      where: { token: refreshToken },
-      update: {
-        token: refreshToken,
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        deviceInfo: userAgent,
-        ipAddress: ipAddress,
-      },
-      create: {
-        userId: user.id,
-        email: user.email,
-        token: refreshToken,
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        deviceInfo: userAgent,
-        ipAddress: ipAddress,
-      },
-    });
+    // TODO: Capture Device Info and IP Address
+    // const userAgent = req.headers.get("user-agent") || "Unknown Device";
+    // const ipAddress =
+    //   req.headers.get("x-forwarded-for") ||
+    //   req.headers.get("cf-connecting-ip") ||
+    //   req.headers.get("x-real-ip") ||
+    //   "Unknown IP";
 
     const response = NextResponse.json(
       { message: "Login successful" },
@@ -117,15 +90,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 900, // 15 minutes
-      path: "/",
-    });
-
-    response.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      maxAge: 60, // 15 minutes
       path: "/",
     });
 

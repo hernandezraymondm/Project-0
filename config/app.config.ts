@@ -1,4 +1,4 @@
-import { getEnv } from "@/common/utils/get-env";
+import { getEnv } from "@/lib/utils/get-env";
 
 const appConfig = () => ({
   NODE_ENV: getEnv("NODE_ENV", "development"),
