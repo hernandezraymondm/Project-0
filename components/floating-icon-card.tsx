@@ -39,9 +39,9 @@ export default function FloatingIconCard({
       </div>
       <CardContent className="flex items-end justify-between">
         <div>
-          <h3 className="text-sm font-bold text-muted-foreground">{title}</h3>
+          <h3 className="font-bold text-muted-foreground">{title}</h3>
           <span
-            className={`${textColor} text-xs text-nowrap`}
+            className={`${textColor} text-sm text-nowrap`}
           >{`${changePrefix} ${change}`}</span>
         </div>
         <p className="text-2xl font-bold">{value}</p>

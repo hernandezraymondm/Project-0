@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader } from "@/components/ui/loader";
+import GridLoader from "react-spinners/GridLoader";
 import {
   Card,
   CardContent,
@@ -128,11 +128,16 @@ export function RecentActivity() {
         <CardTitle>Recent Activity</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 min-h-[9.5em] flex flex-col">
+        {/* TODO: TURN LOADING TO SKELETON */}
         {loading ? (
-          <Loader
-            size="lg"
-            className="flex flex-grow items-center justify-center w-full h-full"
-          />
+          <div className="flex flex-grow items-center justify-center w-full h-full">
+            <GridLoader
+              size={5}
+              color="hsl(var(--tertiary))"
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
         ) : (
           activities.length > 0 &&
           activities.map((activity) => (

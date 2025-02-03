@@ -37,7 +37,11 @@ export default async function RootLayout({
       <body
         className={`${inter.className} ${audiowide.variable} ${jura.variable}`}
       >
-        <NextThemesProvider attribute="class" defaultTheme="light" enableSystem>
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           {children}
           <Toaster />
         </NextThemesProvider>
