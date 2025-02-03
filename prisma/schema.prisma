@@ -22,7 +22,20 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
-  ActivityLog Log[]
+  RefreshToken RefreshToken?
+  ActivityLog  Log[]
+}
+
+model RefreshToken {
+  id      String   @id @default(cuid())
+  userId  String   @unique @map("user_id")
+  email   String
+  token   String   @unique
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([email, token])
+  @@map("refresh_token")
 }
 
 model Log {

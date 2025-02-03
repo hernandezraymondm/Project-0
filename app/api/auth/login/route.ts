@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { SignJWT } from "jose";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
-import { sign } from "jsonwebtoken";
 import * as OTPAuth from "otpauth";
 import { logActivity } from "../../logs/add-activity/route";
 
@@ -71,23 +71,53 @@ export async function POST(req: Request) {
       }
     }
 
-    const token = sign({ userId: user.id }, process.env.JWT_SECRET!, {
-      expiresIn: "1d",
-    });
+    const accessToken = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("15m")
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
 
-    logActivity(user.id, "Logged in");
+    const refreshToken = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("7d")
+      .sign(new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET));
+
+    // Create or update refresh token in the database
+    await prisma.refreshToken.upsert({
+      where: { userId: user.id },
+      update: {
+        token: refreshToken,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      },
+      create: {
+        userId: user.id,
+        email: user.email,
+        token: refreshToken,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      },
+    });
 
     const response = NextResponse.json(
       { message: "Login successful" },
       { status: 200 }
     );
-    response.cookies.set("session", token, {
+
+    response.cookies.set("session", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 86400, // 1 day
+      maxAge: 900, // 15 minutes
       path: "/",
     });
+
+    response.cookies.set("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: "/",
+    });
+
+    await logActivity(user.id, "Logged in");
 
     return response;
   } catch (error) {

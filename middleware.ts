@@ -1,36 +1,53 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const token = request.cookies.get("session")?.value;
 
-  // If token is valid and user is trying to access login or register, redirect to dashboard
-  if (token) {
-    if (
-      request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/register")
-    ) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
-
-  // Allow public access to login, register, and blog posts
+  // Allow public routes
   if (
-    request.nextUrl.pathname.startsWith("/") ||
     request.nextUrl.pathname.startsWith("/login") ||
-    request.nextUrl.pathname.startsWith("/register") ||
-    request.nextUrl.pathname.startsWith("/api/auth")
+    request.nextUrl.pathname.startsWith("/register")
   ) {
     return NextResponse.next();
   }
 
-  // Redirect to login if no token is present
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // For all other routes, allow access if token is present
-  return NextResponse.next();
+  try {
+    const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
+    await jwtVerify(token, secretKey);
+    return NextResponse.next();
+  } catch (error) {
+    if (error instanceof Error && error.name === "JWTExpired") {
+      // Attempt to refresh the token
+      const response = await fetch(
+        `${request.nextUrl.origin}/api/auth/refresh-token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: request.headers.get("Cookie") || "",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const newResponse = NextResponse.next();
+        newResponse.headers.set(
+          "Set-Cookie",
+          response.headers.get("Set-Cookie") || ""
+        );
+        return newResponse;
+      }
+    }
+
+    // If token refresh fails or for any other error, redirect to login
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 }
 
 export const config = {
