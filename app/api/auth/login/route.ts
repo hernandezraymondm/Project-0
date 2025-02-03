@@ -81,18 +81,30 @@ export async function POST(req: Request) {
       .setExpirationTime("7d")
       .sign(new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET));
 
+    // Capture Device Info and IP Address
+    const userAgent = req.headers.get("user-agent") || "Unknown Device";
+    const ipAddress =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("cf-connecting-ip") ||
+      req.headers.get("x-real-ip") ||
+      "Unknown IP";
+
     // Create or update refresh token in the database
     await prisma.refreshToken.upsert({
-      where: { userId: user.id },
+      where: { token: refreshToken },
       update: {
         token: refreshToken,
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        deviceInfo: userAgent,
+        ipAddress: ipAddress,
       },
       create: {
         userId: user.id,
         email: user.email,
         token: refreshToken,
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        deviceInfo: userAgent,
+        ipAddress: ipAddress,
       },
     });
 
