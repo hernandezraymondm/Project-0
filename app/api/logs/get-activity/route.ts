@@ -23,7 +23,7 @@ export async function GET(req: Request) {
     if (typeof decoded.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const activities = await prisma.log.findMany({

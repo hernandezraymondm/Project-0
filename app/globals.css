@@ -12,7 +12,7 @@ body {
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
+    --popover: 249 100% 99.2%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 215 27.9% 16.9%;
     --primary-foreground: 0 0% 98%;
@@ -63,7 +63,7 @@ body {
     --foreground: 0 0% 98%;
     --card: 234 23.8% 24.7%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 13.9%;
+    --popover: 249 18% 13.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 256 62.2% 72%;
     --primary-foreground: 240 5.9% 10%;
@@ -225,16 +225,16 @@ Scroll bar
 }
 
 .text-crawl-container {
-  @apply absolute inset-0 overflow-hidden flex justify-center items-end pb-10;
+  @apply absolute inset-0 flex items-end justify-center overflow-hidden pb-10;
 }
 
 .fade-overlay {
-  @apply absolute inset-0 pointer-events-none;
+  @apply pointer-events-none absolute inset-0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.596) 1%, transparent 50%);
 }
 
 .crawl {
-  @apply relative w-full max-w-[54em] text-[#4c3f5828] text-[1.5rem] font-bold text-justify;
+  @apply relative w-full max-w-[54em] text-justify text-[1.5rem] font-bold text-[#4c3f5828];
   perspective: 300px;
   height: 38vh;
   overflow: hidden;

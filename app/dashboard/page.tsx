@@ -22,7 +22,7 @@ export default function DashboardPage() {
   return (
     <div className="flex-1 space-y-4">
       <div className="flex items-center justify-between">
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <span className="rounded-full bg-card p-3">
             <MdTimeline className="h-6 w-6" />
           </span>
@@ -35,11 +35,11 @@ export default function DashboardPage() {
         </Button>
       </div>
       {/* Main Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-5 pt-4">
+      <div className="grid grid-cols-1 gap-5 pt-4 lg:grid-cols-3 2xl:grid-cols-4">
         {/* Left Column */}
-        <div className="lg:col-span-3 space-y-5">
+        <div className="space-y-5 lg:col-span-3">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-4">
             <FloatingIconCard
               icon={UsersRound}
               title="Clients"
@@ -78,16 +78,16 @@ export default function DashboardPage() {
             />
           </div>
           {/* Charts and Tables */}
-          <div className="grid grid-cols-1 lg:grid-cols-7 gap-5">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
             <Card className="col-span-full lg:col-span-4">
               <div className="p-6">
-                <h3 className="text-lg font-medium mb-4">Overview</h3>
+                <h3 className="mb-4 text-lg font-medium">Overview</h3>
                 <Overview />
               </div>
             </Card>
             <Card className="col-span-full lg:col-span-3">
               <div className="p-6">
-                <h3 className="text-lg font-medium mb-4">
+                <h3 className="mb-4 text-lg font-medium">
                   Recent Transactions
                 </h3>
                 <RecentTransactions />
@@ -95,7 +95,7 @@ export default function DashboardPage() {
             </Card>
           </div>
           {/* Additional Components */}
-          <div className="grid grid-cols-1 lg:grid-cols-7 gap-5">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
             <div className="col-span-full lg:col-span-4">
               <SecurityOverview />
             </div>
@@ -105,11 +105,7 @@ export default function DashboardPage() {
           </div>
         </div>
         {/* Right Column */}
-        <div
-          className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-1 
-        lg:col-span-3 2xl:col-span-1 
-        gap-5"
-        >
+        <div className="grid grid-cols-1 gap-5 lg:col-span-3 xl:grid-cols-3 2xl:col-span-1 2xl:grid-cols-1">
           <Setup2FA />
           <QuickActions />
           <RecentActivity />

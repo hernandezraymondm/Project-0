@@ -22,7 +22,7 @@ import {
 
 async function fetchActivityLogs(page = 1, limit = 4) {
   const response = await fetch(
-    `/api/logs/get-activity?page=${page}&limit=${limit}`
+    `/api/logs/get-activity?page=${page}&limit=${limit}`,
   );
   const data = await response.json();
   return data || { activities: [], totalPages: 1 };
@@ -30,7 +30,7 @@ async function fetchActivityLogs(page = 1, limit = 4) {
 
 export function RecentActivity() {
   const [activities, setActivities] = useState(
-    [] as { id: number; action: string; timestamp: string }[]
+    [] as { id: number; action: string; timestamp: string }[],
   );
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -77,7 +77,7 @@ export function RecentActivity() {
           >
             1
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
       if (start > 2) items.push(<PaginationEllipsis key="ellipsis-start" />);
     }
@@ -96,7 +96,7 @@ export function RecentActivity() {
           >
             {i}
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
     }
 
@@ -115,7 +115,7 @@ export function RecentActivity() {
           >
             {totalPages}
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
     }
 
@@ -127,10 +127,10 @@ export function RecentActivity() {
       <CardHeader>
         <CardTitle>Recent Activity</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 min-h-[9.5em] flex flex-col">
+      <CardContent className="flex min-h-[9.5em] flex-col space-y-4">
         {/* TODO: TURN LOADING TO SKELETON */}
         {loading ? (
-          <div className="flex flex-grow items-center justify-center w-full h-full">
+          <div className="flex h-full w-full flex-grow items-center justify-center">
             <GridLoader
               size={5}
               color="hsl(var(--tertiary))"

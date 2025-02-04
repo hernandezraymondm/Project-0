@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { message: "Invalid verification token" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,13 +39,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "Email verified successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Email verification error:", error);
     return NextResponse.json(
       { message: "An error occurred during email verification" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

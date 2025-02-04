@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { message: "Invalid email or password" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -33,14 +33,14 @@ export async function POST(req: Request) {
     if (!isPasswordValid) {
       return NextResponse.json(
         { message: "Invalid email or password" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!user.isEmailVerified) {
       return NextResponse.json(
         { message: "Please verify your email before logging in" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       if (!otpToken) {
         return NextResponse.json(
           { message: "2FA required", require2FA: true },
-          { status: 200 }
+          { status: 200 },
         );
       }
 
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       if (delta === null) {
         return NextResponse.json(
           { message: "Invalid 2FA token" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
 
     const response = NextResponse.json(
       { message: "Login successful" },
-      { status: 200 }
+      { status: 200 },
     );
 
     response.cookies.set("session", accessToken, {
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
     console.error("Login error:", error);
     return NextResponse.json(
       { message: "An error occurred during login" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

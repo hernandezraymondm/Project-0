@@ -15,16 +15,16 @@ export async function UserStats() {
   const { totalUsers, verifiedUsers } = await getUserStats();
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="flex h-full flex-col">
       <CardHeader>
         <CardTitle>User Statistics</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4 flex-grow">
-        <div className="flex justify-between items-start gap-2 text-sm">
+      <CardContent className="flex flex-grow flex-col gap-4">
+        <div className="flex items-start justify-between gap-2 text-sm">
           <p>Total Users</p>
           <p>{totalUsers}</p>
         </div>
-        <div className="flex justify-between items-start gap-2 text-sm">
+        <div className="flex items-start justify-between gap-2 text-sm">
           <p>Verified Users</p>
           <p>{verifiedUsers}</p>
         </div>

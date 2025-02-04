@@ -145,23 +145,23 @@ export function Setup2FA() {
             height={256}
             src={qrCode || "/placeholder.svg"}
             alt="2FA QR Code"
-            className="w-64 h-64 mx-auto"
+            className="mx-auto h-64 w-64"
           />
-          <p className="text-sm text-gray-500 break-all">
+          <p className="break-all text-sm text-gray-500">
             If you can&apos;t scan the QR code, you can manually enter this URL
             in your authenticator app:
           </p>
-          <p className="text-xs text-gray-500 break-all">{otpauth}</p>
+          <p className="break-all text-xs text-gray-500">{otpauth}</p>
           <p className="break-words text-sm">
             Or enter this secret manually:{" "}
-            <span className="text-violet-400 text-base">{secret}</span>
+            <span className="text-base text-violet-400">{secret}</span>
           </p>
           <Input
             type="text"
             placeholder="Enter 6-digit code"
             value={token}
             onChange={(e) => setToken(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+            className="border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
           />
           <Button onClick={verify2FA} className="button w-full">
             Verify and Enable 2FA

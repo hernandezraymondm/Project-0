@@ -49,16 +49,16 @@ export const SecurityOverview = () => {
       <CardHeader>
         <CardTitle>Security Overview</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 min-h-[9.5em]">
+      <CardContent className="min-h-[9.5em] space-y-4">
         {loading ? (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center">
             <p>Loading...</p>
           </div>
         ) : (
           securityData.map((item, index) => (
             <div
               key={index}
-              className="flex justify-between items-start gap-2 text-sm"
+              className="flex items-start justify-between gap-2 text-sm"
             >
               <p className="text-nowrap">{item.label}</p>
               <p className="text-right">{item.value || "N/A"}</p>

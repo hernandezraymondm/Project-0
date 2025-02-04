@@ -19,7 +19,7 @@ export async function POST() {
     if (typeof decoded.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const user = await prisma.user.findUnique({
@@ -52,7 +52,7 @@ export async function POST() {
     console.error("Enable 2FA error:", error);
     return NextResponse.json(
       { error: "An error occurred while enabling 2FA" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

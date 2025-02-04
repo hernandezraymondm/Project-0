@@ -20,7 +20,7 @@ export async function GET() {
     if (typeof payload.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 

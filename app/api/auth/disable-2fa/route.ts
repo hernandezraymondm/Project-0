@@ -19,7 +19,7 @@ export async function POST() {
     if (typeof decoded.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const result = await prisma.user.update({
@@ -36,7 +36,7 @@ export async function POST() {
     console.error("Disable 2FA error:", error);
     return NextResponse.json(
       { error: "An error occurred while disabling 2FA" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

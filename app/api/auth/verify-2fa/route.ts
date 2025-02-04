@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     if (typeof decoded.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const user = await prisma.user.findUnique({
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     if (!user || !user.twoFactorSecret) {
       return NextResponse.json(
         { error: "User not found or 2FA not set up" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     console.error("Verify 2FA error:", error);
     return NextResponse.json(
       { error: "An error occurred while verifying 2FA" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

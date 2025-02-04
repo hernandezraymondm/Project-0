@@ -4,9 +4,9 @@ import { BinaryText } from "@/components/binary-text";
 
 const SettingPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-black overflow-hidden">
+    <div className="via-space-800 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 to-black">
       {/* Glowing background effect */}
-      <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
+      <div className="bg-radial-gradient absolute inset-0 animate-pulse from-purple-500/20 via-transparent to-transparent"></div>
 
       <AppLogo size="xl" />
       <BinaryText />
@@ -15,7 +15,7 @@ const SettingPage = () => {
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-star"
+            className="animate-star absolute h-[1px] w-[1px] rounded-full bg-white"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,

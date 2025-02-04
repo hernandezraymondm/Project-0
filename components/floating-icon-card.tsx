@@ -31,17 +31,17 @@ export default function FloatingIconCard({
     changeType === "increase" ? "↑" : changeType === "decrease" ? "↓" : "";
 
   return (
-    <Card className="w-full bg-card border-none shadow-md relative pt-8">
+    <Card className="relative w-full border-none bg-card pt-8 shadow-md">
       <div
-        className={`absolute -top-6 left-1/2 -translate-x-1/2 ${iconBgColor} w-14 h-14 rounded-full flex items-center justify-center border-4 border-background card-icon`}
+        className={`absolute -top-6 left-1/2 -translate-x-1/2 ${iconBgColor} card-icon flex h-14 w-14 items-center justify-center rounded-full border-4 border-background`}
       >
-        <Icon className={`w-6 h-6 ${iconColor}`} strokeWidth={3} />
+        <Icon className={`h-6 w-6 ${iconColor}`} strokeWidth={3} />
       </div>
       <CardContent className="flex items-end justify-between">
         <div>
           <h3 className="font-bold text-muted-foreground">{title}</h3>
           <span
-            className={`${textColor} text-sm text-nowrap`}
+            className={`${textColor} text-nowrap text-sm`}
           >{`${changePrefix} ${change}`}</span>
         </div>
         <p className="text-2xl font-bold">{value}</p>

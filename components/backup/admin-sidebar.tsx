@@ -83,18 +83,18 @@ export function AdminSidebar() {
   return (
     <Sidebar
       className={cn(
-        "w-64 border-r z-50 transition-all duration-300 ease-in-out",
-        state === "collapsed" && "w-16" // Smaller width when collapsed
+        "z-50 w-64 border-r transition-all duration-300 ease-in-out",
+        state === "collapsed" && "w-16", // Smaller width when collapsed
       )}
       id="sidebar"
     >
-      <SidebarHeader className="px-6 border-b bg-accent-primary border-[#6a5b83]">
+      <SidebarHeader className="bg-accent-primary border-b border-[#6a5b83] px-6">
         <Link href="/" className="flex items-center">
           <AppLogo />
         </Link>
       </SidebarHeader>
 
-      <SidebarContent className="py-5 px-3 bg-accent-primary">
+      <SidebarContent className="bg-accent-primary px-3 py-5">
         <SidebarMenu className="space-y-2">
           {modules.map((module) => (
             <SidebarMenuItem key={module.name}>
@@ -102,8 +102,8 @@ export function AdminSidebar() {
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
                     className={cn(
-                      "w-full justify-between rounded-lg py-3 transition-colors wiggle-on-hover text-gray-400 hover:text-white",
-                      state === "collapsed" && "justify-center px-2" // Center content and reduce padding when collapsed
+                      "wiggle-on-hover w-full justify-between rounded-lg py-3 text-gray-400 transition-colors hover:text-white",
+                      state === "collapsed" && "justify-center px-2", // Center content and reduce padding when collapsed
                     )}
                   >
                     <div className="flex items-center gap-3">
@@ -131,11 +131,11 @@ export function AdminSidebar() {
                 </CollapsibleTrigger>
 
                 {/* Adjust submenu for collapsed state */}
-                <CollapsibleContent className="mt-2 ml-1 overflow-hidden">
+                <CollapsibleContent className="ml-1 mt-2 overflow-hidden">
                   <SidebarMenuSub
                     className={cn(
                       "space-y-1 border-l-2 pl-4",
-                      state === "collapsed" && "pl-2" // Reduce padding when collapsed
+                      state === "collapsed" && "pl-2", // Reduce padding when collapsed
                     )}
                     style={{ borderColor: colors.border }}
                   >
@@ -148,10 +148,10 @@ export function AdminSidebar() {
                           <SidebarMenuSubButton
                             asChild
                             className={cn(
-                              "w-full px-3 py-2 rounded-md text-sm transition-colors active:bg-violet-600",
+                              "w-full rounded-md px-3 py-2 text-sm transition-colors active:bg-violet-600",
                               isActive
-                                ? "font-semibold bg-orange-300"
-                                : "hover:bg-[#28323f]"
+                                ? "bg-orange-300 font-semibold"
+                                : "hover:bg-[#28323f]",
                             )}
                             style={{
                               color: isActive ? colors.primary : colors.text,
@@ -160,7 +160,7 @@ export function AdminSidebar() {
                             <Link href={href}>
                               <div className="flex items-center gap-2">
                                 <div
-                                  className="w-2 h-2 rounded-full"
+                                  className="h-2 w-2 rounded-full"
                                   style={{ backgroundColor: module.color }}
                                 />
                                 {/* Hide submenu text when sidebar is collapsed */}

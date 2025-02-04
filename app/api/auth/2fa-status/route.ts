@@ -18,7 +18,7 @@ export async function GET() {
     if (typeof payload.userId !== "string") {
       return NextResponse.json(
         { message: "Invalid token payload" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function GET() {
     console.error("2FA status error:", error);
     return NextResponse.json(
       { error: "An error occurred while fetching 2FA status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

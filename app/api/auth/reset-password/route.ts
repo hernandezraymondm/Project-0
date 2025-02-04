@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { message: "If the email exists, a reset link has been sent." },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -44,13 +44,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "If the email exists, a reset link has been sent." },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Reset password error:", error);
     return NextResponse.json(
       { message: "An error occurred while processing your request" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

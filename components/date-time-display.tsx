@@ -29,7 +29,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
   // Render a placeholder on the server
   if (!isMounted) {
     return (
-      <div className="hidden lg:flex items-center justify-between gap-6 text-sm text-muted-foreground flex-nowrap text-nowrap">
+      <div className="hidden flex-nowrap items-center justify-between gap-6 text-nowrap text-sm text-muted-foreground lg:flex">
         <div className="flex items-center space-x-2">
           <Clock className="h-4 w-4" strokeWidth={3} />
           <ScaleLoader
@@ -53,7 +53,7 @@ export function DateTimeDisplay({ showSeconds = false }: DateTimeDisplayProps) {
   }
 
   return (
-    <div className="hidden lg:flex items-center justify-between gap-6 text-sm text-muted-foreground flex-nowrap text-nowrap">
+    <div className="hidden flex-nowrap items-center justify-between gap-6 text-nowrap text-sm text-muted-foreground lg:flex">
       <div className="flex items-center space-x-2">
         <Clock className="h-4 w-4" strokeWidth={3} />
         <span className="w-24">

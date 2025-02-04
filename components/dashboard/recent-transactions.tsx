@@ -67,16 +67,15 @@ export function RecentTransactions() {
           <div className="ml-auto font-medium">
             <div className="flex flex-col items-center gap-1">
               <span
-                className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium
-                  ${
-                    transaction.status === "Deposit"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : transaction.status === "Payment"
-                        ? "bg-blue-100 text-blue-700"
-                        : transaction.status === "Invoice"
-                          ? "bg-amber-100 text-amber-700"
-                          : "bg-red-100 text-red-700"
-                  }`}
+                className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                  transaction.status === "Deposit"
+                    ? "bg-emerald-100 text-emerald-700"
+                    : transaction.status === "Payment"
+                      ? "bg-blue-100 text-blue-700"
+                      : transaction.status === "Invoice"
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-red-100 text-red-700"
+                }`}
               >
                 {transaction.status}
               </span>

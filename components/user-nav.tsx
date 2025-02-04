@@ -19,7 +19,7 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-8 flex items-center gap-2 rounded-full"
+          className="relative flex h-8 items-center gap-2 rounded-full"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage

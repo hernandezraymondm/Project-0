@@ -21,8 +21,8 @@ export default function Navbar({ token }: { token?: string }) {
   };
 
   return (
-    <nav className="bg-transparent border-b border-[#1e293b] p-2 fixed w-full top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="fixed top-0 z-50 w-full border-b border-[#1e293b] bg-transparent p-2">
+      <div className="container mx-auto flex items-center justify-between">
         {/* Logo with gradient text */}
         <Link href="/">
           <AppLogo />
@@ -48,17 +48,17 @@ export default function Navbar({ token }: { token?: string }) {
             <>
               <Link
                 href="/login"
-                className="relative text-white transition-all duration-300 group"
+                className="group relative text-white transition-all duration-300"
               >
                 Login
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
                 href="/register"
-                className="relative text-white transition-all duration-300 group"
+                className="group relative text-white transition-all duration-300"
               >
                 Register
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </>
           )}
@@ -68,10 +68,10 @@ export default function Navbar({ token }: { token?: string }) {
             <>
               <Link
                 href="/dashboard"
-                className="relative text-white transition-all duration-300 group"
+                className="group relative text-white transition-all duration-300"
               >
                 Dashboard
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <LogoutButton />
             </>

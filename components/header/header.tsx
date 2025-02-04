@@ -73,7 +73,7 @@ export function Header() {
 
   return (
     <header className="border-b">
-      <div className="flex h-14 items-center px-8 gap-4">
+      <div className="flex h-14 items-center gap-4 px-8">
         <Button
           variant="ghost"
           size="icon"
@@ -84,7 +84,7 @@ export function Header() {
         </Button>
         <BreadCrumb />
         <SearchBox />
-        <div className="ml-auto flex items-center gap-2 -mr-2">
+        <div className="-mr-2 ml-auto flex items-center gap-2">
           <ThemeToggle />
           <Button variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
@@ -103,7 +103,7 @@ export function Header() {
                 <LayoutGrid className="h-5 w-5" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80 p-4 space-y-3">
+            <PopoverContent className="w-80 space-y-3 p-4">
               <div className="flex items-center gap-3">
                 <SquareDashedMousePointer />
                 Related Applications
@@ -113,10 +113,10 @@ export function Header() {
                   <a
                     key={index}
                     href={app.link}
-                    className="flex flex-col items-center justify-center p-3 rounded-lg transition-colors text-center border bg-accent/50 hover:bg-accent"
+                    className="flex flex-col items-center justify-center rounded-lg border bg-accent/60 p-3 text-center transition-colors hover:bg-accent"
                   >
                     <div className={app.color}>{app.icon}</div>
-                    <span className="text-xs mt-2">{app.name}</span>
+                    <span className="mt-2 text-xs">{app.name}</span>
                   </a>
                 ))}
               </div>

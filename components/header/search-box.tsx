@@ -19,7 +19,7 @@ export function SearchBox() {
   };
 
   return (
-    <div className="w-full flex-1 md:w-auto md:flex-none ml-4">
+    <div className="ml-4 w-full flex-1 md:w-auto md:flex-none">
       {/* Search for larger screens (always visible) */}
       <div className="relative hidden xl:flex">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -30,7 +30,7 @@ export function SearchBox() {
       </div>
 
       {/* Search for small screens (icon + expandable input) */}
-      <div className="xl:hidden flex items-center">
+      <div className="flex items-center xl:hidden">
         {isExpanded ? (
           <div className="relative flex items-center transition-all duration-300 ease-in-out">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -38,7 +38,7 @@ export function SearchBox() {
               placeholder="Search"
               className={cn(
                 "pl-8 pr-8 transition-all duration-300 ease-in-out",
-                isExpanded ? "w-[200px] opacity-100" : "w-0 opacity-0"
+                isExpanded ? "w-[200px] opacity-100" : "w-0 opacity-0",
               )}
               autoFocus
               onBlur={handleBlur} // Close when input loses focus
@@ -48,7 +48,7 @@ export function SearchBox() {
           <button
             onClick={toggleSearch}
             aria-label="Search"
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="p-2 text-muted-foreground transition-colors hover:text-foreground"
           >
             <Search className="h-5 w-5" />
           </button>
