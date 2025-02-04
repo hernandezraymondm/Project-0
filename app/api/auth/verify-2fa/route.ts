@@ -57,7 +57,7 @@ export async function POST(req: Request) {
       }
       return NextResponse.json({ success: true });
     } else {
-      return NextResponse.json({ error: "Invalid token" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid code" }, { status: 400 });
     }
   } catch (error) {
     console.error("Verify 2FA error:", error);

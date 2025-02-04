@@ -15,6 +15,14 @@ const registerSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  if (req.method !== "POST") {
+    return NextResponse.json(
+      { error: "Method Not Allowed" },
+      // { message: "Method Not Allowed" },
+      { status: 405 },
+    );
+  }
+
   try {
     const body = await req.json();
     const { email, password } = registerSchema.parse(body);
