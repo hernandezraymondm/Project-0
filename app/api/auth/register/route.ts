@@ -22,8 +22,8 @@ export async function POST(req: Request) {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return NextResponse.json(
-        { message: "User already exists" },
-        { status: 400 }
+        { message: "User already in use" },
+        { status: 400 },
       );
     }
 
@@ -53,13 +53,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "User registered successfully" },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
       { message: "An error occurred during registration" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

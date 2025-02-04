@@ -16,27 +16,27 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center text-white font-audiowide select-none mx-auto"
+      className="mx-auto flex select-none flex-col items-center justify-center font-audiowide text-white"
       style={{ transform: scale }} // Apply scaling
     >
       {/* UNKNOWN with stylized lines */}
       <div className="relative flex items-center">
         {/* Left stylized line */}
-        <div className="absolute right-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400 animate-line-expand-left" />
-        <span className="text-[9px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient hover:from-pink-600 hover:to-purple-400 transition-all duration-300 p-1">
+        <div className="animate-line-expand-left absolute right-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400" />
+        <span className="animate-gradient bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text p-1 text-[9px] font-bold text-transparent transition-all duration-300 hover:from-pink-600 hover:to-purple-400">
           UNKNOWN
         </span>
         {/* Right stylized line */}
-        <div className="absolute left-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400 animate-line-expand-right" />
+        <div className="animate-line-expand-right absolute left-[61px] h-[1px] bg-gradient-to-r from-pink-600 to-purple-400" />
       </div>
 
       {/* AWAKENING with stylized line below */}
       <div className="relative -mt-3">
-        <span className="text-[19px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 animate-gradient hover:from-pink-600 hover:to-purple-400 transition-all duration-300 p-1">
+        <span className="animate-gradient bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text p-1 text-[19px] font-bold text-transparent transition-all duration-300 hover:from-pink-600 hover:to-purple-400">
           PROJECT
         </span>
         {/* Stylized line below */}
-        <div className="absolute -bottom-[2px] h-1 bg-gradient-to-r from-purple-400 to-pink-600 animate-line-expand-center" />
+        <div className="animate-line-expand-center absolute -bottom-[2px] h-1 bg-gradient-to-r from-purple-400 to-pink-600" />
       </div>
     </div>
   );

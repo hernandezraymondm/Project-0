@@ -1,14 +1,14 @@
 export function TextCrawl() {
   return (
-    <div className="text-crawl-container select-none ">
+    <div className="text-crawl-container select-none">
       <div className="fade-overlay" />
 
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text">
-            <div className="text-center mb-10">
-              <p className="pt-8 mb-3 text-6xl">Episode I</p>
-              <h1 className="text-7xl uppercase mb-8">
+            <div className="mb-10 text-center">
+              <p className="mb-3 pt-8 text-6xl">Episode I</p>
+              <h1 className="mb-8 text-7xl uppercase">
                 THE TECH STACK AWAKENS
               </h1>
             </div>

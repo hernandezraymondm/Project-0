@@ -49,7 +49,7 @@ export function NavProjects({
   const pathname = usePathname();
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden text-sidebar-text">
+    <SidebarGroup className="text-sidebar-text group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel className="text-sidebar-text-foreground">
         Projects
       </SidebarGroupLabel>

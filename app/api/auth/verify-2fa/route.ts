@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import * as OTPAuth from "otpauth";
-import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { logActivity } from "../../logs/add-activity/route";
+import { decrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 
@@ -17,9 +17,13 @@ export async function POST(req: Request) {
 
   try {
     const { token: otpToken } = await req.json();
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-    };
+    const decoded = await decrypt(token);
+    if (typeof decoded.userId !== "string") {
+      return NextResponse.json(
+        { message: "Invalid token payload" },
+        { status: 401 },
+      );
+    }
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
     });
@@ -27,7 +31,7 @@ export async function POST(req: Request) {
     if (!user || !user.twoFactorSecret) {
       return NextResponse.json(
         { error: "User not found or 2FA not set up" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -59,7 +63,7 @@ export async function POST(req: Request) {
     console.error("Verify 2FA error:", error);
     return NextResponse.json(
       { error: "An error occurred while verifying 2FA" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

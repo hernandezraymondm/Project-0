@@ -5,42 +5,42 @@ import { TextCrawl } from "../components/text-crawl";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-space-800 to-[#2e2838] overflow-hidden">
+    <main className="via-space-800 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 to-[#2e2838]">
       {/* Glowing background effect */}
-      <div className="absolute inset-0 bg-radial-gradient from-purple-500/20 via-transparent to-transparent animate-pulse"></div>
+      <div className="bg-radial-gradient absolute inset-0 animate-pulse from-purple-500/20 via-transparent to-transparent"></div>
 
       {/* Content */}
-      <div className="relative z-10 text-center space-y-8 max-w-2xl">
+      <div className="relative z-10 max-w-2xl space-y-8 text-center">
         {/* Futuristic title with gradient text */}
 
         <AppLogo size="lg" />
 
         {/* Subtitle with glowing effect */}
-        <h2 className="text-xl font-medium text-white pt-14 font-jura">
+        <h2 className="pt-14 font-jura text-xl font-medium text-white">
           A NEXT.js starter kit so you don&apos;t have to start from scratch.
           Equipped with{" "}
-          <span className="text-purple-400 font-semibold">
+          <span className="font-semibold text-purple-400">
             secure session management
           </span>
-          , <span className="text-pink-400 font-semibold">TOTP 2FA</span>, and{" "}
-          <span className="text-blue-400 font-semibold">
+          , <span className="font-semibold text-pink-400">TOTP 2FA</span>, and{" "}
+          <span className="font-semibold text-blue-400">
             email verification
           </span>
           .
         </h2>
 
         {/* Buttons with hover animations */}
-        <div className="flex gap-4 justify-center">
+        <div className="flex justify-center gap-4">
           <Button
             asChild
-            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
+            className="transform bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
           >
             <Link href="/login">Login</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-purple-500 text-purple-500 hover:bg-purple-500/10 hover:border-purple-600 hover:text-purple-600 transition-all duration-300 transform hover:scale-105"
+            className="transform border-purple-500 text-purple-500 transition-all duration-300 hover:scale-105 hover:border-purple-600 hover:bg-purple-500/10 hover:text-purple-600"
           >
             <Link href="/register">Register</Link>
           </Button>
@@ -55,7 +55,7 @@ export default function Home() {
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-[1px] h-[1px] bg-white rounded-full animate-star"
+            className="animate-star absolute h-[1px] w-[1px] rounded-full bg-white"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,

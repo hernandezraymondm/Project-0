@@ -66,7 +66,7 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
           </p>
           <Button
             onClick={() => router.push("/login")}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
           >
             Go to Login
           </Button>
@@ -78,7 +78,7 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
           </p>
           <Button
             onClick={() => router.push("/")}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
           >
             Go to Home
           </Button>

@@ -34,13 +34,13 @@ export function ThemeToggle() {
           <DropdownMenuItem
             key={name}
             onClick={() => setTheme(name)}
-            className="flex justify-between items-center"
+            className="flex items-center justify-between"
           >
             <span className="flex items-center gap-2">
               {icon} {label}
             </span>
             {theme === name && (
-              <div className="h-3 w-3 bg-tertiary rounded-full animate-pulse" />
+              <div className="h-3 w-3 animate-pulse rounded-full bg-tertiary" />
             )}
           </DropdownMenuItem>
         ))}

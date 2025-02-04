@@ -31,11 +31,11 @@ export function DashboardNavbar() {
   };
 
   return (
-    <header className="sticky top-0 w-full bg-navbar flex justify-end lg:inline-block border-b border-border">
-      <div className="px-12 flex h-14 items-center justify-between">
+    <header className="bg-navbar sticky top-0 flex w-full justify-end border-b border-border lg:inline-block">
+      <div className="flex h-14 items-center justify-between px-12">
         <div className="mr-4 hidden xl:flex">
           <Separator orientation="vertical" className="mr-2 h-4" />
-          <span className="font-bold mr-6 items-center space-x-2">
+          <span className="mr-6 items-center space-x-2 font-bold">
             <BreadCrumb />
           </span>
         </div>

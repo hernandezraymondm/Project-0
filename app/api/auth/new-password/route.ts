@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { message: "Invalid or expired reset token" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -47,13 +47,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "Password reset successful" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("New password error:", error);
     return NextResponse.json(
       { message: "An error occurred while resetting your password" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

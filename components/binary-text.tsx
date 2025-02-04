@@ -39,7 +39,7 @@ export function BinaryText() {
       <div className="crawl">
         <div className="crawl-content">
           <div className="crawl-text font-mono text-2xl tracking-widest">
-            <p className="mb-8 leading-tight break-words">
+            <p className="mb-8 break-words leading-tight">
               {binaryArray.map((item, index) => (
                 <span key={index} className={item.color}>
                   {item.value}
