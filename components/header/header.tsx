@@ -14,7 +14,7 @@ import { SearchBox } from "@/components/header/search-box";
 import { ThemeToggle } from "@/components/header/theme-toggle";
 import { LogoutButton } from "@/components/logout-button";
 import { Button } from "../ui/button";
-import { BreadCrumb } from "@/app/components/breadcrumb";
+import { BreadCrumb } from "@/app/_components/breadcrumb";
 import { useState, useEffect } from "react";
 import {
   Popover,

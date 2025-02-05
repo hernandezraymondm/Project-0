@@ -5,7 +5,7 @@ import { LogoutButton } from "@/components/logout-button";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import { AppLogo } from "@/app/components/app-logo";
+import { AppLogo } from "@/app/_components/app-logo";
 import { useEffect, useState } from "react";
 
 export default function Navbar({ token }: { token?: string }) {

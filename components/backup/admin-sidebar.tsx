@@ -26,7 +26,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { AppLogo } from "@/app/components/app-logo";
+import { AppLogo } from "@/app/_components/app-logo";
 import { useSidebar } from "@/components/ui/sidebar"; // Import useSidebar hook
 
 const colors = {
