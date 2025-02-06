@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "Your trusted solution for secure session management, TOTP 2FA, and email verification.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -42,6 +42,7 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
         >
+          {/* <DisableDevToolsProvider /> */}
           {children}
           <Toaster />
         </NextThemesProvider>

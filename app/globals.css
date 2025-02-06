@@ -118,8 +118,6 @@ body {
 /* ===========
 Scroll bar 
 ============*/
-/* Scrollbar Style */
-
 ::-webkit-scrollbar-track {
   border-radius: 2px;
 }

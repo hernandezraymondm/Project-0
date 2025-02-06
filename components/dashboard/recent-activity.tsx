@@ -36,6 +36,8 @@ export function RecentActivity() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  console.log(activities);
+
   useEffect(() => {
     setLoading(true);
     fetchActivityLogs(page)
