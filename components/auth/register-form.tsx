@@ -9,37 +9,29 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
+import { registerUser } from "@/services/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schema/auth.schema";
+import { FormAlert } from "@/components/form-alert";
 import { Button } from "@/components/ui/button";
+import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
 
-const formSchema = z
-  .object({
-    email: z.string().email({ message: "Invalid email address" }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long" }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-export function RegisterForm() {
+export const RegisterForm = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -54,32 +46,53 @@ export function RegisterForm() {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        toast.info("Please check your email to verify your account.");
-        router.push("/login");
-      } else {
-        toast.error(data.message || "An error occurred during registration.");
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError("");
+    console.log("clicked");
+    startTransition(async () => {
+      try {
+        const response = await registerUser(values);
+        const data = await response.json();
+        if (response.ok) {
+          toast.info("Please check your email to verify your account.");
+          router.push("/login");
+        } else {
+          setError(data.error || "An error occurred during registration.");
+        }
+      } catch {
+        toast.error("An error occurred during registration.");
       }
-    } catch {
-      toast.error("An error occurred during registration.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
+    });
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Email Field */}
+        {/* NAME FIELD */}
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-300">Name</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    placeholder="Enter your name"
+                    {...field}
+                    className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+                  />
+                  <div className="absolute right-0 top-0 flex h-full items-center px-3 py-2 hover:bg-transparent">
+                    <IdCard className="h-4 w-4 text-gray-600" strokeWidth="3" />
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* EMAIL FIELD */}
         <FormField
           control={form.control}
           name="email"
@@ -89,6 +102,7 @@ export function RegisterForm() {
               <FormControl>
                 <div className="relative">
                   <Input
+                    type="email"
                     placeholder="Enter your email"
                     {...field}
                     className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
@@ -98,12 +112,12 @@ export function RegisterForm() {
                   </div>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Password Field */}
+        {/* PASSWORD FIELD */}
         <FormField
           control={form.control}
           name="password"
@@ -124,7 +138,7 @@ export function RegisterForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
-                    disabled={isLoading}
+                    disabled={isPending}
                   >
                     {showPassword ? (
                       <EyeOffIcon
@@ -143,12 +157,12 @@ export function RegisterForm() {
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Confirm Password Field */}
+        {/* CONFIRM PASSWORD FIELD */}
         <FormField
           control={form.control}
           name="confirmPassword"
@@ -169,7 +183,7 @@ export function RegisterForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={toggleConfirmPasswordVisibility}
-                    disabled={isLoading}
+                    disabled={isPending}
                   >
                     {showConfirmPassword ? (
                       <EyeOffIcon
@@ -188,20 +202,22 @@ export function RegisterForm() {
                   </Button>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Register Button */}
+        <FormAlert message={error} />
+
+        {/* REGISTER BUTTON */}
         <Button
           type="submit"
-          disabled={isLoading}
+          disabled={isPending}
           className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
         >
-          {isLoading ? "Registering..." : "Register"}
+          {isPending ? "Registering..." : "Register"}
         </Button>
       </form>
     </Form>
   );
-}
+};

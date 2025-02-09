@@ -1,8 +1,6 @@
-import { randomBytes, createHash } from "crypto";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { v4 as uuidv4 } from "uuid";
-import crypto from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,11 +11,19 @@ export function cn(...inputs: ClassValue[]) {
  * @returns {Promise<void>} A promise that resolves after the delay.
  */
 export async function delayWithHash(): Promise<void> {
-  return new Promise((resolve) => {
-    // Generate a random string
-    const randomString = randomBytes(16).toString("hex");
-    // Generate a hash of the random string
-    createHash("sha256").update(randomString).digest("hex");
+  return new Promise(async (resolve) => {
+    // Generate a random string using Web Crypto API
+    const array = new Uint8Array(16);
+    crypto.getRandomValues(array);
+    const randomString = Array.from(array)
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+
+    // Generate a hash of the random string using Web Crypto API
+    const encoder = new TextEncoder();
+    const data = encoder.encode(randomString);
+    await crypto.subtle.digest("SHA-256", data);
+
     // Simulate delay
     setTimeout(resolve, 100);
   });
@@ -38,7 +44,10 @@ export const generateUUID = (): string => {
  * @returns {string} - A 6-digit verification code.
  */
 export const generateOTP = (): string => {
-  return crypto.randomInt(100000, 999999).toString();
+  // Generate a random 6-digit number using Web Crypto API
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return ((array[0] % 900000) + 100000).toString();
 };
 
 /**

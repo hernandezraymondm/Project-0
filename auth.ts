@@ -1,13 +1,13 @@
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Facebook from "next-auth/providers/facebook";
+import { LoginSchema } from "@/schema/auth.schema";
 import Google from "next-auth/providers/google";
 import { Config } from "@/config/app.config";
 import { Adapter } from "next-auth/adapters";
 import { getUserByEmail } from "./data/user";
 import { delayWithHash } from "@/lib/utils";
 import { db } from "@/lib/utils/prisma";
-import { LoginSchema } from "@/schema";
 import NextAuth from "next-auth";
 import bcrypt from "bcryptjs";
 

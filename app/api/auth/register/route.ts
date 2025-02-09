@@ -6,8 +6,8 @@ import { sendVerificationEmail } from "@/lib/utils/mailer";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { ActionLog } from "@/lib/enums/action-log.enum";
 import { NextRequest, NextResponse } from "next/server";
+import { RegisterSchema } from "@/schema/auth.schema";
 import { HttpStatus } from "@/config/http.config";
-import { RegisterSchema } from "@/schema";
 import { db } from "@/lib/utils/prisma";
 import bcrypt from "bcryptjs";
 
