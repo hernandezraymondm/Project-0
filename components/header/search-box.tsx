@@ -1,9 +1,9 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { Search } from "lucide-react";
 import { cn } from "@/lib/utils"; // Adjust the import according to your project structure
+import { useState } from "react";
 
 export function SearchBox() {
   const [isExpanded, setIsExpanded] = useState(false);

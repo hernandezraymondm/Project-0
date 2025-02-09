@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
@@ -13,6 +12,7 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react";
+import * as React from "react";
 
 import {
   Sidebar,
@@ -22,8 +22,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { TeamSwitcher } from "../sidebar/team-switcher";
-import { NavMain } from "../sidebar/nav-main";
 import { NavProjects } from "../sidebar/nav-projects";
+import { NavMain } from "../sidebar/nav-main";
 import { NavUser } from "../sidebar/nav-user";
 
 // This is sample data.

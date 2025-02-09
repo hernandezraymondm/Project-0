@@ -1,7 +1,7 @@
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
 

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { format } from "date-fns";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { CalendarDays, Clock } from "lucide-react";
+import { format } from "date-fns";
 
 interface ClientDateTimeDisplayProps {
   showSeconds?: boolean;

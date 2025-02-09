@@ -1,14 +1,14 @@
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { OutlineInput } from "../ui/outline-input";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Download } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import QRCode from "qrcode";
 import Link from "next/link";
-import { OutlineInput } from "../ui/outline-input";
+import QRCode from "qrcode";
 
 export function Setup2FA() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);

@@ -1,8 +1,8 @@
-import { Metadata } from "next";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import type React from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Header } from "@/components/header/header";
+import { Metadata } from "next";
+import type React from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard",

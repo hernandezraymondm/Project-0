@@ -1,15 +1,4 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  ChevronDown,
-  Box,
-  DollarSign,
-  Users,
-  FileText,
-  CheckSquare,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +15,19 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  ChevronDown,
+  Box,
+  DollarSign,
+  Users,
+  FileText,
+  CheckSquare,
+} from "lucide-react";
 import { AppLogo } from "@/app/_components/app-logo";
 import { useSidebar } from "@/components/ui/sidebar"; // Import useSidebar hook
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const colors = {
   primary: "#b046e5",

@@ -1,6 +1,8 @@
+import { randomBytes, createHash } from "crypto";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { randomBytes, createHash } from "crypto";
+import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -20,3 +22,31 @@ export async function delayWithHash(): Promise<void> {
     setTimeout(resolve, 100);
   });
 }
+
+/**
+ * Generates a new UUID.
+ *
+ * @returns {string} - A newly generated UUID.
+ */
+export const generateUUID = (): string => {
+  return uuidv4();
+};
+
+/**
+ * Generates a random 6-digit verification code.
+ *
+ * @returns {string} - A 6-digit verification code.
+ */
+export const generateOTP = (): string => {
+  return crypto.randomInt(100000, 999999).toString();
+};
+
+/**
+ * Generates an expiration date for the verification token.
+ *
+ * @param {number} hours - The number of hours until the token expires.
+ * @returns {Date} - The expiration date.
+ */
+export const generateExpirationDate = (hours: number): Date => {
+  return new Date(new Date().getTime() + hours * 3600 * 1000);
+};

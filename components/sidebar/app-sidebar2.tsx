@@ -1,6 +1,16 @@
 "use client";
 
 import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import {
   LayoutDashboard,
   Table2,
   FileText,
@@ -13,16 +23,6 @@ import {
   Github,
   LogOut,
 } from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-} from "@/components/ui/sidebar";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },

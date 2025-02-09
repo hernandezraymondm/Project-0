@@ -1,12 +1,12 @@
-import { Bell } from "lucide-react";
-import { SearchBox } from "@/components/header/search-box";
 import { ThemeToggle } from "@/components/header/theme-toggle";
-import { LogoutButton } from "@/components/logout-button";
-import { Button } from "../ui/button";
+import { SearchBox } from "@/components/header/search-box";
 import { BreadCrumb } from "@/app/_components/breadcrumb";
-import { SidebarToggle } from "./sidebar-toggle";
+import { LogoutButton } from "@/components/logout-button";
 import { FullScreenToggle } from "./fullscreen-toggle";
+import { SidebarToggle } from "./sidebar-toggle";
 import { RelatedApps } from "./related-apps";
+import { Button } from "../ui/button";
+import { Bell } from "lucide-react";
 
 export function Header() {
   return (

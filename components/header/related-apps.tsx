@@ -1,7 +1,7 @@
-import { LayoutGrid, SquareDashedMousePointer } from "lucide-react";
-import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { LayoutGrid, SquareDashedMousePointer } from "lucide-react";
+import { Button } from "../ui/button";
 
 // Related Applications Data
 const relatedApplications = [

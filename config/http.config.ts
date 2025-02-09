@@ -22,6 +22,6 @@ const httpConfig = () => ({
   GATEWAY_TIMEOUT: 504,
 });
 
-export const httpStatus = httpConfig();
+export const HttpStatus = httpConfig();
 
-export type HttpStatusCode = (typeof httpStatus)[keyof typeof httpStatus];
+export type HttpStatusCode = (typeof HttpStatus)[keyof typeof HttpStatus];

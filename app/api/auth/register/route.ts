@@ -1,73 +1,62 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import * as z from "zod";
-import { Resend } from "resend";
-import VerificationEmail from "@/components/emails/verification-email";
+import { generateVerificationToken } from "@/lib/utils/token";
+import { validateMethod } from "@/lib/utils/validate-method";
 import { logActivity } from "../../logs/add-activity/route";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { sendVerificationEmail } from "@/lib/utils/mailer";
+import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { ActionLog } from "@/lib/enums/action-log.enum";
+import { NextRequest, NextResponse } from "next/server";
+import { HttpStatus } from "@/config/http.config";
+import { RegisterSchema } from "@/schema";
+import { db } from "@/lib/utils/prisma";
+import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
+export async function POST(req: NextRequest) {
+  // VALIDATE HTTP METHOD BEFORE PROCESSING
+  const methodError = validateMethod(req, "POST");
+  if (methodError) return methodError;
 
-const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
+  const body = await req.json();
 
-export async function POST(req: Request) {
-  if (req.method !== "POST") {
+  // VALIDATE REQUEST BODY WITH ZOD
+  const validation = RegisterSchema.safeParse(body);
+  if (!validation.success) {
     return NextResponse.json(
-      { error: "Method Not Allowed" },
-      // { message: "Method Not Allowed" },
-      { status: 405 },
+      { error: ErrorCode.INVALID_DATA, details: validation.error.format() },
+      { status: HttpStatus.BAD_REQUEST },
     );
   }
 
-  try {
-    const body = await req.json();
-    const { email, password } = registerSchema.parse(body);
+  const { name, email, password } = validation.data;
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) {
-      return NextResponse.json(
-        { message: "User already in use" },
-        { status: 400 },
-      );
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.random().toString(36).substring(2, 15);
-
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        verificationToken,
-      },
-    });
-
-    if (user) {
-      logActivity(user.id, "Registered account");
-    }
-
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
-
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "Verify Your Email",
-      react: VerificationEmail({ verificationUrl }),
-    });
-
+  // CHECK IF THE USER ALREADY EXISTS
+  const existingUser = await db.user.findUnique({ where: { email } });
+  if (existingUser) {
     return NextResponse.json(
-      { message: "User registered successfully" },
-      { status: 201 },
-    );
-  } catch (error) {
-    console.error("Registration error:", error);
-    return NextResponse.json(
-      { message: "An error occurred during registration" },
-      { status: 500 },
+      { error: ErrorCode.AUTH_EMAIL_ALREADY_EXISTS },
+      { status: HttpStatus.BAD_REQUEST },
     );
   }
+
+  // HASH PASSWORD AND CREATE USER
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await db.user.create({
+    data: { name, email, password: hashedPassword },
+  });
+
+  // LOG USER REGISTRATION
+  logActivity(user.id, ActionLog.ACCOUNT_SIGNUP);
+
+  // GENERATE AND SEND VERIFICATION EMAIL
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token,
+    verificationToken.code,
+  );
+
+  return NextResponse.json(
+    { message: SuccessCode.ACCOUNT_SIGNUP },
+    { status: HttpStatus.CREATED },
+  );
 }

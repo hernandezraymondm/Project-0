@@ -1,7 +1,4 @@
 const appConfig = () => ({
-  DOMAIN: process.env.NEXT_PUBLIC_APP_URL!,
-  APP_NAME: process.env.NEXT_PUBLIC_APP_NAME!,
-
   ACCESS_TOKEN_EXPIRY: "15m",
   REFRESH_TOKEN_EXPIRY: "7d",
   REFRESH_DB_SESSION_EXPIRY: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
@@ -10,6 +7,10 @@ const appConfig = () => ({
 
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET!,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET!,
+
+  // CURRENTLY USED
+  DOMAIN: process.env.NEXT_PUBLIC_APP_URL!,
+  APP_NAME: process.env.NEXT_PUBLIC_APP_NAME!,
 
   AUTH_SECRET: process.env.AUTH_SECRET!,
   GOOGLE_ID: process.env.AUTH_GOOGLE_ID!,
@@ -25,4 +26,4 @@ const appConfig = () => ({
   API_BASE_PATH: "/api",
 });
 
-export const config = appConfig();
+export const Config = appConfig();

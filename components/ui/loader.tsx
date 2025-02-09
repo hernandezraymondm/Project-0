@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import * as React from "react";
 
 const loaderVariants = cva("flex justify-center items-center", {
   variants: {
@@ -39,7 +39,7 @@ export interface LoaderProps
 const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
   (
     { className, size = "md", color = "hsl(var(--tertiary))", ...props },
-    ref
+    ref,
   ) => {
     const lines = [0, 1, 2];
     const translateYValue = size === "sm" ? 5 : size === "md" ? 7 : 10;
@@ -74,7 +74,7 @@ const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
         `}</style>
       </div>
     );
-  }
+  },
 );
 
 Loader.displayName = "Loader";

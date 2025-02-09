@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Inter, Audiowide, Jura } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import type { Metadata } from "next";
+import "./globals.css";
 
 // Initialize Inter font
 const inter = Inter({ subsets: ["latin"] });

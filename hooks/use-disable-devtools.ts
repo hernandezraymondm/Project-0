@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import DisableDevtool from "disable-devtool";
+import { useEffect } from "react";
 
 export default function useDisableDevTools() {
   useEffect(() => {

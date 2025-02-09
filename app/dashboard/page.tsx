@@ -1,22 +1,22 @@
-import FloatingIconCard from "@/components/floating-icon-card";
 import {
   UsersRound,
   ShoppingCart,
   ChartNoAxesCombined,
   TriangleAlert,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { FaGithub } from "react-icons/fa";
-import { MdTimeline } from "react-icons/md";
-import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
-import { RecentTransactions } from "@/components/dashboard/recent-transactions";
-import { RecentActivity } from "@/components/dashboard/recent-activity";
-import { Setup2FA } from "@/components/dashboard/setup-2fa";
-import { QuickActions } from "@/components/dashboard/quick-actions";
-import { UserStats } from "../_components/user-stats";
 import { SecurityOverview } from "../../components/dashboard/security-overview";
-import { Card } from "@/components/ui/card";
+import { RecentTransactions } from "@/components/dashboard/recent-transactions";
+import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
+import { QuickActions } from "@/components/dashboard/quick-actions";
+import FloatingIconCard from "@/components/floating-icon-card";
 import { ClientDateTimeDisplay } from "@/components/date-time";
+import { Setup2FA } from "@/components/dashboard/setup-2fa";
+import { UserStats } from "../_components/user-stats";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { MdTimeline } from "react-icons/md";
+import { FaGithub } from "react-icons/fa";
 
 export default function DashboardPage() {
   return (

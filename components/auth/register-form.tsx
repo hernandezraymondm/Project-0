@@ -1,13 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -16,7 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { toast } from "sonner";
+import * as z from "zod";
 
 const formSchema = z
   .object({

@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import * as z from "zod";
-import * as OTPAuth from "otpauth";
 import { logActivity } from "../../logs/add-activity/route";
 import { encrypt } from "@/lib/utils/basic-auth";
+import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+import * as OTPAuth from "otpauth";
+import bcrypt from "bcryptjs";
+import * as z from "zod";
 
 const prisma = new PrismaClient();
 

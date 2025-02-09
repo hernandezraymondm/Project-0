@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import { jwtVerify } from "jose";
-import { cookies } from "next/headers";
 import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { jwtVerify } from "jose";
 
 const prisma = new PrismaClient();
 

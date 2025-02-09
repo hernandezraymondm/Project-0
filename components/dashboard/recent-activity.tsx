@@ -1,15 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import GridLoader from "react-spinners/GridLoader";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { formatDateTime } from "@/lib/utils/format-date";
 import {
   Pagination,
   PaginationContent,
@@ -19,6 +9,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { formatDateTime } from "@/lib/utils/format-date";
+import GridLoader from "react-spinners/GridLoader";
+import { useEffect, useState } from "react";
 
 async function fetchActivityLogs(page = 1, limit = 4) {
   const response = await fetch(

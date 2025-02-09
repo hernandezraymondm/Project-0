@@ -1,15 +1,15 @@
-import NextAuth from "next-auth";
-import { prisma } from "@/lib/utils/prisma";
-import { Adapter } from "next-auth/adapters";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { delayWithHash } from "@/lib/utils";
-import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import Facebook from "next-auth/providers/facebook";
+import Google from "next-auth/providers/google";
+import { Config } from "@/config/app.config";
+import { Adapter } from "next-auth/adapters";
+import { getUserByEmail } from "./data/user";
+import { delayWithHash } from "@/lib/utils";
+import { db } from "@/lib/utils/prisma";
 import { LoginSchema } from "@/schema";
-import { config } from "@/config/app.config";
-import { getUserByEmail } from "@/actions/user";
+import NextAuth from "next-auth";
+import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
@@ -18,7 +18,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   events: {
     async linkAccount({ user }) {
-      await prisma.user.update({
+      await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
       });
@@ -84,17 +84,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  secret: config.AUTH_SECRET,
-  adapter: PrismaAdapter(prisma) as Adapter,
+  secret: Config.AUTH_SECRET,
+  adapter: PrismaAdapter(db) as Adapter,
   session: { strategy: "jwt" },
   providers: [
     Google({
-      clientId: config.GOOGLE_ID,
-      clientSecret: config.GOOGLE_SECRET,
+      clientId: Config.GOOGLE_ID,
+      clientSecret: Config.GOOGLE_SECRET,
     }),
     Facebook({
-      clientId: config.FACEBOOK_ID,
-      clientSecret: config.FACEBOOK_SECRET,
+      clientId: Config.FACEBOOK_ID,
+      clientSecret: Config.FACEBOOK_SECRET,
     }),
     Credentials({
       async authorize(credentials) {

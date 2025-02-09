@@ -1,8 +1,5 @@
 "use client";
 
-import { Bell, Moon, Sun, User } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,12 +8,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
-import { BreadCrumb } from "@/app/_components/breadcrumb";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
+import { BreadCrumb } from "@/app/_components/breadcrumb";
+import { Bell, Moon, Sun, User } from "lucide-react";
 import { SearchBar } from "../header/search-box";
+import { Button } from "@/components/ui/button";
 import { LogoutButton } from "../logout-button";
 import { Separator } from "../ui/separator";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export function DashboardNavbar() {
   const { theme, setTheme } = useTheme();
