@@ -1,14 +1,14 @@
+import { Navbar } from "@/components/navbar";
 import React from "react";
-import { cookies } from "next/headers";
-import Navbar from "@/components/navbar";
+// import { cookies } from "next/headers";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("session")?.value;
+  // const cookieStore = cookies();
+  // const token = (await cookieStore).get("session")?.value;
 
   return (
     <div>
-      <Navbar token={token} />
+      <Navbar />
       {children}
     </div>
   );

@@ -8,15 +8,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { FaGithub } from "react-icons/fa";
 import { MdTimeline } from "react-icons/md";
-import { Overview } from "@/components/dashboard/overview";
+import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
 import { QuickActions } from "@/components/dashboard/quick-actions";
-import { UserStats } from "../components/user-stats";
+import { UserStats } from "../_components/user-stats";
 import { SecurityOverview } from "../../components/dashboard/security-overview";
-import { DateTimeDisplay } from "@/components/date-time-display";
 import { Card } from "@/components/ui/card";
+import { ClientDateTimeDisplay } from "@/components/date-time";
 
 export default function DashboardPage() {
   return (
@@ -28,7 +28,10 @@ export default function DashboardPage() {
           </span>
           <h2 className="text-3xl tracking-tight">Overview</h2>
         </div>
-        <DateTimeDisplay showSeconds />
+        <div className="hidden flex-nowrap items-center justify-between gap-6 text-nowrap text-sm text-muted-foreground lg:flex">
+          <ClientDateTimeDisplay showSeconds type="time" />
+          <ClientDateTimeDisplay showSeconds type="date" />
+        </div>
         <Button>
           <FaGithub className="mr-2 h-4 w-4" />
           <p className="hidden sm:inline">Star on GitHub</p>
@@ -81,8 +84,8 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
             <Card className="col-span-full lg:col-span-4">
               <div className="p-6">
-                <h3 className="mb-4 text-lg font-medium">Overview</h3>
-                <Overview />
+                <h3 className="mb-4 text-lg font-medium">Sales Analytics</h3>
+                <SalesAnalytics />
               </div>
             </Card>
             <Card className="col-span-full lg:col-span-3">

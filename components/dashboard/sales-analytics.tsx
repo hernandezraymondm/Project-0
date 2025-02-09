@@ -1,97 +1,133 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+const data = [
+  {
+    name: "Jan",
+    revenue: 10400,
+    subscription: 240,
+  },
+  {
+    name: "Feb",
+    revenue: 14405,
+    subscription: 300,
+  },
+  {
+    name: "Mar",
+    revenue: 9400,
+    subscription: 200,
+  },
+  {
+    name: "Apr",
+    revenue: 8200,
+    subscription: 278,
+  },
+  {
+    name: "May",
+    revenue: 7000,
+    subscription: 189,
+  },
+  {
+    name: "Jun",
+    revenue: 9600,
+    subscription: 239,
+  },
+  {
+    name: "Jul",
+    revenue: 11244,
+    subscription: 278,
+  },
+  {
+    name: "Aug",
+    revenue: 12988,
+    subscription: 348,
+  },
 ];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
 
 export function SalesAnalytics() {
   return (
-    <Card className="card">
-      <CardHeader>
-        <CardTitle className="card-title">Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              dataKey="desktop"
-              type="monotone"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
-            </div>
-          </div>
-        </div>
-      </CardFooter>
-    </Card>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart
+        data={data}
+        margin={{
+          top: 5,
+          right: 10,
+          left: 10,
+          bottom: 0,
+        }}
+      >
+        <XAxis
+          dataKey="name"
+          stroke="#888888"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+        />
+        <YAxis
+          stroke="#888888"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+          tickFormatter={(value) => `$${value}`}
+        />
+        <Tooltip
+          content={({ active, payload }) => {
+            if (active && payload && payload.length) {
+              return (
+                <div className="rounded-lg border bg-background p-2 shadow-sm">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex flex-col">
+                      <span className="text-[0.70rem] uppercase text-muted-foreground">
+                        Revenue
+                      </span>
+                      <span className="font-bold text-muted-foreground">
+                        ${payload[0].value}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[0.70rem] uppercase text-muted-foreground">
+                        Subscription
+                      </span>
+                      <span className="font-bold text-muted-foreground">
+                        {payload[1].value}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
+        <Line
+          type="monotone"
+          dataKey="revenue"
+          stroke="#2563eb"
+          strokeWidth={2}
+          activeDot={{
+            r: 6,
+            style: { fill: "#2563eb", opacity: 0.25 },
+          }}
+        />
+        <Line
+          type="monotone"
+          dataKey="subscription"
+          stroke="#16a34a"
+          strokeWidth={2}
+          activeDot={{
+            r: 6,
+            style: { fill: "#16a34a", opacity: 0.25 },
+          }}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }

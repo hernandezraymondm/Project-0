@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import DisableDevtool from "disable-devtool";
 
-export default function DisableDevTools() {
+export default function useDisableDevTools() {
   useEffect(() => {
     DisableDevtool({
       ondevtoolopen: () => {
@@ -13,6 +13,4 @@ export default function DisableDevTools() {
       interval: 1000, // Check for DevTools every second
     });
   }, []);
-
-  return null; // This component doesn't render anything
 }

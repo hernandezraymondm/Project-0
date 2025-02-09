@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Download } from "lucide-react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import QRCode from "qrcode";
+import Link from "next/link";
+import { OutlineInput } from "../ui/outline-input";
 
 export function Setup2FA() {
   const { toast } = useToast();
@@ -136,7 +138,7 @@ export function Setup2FA() {
           </Button>
         </CardContent>
       ) : (
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col space-y-4">
           <p className="text-sm">
             Scan this QR code with your authenticator app:
           </p>
@@ -147,24 +149,41 @@ export function Setup2FA() {
             alt="2FA QR Code"
             className="mx-auto h-64 w-64"
           />
-          <p className="break-all text-sm text-gray-500">
-            If you can&apos;t scan the QR code, you can manually enter this URL
-            in your authenticator app:
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="self-center bg-success text-xs hover:bg-success/80"
+          >
+            <Link
+              href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pli=1"
+              target="_blank"
+              className="flex items-center justify-center gap-2"
+            >
+              <Download /> Download Google Authenticator
+            </Link>
+          </Button>
+
+          <p className="break-words text-sm text-gray-500">
+            If you can&apos;t scan the QR code, you can manually enter this
+            secret key in your authenticator app:
+          </p>
+          <p className="text-sm font-semibold text-violet-400">{secret}</p>
+
+          <p className="break-words text-sm text-gray-500">
+            Or enter this URL manually:
           </p>
           <p className="break-all text-xs text-gray-500">{otpauth}</p>
-          <p className="break-words text-sm">
-            Or enter this secret manually:{" "}
-            <span className="text-base text-violet-400">{secret}</span>
-          </p>
-          <Input
+
+          <OutlineInput
+            label="Enter 6-digit code"
             type="text"
-            placeholder="Enter 6-digit code"
             value={token}
             onChange={(e) => setToken(e.target.value)}
-            className="border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+            className="rounded-3xl bg-background focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
           />
           <Button onClick={verify2FA} className="button w-full">
-            Verify and Enable 2FA
+            Verify and Enable
           </Button>
         </CardContent>
       )}

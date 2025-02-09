@@ -1,5 +1,5 @@
 import React from "react";
-import { AppLogo } from "../components/app-logo";
+import { AppLogo } from "../_components/app-logo";
 import { BinaryText } from "@/components/binary-text";
 
 const SettingPage = () => {
