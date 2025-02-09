@@ -2,11 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { LogOut } from "lucide-react";
 
 export function LogoutButton() {
-  const { toast } = useToast();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -16,10 +15,7 @@ export function LogoutButton() {
         credentials: "include", // This is important for including cookies in the request
       });
       if (response.ok) {
-        toast({
-          title: "Logged out",
-          description: "You have been successfully logged out.",
-        });
+        toast.success("You have been successfully logged out.");
         router.push("/login");
         router.refresh();
       } else {
@@ -27,11 +23,7 @@ export function LogoutButton() {
       }
     } catch (error) {
       console.error("Logout error:", error);
-      toast({
-        title: "Error",
-        description: "An error occurred while logging out.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while logging out.");
     }
   };
 

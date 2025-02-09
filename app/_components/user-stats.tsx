@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function getUserStats() {
   const totalUsers = await prisma.user.count();
   const verifiedUsers = await prisma.user.count({
-    where: { isEmailVerified: true },
+    where: { emailVerified: { not: null } },
   });
   return { totalUsers, verifiedUsers };
 }

@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 interface VerifyEmailProps {
   token: string;
 }
 
 export function VerifyEmail({ token }: VerifyEmailProps) {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
@@ -27,24 +26,14 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
         const data = await response.json();
         if (response.ok) {
           setIsVerified(true);
-          toast({
-            title: "Email verified",
-            description: "Your email has been successfully verified.",
-          });
+          toast.success("Your email has been successfully verified.");
         } else {
-          toast({
-            title: "Verification failed",
-            description:
-              data.message || "An error occurred during email verification.",
-            variant: "destructive",
-          });
+          toast.error(
+            data.message || "An error occurred during email verification.",
+          );
         }
       } catch {
-        toast({
-          title: "Verification failed",
-          description: "An error occurred during email verification.",
-          variant: "destructive",
-        });
+        toast.error("An error occurred during email verification.");
       } finally {
         setIsLoading(false);
       }

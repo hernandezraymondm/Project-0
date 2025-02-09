@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter, Audiowide, Jura } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 // Initialize Inter font
@@ -44,7 +44,8 @@ export default function RootLayout({
         >
           {/* <DisableDevToolsProvider /> */}
           {children}
-          <Toaster />
+
+          <Toaster richColors position="bottom-center" />
         </NextThemesProvider>
       </body>
     </html>

@@ -1,13 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export function QuickActions() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { toast } = useToast();
-
   const actions = [
     {
       label: "Change Password",

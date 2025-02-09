@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -28,7 +28,6 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [require2FA, setRequire2FA] = useState(false);
@@ -55,32 +54,18 @@ export function LoginForm() {
       .then((data) => {
         if (data.require2FA) {
           setRequire2FA(true);
-          toast({
-            title: "2FA Required",
-            description: "Please enter your 2FA code to complete login.",
-          });
+          toast.warning("Please enter your 2FA code to complete login.");
         } else if (data.message === "Login successful") {
-          toast({
-            title: "Login successful",
-            description: "You have been logged in successfully.",
-          });
+          toast.success("You have been logged in successfully.");
           router.push("/dashboard");
           router.refresh();
         } else {
-          toast({
-            title: "Login failed",
-            description: data.message || "Invalid email or password.",
-            variant: "destructive",
-          });
+          toast.error(data.message || "Invalid credentials.");
         }
       })
       .catch((error) => {
         console.error("Login error:", error);
-        toast({
-          title: "Login failed",
-          description: "An error occurred during login.",
-          variant: "destructive",
-        });
+        toast.error("An error occurred during login.");
       })
       .finally(() => {
         setIsLoading(false);

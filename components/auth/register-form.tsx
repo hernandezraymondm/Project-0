@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -32,7 +32,6 @@ const formSchema = z
   });
 
 export function RegisterForm() {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -65,24 +64,13 @@ export function RegisterForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        toast({
-          title: "Registration successful",
-          description: "Please check your email to verify your account.",
-        });
+        toast.info("Please check your email to verify your account.");
         router.push("/login");
       } else {
-        toast({
-          title: "Registration failed",
-          description: data.message || "An error occurred during registration.",
-          variant: "destructive",
-        });
+        toast.error(data.message || "An error occurred during registration.");
       }
     } catch {
-      toast({
-        title: "Registration failed",
-        description: "An error occurred during registration.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred during registration.");
     } finally {
       setIsLoading(false);
     }

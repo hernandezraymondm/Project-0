@@ -14,14 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
 export function ResetPasswordForm() {
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,27 +40,15 @@ export function ResetPasswordForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        toast({
-          title: "Reset password email sent",
-          description:
-            "Check your email for instructions to reset your password.",
-        });
+        toast.info("Check your email for instructions to reset your password.");
       } else {
-        toast({
-          title: "Reset password failed",
-          description:
-            data.message ||
+        toast.error(
+          data.message ||
             "An error occurred while sending the reset password email.",
-          variant: "destructive",
-        });
+        );
       }
     } catch {
-      toast({
-        title: "Reset password failed",
-        description:
-          "An error occurred while sending the reset password email.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while sending the reset password email.");
     } finally {
       setIsLoading(false);
     }
