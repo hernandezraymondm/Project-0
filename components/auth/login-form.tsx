@@ -26,6 +26,7 @@ export function LoginForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
+  const [lockTime, setLockTime] = useState<number | undefined>();
   const [verificationToken, setVerificationToken] = useState<
     string | undefined
   >("");
@@ -82,6 +83,12 @@ export function LoginForm() {
     setVerificationToken: (token: string) => void,
     setError: (error: string) => void,
   ) => {
+    if (data.lockTime) {
+      setLockTime(data.lockTime);
+      toast.warning(
+        `Your account has been lock due to multiple failed attempts. Please try again in ${lockTime} seconds.`,
+      );
+    }
     if (data.verificationToken) {
       setVerificationToken(data.verificationToken);
       toast.info("Please verify your email address to login.");

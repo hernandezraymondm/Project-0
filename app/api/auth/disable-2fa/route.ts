@@ -28,7 +28,7 @@ export async function POST() {
     });
 
     if (result) {
-      logActivity(decoded.userId, "Disabled 2FA");
+      logActivity("Disabled 2FA", decoded.userId);
     }
 
     return NextResponse.json({ message: "2FA has been disabled" });

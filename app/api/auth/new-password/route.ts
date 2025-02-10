@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     });
 
     if (result) {
-      logActivity(user.id, "Reset password");
+      logActivity("Reset password", user.id, user.email);
     }
 
     return NextResponse.json(

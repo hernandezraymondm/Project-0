@@ -1,4 +1,6 @@
+import { logActivity } from "@/app/api/logs/add-activity/route";
 import { sendLockoutEmailAlert } from "../utils/mailer";
+import { ActionLog } from "../enums/action-log.enum";
 import bcrypt from "bcryptjs";
 
 export const loginAttempts = new Map<
@@ -20,9 +22,9 @@ const CLEANUP_INTERVAL = 10 * 60 * 1000; // 10 minutes
 export const handleLoginAttempts = async (
   email: string,
   password: string,
-  hashedPassword: string,
+  user: any,
 ) => {
-  const passwordMatch = await bcrypt.compare(password, hashedPassword);
+  const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (!passwordMatch) {
     const now = Date.now();
@@ -42,6 +44,9 @@ export const handleLoginAttempts = async (
         console.log(`Lockout Email Sent to ${email}!`);
         await sendLockoutEmailAlert(email);
         userAttempts.emailSent = true;
+
+        // Log activity
+        logActivity(ActionLog.ACCOUNT_LOCKED, user.id, user.email);
       }
     }
 

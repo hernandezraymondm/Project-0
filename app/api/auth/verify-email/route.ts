@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     });
 
     if (result) {
-      logActivity(user.id, "Verified email");
+      logActivity("Verified email", user.id, user.email);
     }
 
     return NextResponse.json(

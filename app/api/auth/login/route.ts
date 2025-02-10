@@ -46,23 +46,17 @@ export async function POST(req: NextRequest) {
   // CHECK LOCK OUT STATUS
   const { locked, remainingTime } = checkLockoutStatus(email);
   if (locked) {
-    // Log activity
-    logActivity(user.id, ActionLog.ACCOUNT_LOCKED);
     return NextResponse.json(
       {
         message: ErrorCode.AUTH_ACCOUNT_LOCKED,
-        time: Math.ceil(remainingTime),
+        lockTime: Math.ceil(remainingTime),
       },
       { status: HttpStatus.BAD_REQUEST },
     );
   }
 
   // HANDLE PASSWORD VERIFICATION AND FAILED LOGIN ATTEMPTS
-  const { verified } = await handleLoginAttempts(
-    email,
-    password,
-    user.password,
-  );
+  const { verified } = await handleLoginAttempts(email, password, user);
   if (!verified) {
     return NextResponse.json(
       { message: ErrorCode.AUTH_INVALID_CREDENTIALS },
@@ -110,7 +104,7 @@ export async function POST(req: NextRequest) {
   }
 
   // LOG ACTIVITY
-  logActivity(user.id, ActionLog.ACCOUNT_SIGNIN);
+  logActivity(ActionLog.ACCOUNT_SIGNIN, user.id, user.email);
 
   // PROCEED WITH LOGIN
   try {

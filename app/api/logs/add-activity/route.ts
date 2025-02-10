@@ -2,11 +2,16 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function logActivity(userId: string, action: string) {
+export async function logActivity(
+  action: string,
+  userId: string,
+  email?: string,
+) {
   try {
     await prisma.log.create({
       data: {
         userId,
+        email,
         action,
         timestamp: new Date(),
       },

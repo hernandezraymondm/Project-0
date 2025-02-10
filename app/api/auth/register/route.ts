@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   });
 
   // LOG USER REGISTRATION
-  logActivity(user.id, ActionLog.ACCOUNT_SIGNUP);
+  logActivity(ActionLog.ACCOUNT_SIGNUP, user.id, user.email);
 
   // GENERATE AND SEND VERIFICATION EMAIL
   const verification = await generateVerification(email);
