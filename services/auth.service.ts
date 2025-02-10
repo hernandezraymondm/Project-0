@@ -10,10 +10,13 @@ export const registerUser = async (values: any) => {
 };
 
 export const loginUser = async (values: any) => {
-  const response = await fetch(`${Config.API_BASE_PATH}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(values),
-  });
+  const response = await fetch(
+    `${Config.DOMAIN}${Config.API_BASE_PATH}/auth/login`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    },
+  );
   return response;
 };

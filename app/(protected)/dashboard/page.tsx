@@ -4,7 +4,7 @@ import {
   ChartNoAxesCombined,
   TriangleAlert,
 } from "lucide-react";
-import { SecurityOverview } from "../../components/dashboard/security-overview";
+import { SecurityOverview } from "../../../components/dashboard/security-overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
@@ -12,7 +12,7 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import FloatingIconCard from "@/components/floating-icon-card";
 import { ClientDateTimeDisplay } from "@/components/date-time";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
-import { UserStats } from "../_components/user-stats";
+import { UserStats } from "../../_components/user-stats";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MdTimeline } from "react-icons/md";
@@ -100,18 +100,18 @@ export default function DashboardPage() {
           {/* Additional Components */}
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-7">
             <div className="col-span-full lg:col-span-4">
-              <SecurityOverview />
+              {/* <SecurityOverview /> */}
             </div>
             <div className="col-span-full lg:col-span-3">
-              <UserStats />
+              {/* <UserStats /> */}
             </div>
           </div>
         </div>
         {/* Right Column */}
         <div className="grid grid-cols-1 gap-5 lg:col-span-3 xl:grid-cols-3 2xl:col-span-1 2xl:grid-cols-1">
-          <Setup2FA />
+          {/* <Setup2FA /> */}
           <QuickActions />
-          <RecentActivity />
+          {/* <RecentActivity /> */}
         </div>
       </div>
     </div>

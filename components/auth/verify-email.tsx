@@ -54,7 +54,7 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
             Your email has been successfully verified.
           </p>
           <Button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/auth/login")}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
           >
             Go to Login

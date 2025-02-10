@@ -11,11 +11,8 @@ import { ActionLog } from "@/lib/enums/action-log.enum";
 import { NextRequest, NextResponse } from "next/server";
 import { LoginSchema } from "@/schema/auth.schema";
 import { HttpStatus } from "@/config/http.config";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { db } from "@/lib/utils/prisma";
-import { AuthError } from "next-auth";
 import * as OTPAuth from "otpauth";
-import { signIn } from "@/auth";
 
 export async function POST(req: NextRequest) {
   // VALIDATE HTTP METHOD
@@ -105,25 +102,6 @@ export async function POST(req: NextRequest) {
 
   // LOG ACTIVITY
   logActivity(ActionLog.ACCOUNT_SIGNIN, user.id, user.email);
-
-  // PROCEED WITH LOGIN
-  try {
-    await signIn("credentials", {
-      email,
-      password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
-    });
-  } catch (error) {
-    const errorMessage =
-      error instanceof AuthError && error.type === "CredentialsSignin"
-        ? "Invalid credentials!"
-        : "Oops! Something went wrong!";
-
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: HttpStatus.INTERNAL_SERVER_ERROR },
-    );
-  }
 
   return NextResponse.json(
     { message: SuccessCode.AUTH_SIGNIN },

@@ -1,46 +1,21 @@
-import {
-  DEFAULT_LOGIN_REDIRECT,
-  apiAuthPrefix,
-  authRoutes,
-  publicRoutes,
-} from "@/routes";
-import { auth } from "@/auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.some((route) =>
-    new RegExp(`^${route.replace(/\*/g, ".*")}$`).test(nextUrl.pathname),
-  );
-  const isAuthRoute = authRoutes.some((route) =>
-    new RegExp(`^${route.replace(/\*/g, ".*")}$`).test(nextUrl.pathname),
-  );
+export function middleware(request: NextRequest) {
+  const refreshToken = request.cookies.get("refreshToken")?.value;
 
-  if (isApiAuthRoute) return;
-
-  if (isAuthRoute) {
-    if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-    return;
+  // Allow public routes
+  const publicRoutes = ["/login", "/register", "/"];
+  if (publicRoutes.includes(request.nextUrl.pathname)) {
+    return NextResponse.next();
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
-
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
-    );
+  if (!refreshToken) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return;
-});
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

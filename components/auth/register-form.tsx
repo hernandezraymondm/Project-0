@@ -46,7 +46,7 @@ export const RegisterForm = () => {
         const data = await response.json();
         if (response.ok) {
           toast.info("Please check your email to verify your account.");
-          router.push("/login");
+          router.push("/auth/login");
         } else {
           setError(data.message || "An error occurred during registration.");
         }

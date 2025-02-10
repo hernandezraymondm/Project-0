@@ -32,7 +32,7 @@ const menuItems = [
   { icon: Monitor, label: "Responsive", href: "/responsive" },
   { icon: Palette, label: "Styles", href: "/styles" },
   { icon: User, label: "Profile", href: "/profile" },
-  { icon: Lock, label: "Login", href: "/login" },
+  { icon: Lock, label: "Login", href: "/auth/login" },
   { icon: AlertCircle, label: "Error", href: "/error" },
   { icon: Github, label: "GitHub", href: "/github" },
 ];

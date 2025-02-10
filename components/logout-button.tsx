@@ -1,30 +1,32 @@
 "use client";
 
+// import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
-import { toast } from "sonner";
 
 export function LogoutButton() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include", // This is important for including cookies in the request
-      });
-      if (response.ok) {
-        toast.success("You have been successfully logged out.");
-        router.push("/login");
-        router.refresh();
-      } else {
-        throw new Error("Logout failed");
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast.error("An error occurred while logging out.");
-    }
+    signOut();
+    // try {
+    //   const response = await fetch("/api/auth/logout", {
+    //     method: "POST",
+    //     credentials: "include", // This is important for including cookies in the request
+    //   });
+    //   if (response.ok) {
+    //     toast.success("You have been successfully logged out.");
+    //     router.push("/auth/login");
+    //     router.refresh();
+    //   } else {
+    //     throw new Error("Logout failed");
+    //   }
+    // } catch (error) {
+    //   console.error("Logout error:", error);
+    //   toast.error("An error occurred while logging out.");
+    // }
   };
 
   return (

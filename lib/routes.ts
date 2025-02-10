@@ -11,11 +11,11 @@ export const publicRoutes: string[] = ["/"];
  * @type {string[]}
  */
 export const authRoutes: string[] = [
-  "/login",
-  "/register",
-  "/error",
-  "/auth/reset*",
-  "/verify-email*",
+  "/auth/login",
+  "/auth/register",
+  "/auth/error",
+  "/auth/reset-password*",
+  "/auth/verify-email*",
 ];
 
 /**
@@ -29,4 +29,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/settings";
+export const DEFAULT_LOGIN_REDIRECT: string = "/dashboard";

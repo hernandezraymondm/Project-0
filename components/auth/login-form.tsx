@@ -8,22 +8,28 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
+import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DEFAULT_LOGIN_REDIRECT } from "@/lib/routes";
 import { loginUser } from "@/services/auth.service";
 import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FormAlert } from "../form-alert";
+import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import Link from "next/link";
 import * as z from "zod";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [lockTime, setLockTime] = useState<number | undefined>();
@@ -72,7 +78,7 @@ export function LoginForm() {
     if (data.twoFactor) {
       setTwoFactor(true);
       toast.info("Please enter your 2FA code to complete login.");
-    } else if (data.message === "Login successful") {
+    } else if (data.message === SuccessCode.AUTH_SIGNIN) {
       toast.success("You have been logged in successfully.");
       navigateToDashboard();
     }
@@ -83,10 +89,10 @@ export function LoginForm() {
     setVerificationToken: (token: string) => void,
     setError: (error: string) => void,
   ) => {
-    if (data.lockTime) {
+    if (data.message === ErrorCode.AUTH_ACCOUNT_LOCKED) {
       setLockTime(data.lockTime);
       toast.warning(
-        `Your account has been lock due to multiple failed attempts. Please try again in ${lockTime} seconds.`,
+        `Your account has been locked due to multiple failed attempts. Please try again in ${lockTime} seconds.`,
       );
     }
     if (data.verificationToken) {
@@ -95,7 +101,6 @@ export function LoginForm() {
     }
     setError(data.message || "An error occurred during login.");
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -209,7 +214,7 @@ export function LoginForm() {
       {/* RESET PASSWORD LINK */}
       <div className="mt-6 text-center">
         <Link
-          href="/reset-password"
+          href="/auth/reset-password"
           className="text-purple-400 underline transition-all duration-300 hover:text-pink-500"
         >
           Reset Password
