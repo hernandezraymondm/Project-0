@@ -1,19 +1,37 @@
-import { VerificationToken } from "@prisma/client";
+import { Verification } from "@prisma/client";
 import { db } from "@/lib/utils/prisma";
 
 /**
  * @One
- * Retrieves a verification token by its token value.
+ * Retrieves a verification by a given email.
  */
-export const getVerificationTokenByToken = async (
-  token: string,
-): Promise<VerificationToken | null> => {
+export const getVerificationByEmail = async (
+  email: string,
+): Promise<Verification | null> => {
   try {
-    const verificationToken = await db.verificationToken.findUnique({
+    const verification = await db.verification.findFirst({
+      where: { email },
+    });
+
+    return verification;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * @One
+ * Retrieves a verification by its token value.
+ */
+export const getVerificationByToken = async (
+  token: string,
+): Promise<Verification | null> => {
+  try {
+    const verification = await db.verification.findUnique({
       where: { token },
     });
 
-    return verificationToken;
+    return verification;
   } catch {
     return null;
   }
@@ -21,73 +39,18 @@ export const getVerificationTokenByToken = async (
 
 /**
  * @One
- * Retrieves a verification token by a given email.
+ * Retrieves a verification by token and code.
  */
-export const getVerificationTokenByEmail = async (
-  email: string,
-): Promise<VerificationToken | null> => {
-  try {
-    const verificationToken = await db.verificationToken.findFirst({
-      where: { email },
-    });
-
-    return verificationToken;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * @Many
- * Retrieves all verification tokens for a given email.
- */
-export const getVerificationTokensByEmail = async (
-  email: string,
-): Promise<VerificationToken[]> => {
-  try {
-    const verificationTokens = await db.verificationToken.findMany({
-      where: { email },
-    });
-    return verificationTokens;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-/**
- * @One
- * Retrieves a verification token by token and code.
- */
-export const getVerificationTokenByTokenAndCode = async (
+export const getVerificationByTokenAndCode = async (
   token: string,
   code: string,
-): Promise<VerificationToken | null> => {
+): Promise<Verification | null> => {
   try {
-    const verificationToken = await db.verificationToken.findFirst({
+    const verification = await db.verification.findUnique({
       where: { token, code },
     });
 
-    return verificationToken;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * @One
- * Retrieves a verification token by token and email.
- */
-export const getVerificationTokenByTokenAndEmail = async (
-  token: string,
-  email: string,
-): Promise<VerificationToken | null> => {
-  try {
-    const verificationToken = await db.verificationToken.findUnique({
-      where: { email, token },
-    });
-
-    return verificationToken;
+    return verification;
   } catch {
     return null;
   }

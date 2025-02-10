@@ -1,4 +1,4 @@
-import { generateVerificationToken } from "@/lib/utils/token";
+import { generateVerification } from "@/lib/helpers/generate-verification";
 import { validateMethod } from "@/lib/utils/validate-method";
 import { logActivity } from "../../logs/add-activity/route";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
@@ -19,21 +19,21 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   // VALIDATE REQUEST BODY WITH ZOD
-  const validation = RegisterSchema.safeParse(body);
-  if (!validation.success) {
+  const { success, data, error } = RegisterSchema.safeParse(body);
+  if (!success) {
     return NextResponse.json(
-      { error: ErrorCode.INVALID_DATA, details: validation.error.format() },
+      { message: ErrorCode.INVALID_DATA, details: error.format() },
       { status: HttpStatus.BAD_REQUEST },
     );
   }
 
-  const { name, email, password } = validation.data;
+  const { name, email, password } = data;
 
   // CHECK IF THE USER ALREADY EXISTS
-  const existingUser = await db.user.findUnique({ where: { email } });
-  if (existingUser) {
+  const userStore = await db.user.findUnique({ where: { email } });
+  if (userStore) {
     return NextResponse.json(
-      { error: ErrorCode.AUTH_EMAIL_ALREADY_EXISTS },
+      { message: ErrorCode.AUTH_EMAIL_ALREADY_EXISTS },
       { status: HttpStatus.BAD_REQUEST },
     );
   }
@@ -48,15 +48,15 @@ export async function POST(req: NextRequest) {
   logActivity(user.id, ActionLog.ACCOUNT_SIGNUP);
 
   // GENERATE AND SEND VERIFICATION EMAIL
-  const verificationToken = await generateVerificationToken(email);
+  const verification = await generateVerification(email);
   await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token,
-    verificationToken.code,
+    verification.email,
+    verification.token,
+    verification.code,
   );
 
   return NextResponse.json(
-    { message: SuccessCode.ACCOUNT_SIGNUP },
+    { message: SuccessCode.AUTH_SIGNUP },
     { status: HttpStatus.CREATED },
   );
 }

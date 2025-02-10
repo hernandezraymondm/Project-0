@@ -1,19 +1,19 @@
-import { PasswordResetToken } from "@prisma/client";
+import { PasswordReset } from "@prisma/client";
 import { db } from "@/lib/utils/prisma";
 
 /**
  * @One
- * Retrieves a password reset token by its token value.
+ * Retrieves a password reset by its token value.
  */
-export const getPasswordResetTokenByToken = async (
+export const getPasswordResetByToken = async (
   token: string,
-): Promise<PasswordResetToken | null> => {
+): Promise<PasswordReset | null> => {
   try {
-    const passwordResetToken = await db.passwordResetToken.findUnique({
+    const passwordReset = await db.passwordReset.findUnique({
       where: { token },
     });
 
-    return passwordResetToken;
+    return passwordReset;
   } catch {
     return null;
   }
@@ -21,16 +21,16 @@ export const getPasswordResetTokenByToken = async (
 
 /**
  * @Many
- * Retrieves all password reset tokens for a given email.
+ * Retrieves all password reset for a given email.
  */
-export const getPasswordResetTokensByEmail = async (
+export const getAllPasswordResetsByEmail = async (
   email: string,
-): Promise<PasswordResetToken[]> => {
+): Promise<PasswordReset[]> => {
   try {
-    const passwordResetToken = await db.passwordResetToken.findMany({
+    const passwordResets = await db.passwordReset.findMany({
       where: { email },
     });
-    return passwordResetToken;
+    return passwordResets;
   } catch (error) {
     console.error(error);
     return [];
@@ -39,18 +39,18 @@ export const getPasswordResetTokensByEmail = async (
 
 /**
  * @One
- * Retrieves a password reset token by token and code.
+ * Retrieves a password reset by token and code.
  */
-export const getPasswordResetTokenByTokenAndCode = async (
+export const getPasswordResetByTokenAndCode = async (
   token: string,
   code: string,
-): Promise<PasswordResetToken | null> => {
+): Promise<PasswordReset | null> => {
   try {
-    const passwordResetToken = await db.passwordResetToken.findFirst({
+    const passwordReset = await db.passwordReset.findFirst({
       where: { token, code },
     });
 
-    return passwordResetToken;
+    return passwordReset;
   } catch {
     return null;
   }
@@ -60,16 +60,16 @@ export const getPasswordResetTokenByTokenAndCode = async (
  * @One
  * Retrieves a password reset token by token and email.
  */
-export const getPasswordResetTokenByTokenAndEmail = async (
+export const getPasswordResetByTokenAndEmail = async (
   token: string,
   email: string,
-): Promise<PasswordResetToken | null> => {
+): Promise<PasswordReset | null> => {
   try {
-    const passwordResetToken = await db.passwordResetToken.findUnique({
+    const passwordReset = await db.passwordReset.findUnique({
       where: { email, token },
     });
 
-    return passwordResetToken;
+    return passwordReset;
   } catch {
     return null;
   }
@@ -78,17 +78,17 @@ export const getPasswordResetTokenByTokenAndEmail = async (
 /**
  * @One
  * Will probably be unused
- * Retrieves a password reset token by email
+ * Retrieves a password reset by email
  */
-export const getPasswordResetTokenByEmail = async (
+export const getPasswordResetByEmail = async (
   email: string,
-): Promise<PasswordResetToken | null> => {
+): Promise<PasswordReset | null> => {
   try {
-    const passwordResetToken = await db.passwordResetToken.findFirst({
+    const passwordReset = await db.passwordReset.findFirst({
       where: { email },
     });
 
-    return passwordResetToken;
+    return passwordReset;
   } catch {
     return null;
   }

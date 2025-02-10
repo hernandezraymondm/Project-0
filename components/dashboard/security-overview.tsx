@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatLastLogin } from "@/lib/utils/last-login";
+import { formatLastLogin } from "@/lib/utils/format-last-login";
 import { useState, useEffect } from "react";
 
 interface User {

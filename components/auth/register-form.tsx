@@ -23,8 +23,8 @@ import * as z from "zod";
 
 export const RegisterForm = () => {
   const router = useRouter();
-  const [error, setError] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -38,17 +38,8 @@ export const RegisterForm = () => {
     },
   });
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
-    console.log("clicked");
     startTransition(async () => {
       try {
         const response = await registerUser(values);
@@ -57,12 +48,20 @@ export const RegisterForm = () => {
           toast.info("Please check your email to verify your account.");
           router.push("/login");
         } else {
-          setError(data.error || "An error occurred during registration.");
+          setError(data.message || "An error occurred during registration.");
         }
       } catch {
         toast.error("An error occurred during registration.");
       }
     });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -207,6 +206,7 @@ export const RegisterForm = () => {
           )}
         />
 
+        {/* FORM ALERT */}
         <FormAlert message={error} />
 
         {/* REGISTER BUTTON */}

@@ -26,7 +26,7 @@ export interface FormAlertProps
 }
 
 const FormAlert = React.forwardRef<HTMLDivElement, FormAlertProps>(
-  ({ className, message, variant, ...props }, ref) => {
+  ({ className, message, variant = "error", ...props }, ref) => {
     if (!message) return null;
 
     return (

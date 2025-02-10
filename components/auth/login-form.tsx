@@ -10,67 +10,84 @@ import {
 } from "@/components/ui/form";
 import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginUser } from "@/services/auth.service";
+import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
+import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { FormAlert } from "../form-alert";
 import { toast } from "sonner";
 import Link from "next/link";
 import * as z from "zod";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
-  otpToken: z.string().optional(),
-});
-
 export function LoginForm() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [require2FA, setRequire2FA] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [verificationToken, setVerificationToken] = useState<
+    string | undefined
+  >("");
+  const [twoFactor, setTwoFactor] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
-      otpToken: "",
+      code: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.require2FA) {
-          setRequire2FA(true);
-          toast.warning("Please enter your 2FA code to complete login.");
-        } else if (data.message === "Login successful") {
-          toast.success("You have been logged in successfully.");
-          router.push("/dashboard");
-          router.refresh();
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    startTransition(async () => {
+      try {
+        const response = await loginUser(values);
+        const data = await response.json();
+        if (response.ok) {
+          handleResponse(data, setTwoFactor);
         } else {
-          toast.error(data.message || "Invalid credentials.");
+          handleErrorResponse(data, setVerificationToken, setError);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Login error:", error);
         toast.error("An error occurred during login.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
+      }
+    });
+  };
+
+  const navigateToDashboard = () => {
+    router.push("/dashboard");
+    router.refresh();
+  };
+
+  const handleResponse = (
+    data: any,
+    setTwoFactor: (state: boolean) => void,
+  ) => {
+    if (data.twoFactor) {
+      setTwoFactor(true);
+      toast.info("Please enter your 2FA code to complete login.");
+    } else if (data.message === "Login successful") {
+      toast.success("You have been logged in successfully.");
+      navigateToDashboard();
+    }
+  };
+
+  const handleErrorResponse = (
+    data: any,
+    setVerificationToken: (token: string) => void,
+    setError: (error: string) => void,
+  ) => {
+    if (data.verificationToken) {
+      setVerificationToken(data.verificationToken);
+      toast.info("Please verify your email address to login.");
+    }
+    setError(data.message || "An error occurred during login.");
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -79,7 +96,7 @@ export function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Email Field */}
+        {/* EMAIL FIELD */}
         <FormField
           control={form.control}
           name="email"
@@ -103,7 +120,7 @@ export function LoginForm() {
           )}
         />
 
-        {/* Password Field */}
+        {/* PASSWORD FIELD */}
         <FormField
           control={form.control}
           name="password"
@@ -124,7 +141,7 @@ export function LoginForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
-                    disabled={isLoading}
+                    disabled={isPending}
                   >
                     {showPassword ? (
                       <EyeOffIcon
@@ -148,11 +165,11 @@ export function LoginForm() {
           )}
         />
 
-        {/* 2FA Field (Conditional) */}
-        {require2FA && (
+        {/* 2FA FIELD (CONDITIONAL) */}
+        {twoFactor && (
           <FormField
             control={form.control}
-            name="otpToken"
+            name="code"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-300">2FA Code</FormLabel>
@@ -169,17 +186,20 @@ export function LoginForm() {
           />
         )}
 
-        {/* Login Button */}
+        {/* FORM ALERT */}
+        <FormAlert message={error} />
+
+        {/* LOGIN BUTTON */}
         <Button
           type="submit"
-          disabled={isLoading}
+          disabled={isPending}
           className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
         >
-          {isLoading ? "Logging in..." : "Login"}
+          {isPending ? "Logging in..." : "Login"}
         </Button>
       </form>
 
-      {/* Reset Password Link */}
+      {/* RESET PASSWORD LINK */}
       <div className="mt-6 text-center">
         <Link
           href="/reset-password"

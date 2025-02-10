@@ -99,7 +99,7 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-model VerificationToken {
+model Verification {
   id      String   @id @default(cuid())
   email   String
   token   String   @unique
@@ -107,10 +107,10 @@ model VerificationToken {
   expires DateTime
 
   @@unique([email, token])
-  @@map("verification_tokens")
+  @@map("verification")
 }
 
-model PasswordResetToken {
+model PasswordReset {
   id      String   @id @default(cuid())
   email   String
   token   String   @unique
@@ -118,5 +118,5 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
-  @@map("password_reset_token")
+  @@map("password_reset")
 }
