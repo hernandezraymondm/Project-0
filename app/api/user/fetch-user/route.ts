@@ -1,3 +1,4 @@
+import { validateMethod } from "@/lib/utils/validate-method";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { getAuthenticatedUser } from "@/lib/utils/auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,8 +7,12 @@ import { db } from "@/lib/utils/prisma";
 
 export async function GET(req: NextRequest) {
   try {
-    const auth = await getAuthenticatedUser(req);
+    // VALIDATE HTTP METHOD BEFORE PROCESSING
+    const methodError = validateMethod(req, "GET");
+    if (methodError) return methodError;
 
+    // VALIDATE AUTHORIZATION BEARER TOKEN
+    const auth = await getAuthenticatedUser(req);
     if (!auth) {
       return NextResponse.json(
         { error: ErrorCode.AUTH_NOT_FOUND },
@@ -15,6 +20,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // CHECK USER FROM DB
     const user = await db.user.findUnique({
       where: { id: auth.userId },
       select: { id: true, email: true, name: true },
@@ -27,6 +33,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // RETURN USER INFO
     return NextResponse.json(user);
 
     // if (typeof payload.userId !== "string") {

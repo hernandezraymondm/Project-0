@@ -45,16 +45,22 @@ export async function POST(req: NextRequest) {
       data: { name, email, password: hashedPassword },
     });
 
+    // CHECK APP SETTINGS
+    const settings = await db.setting.findFirst({
+      select: { emailVerificationEnabled: true },
+    });
+    if (settings?.emailVerificationEnabled) {
+      // GENERATE AND SEND VERIFICATION EMAIL
+      const verification = await generateVerification(email);
+      await sendVerificationEmail(
+        verification.email,
+        verification.token,
+        verification.code,
+      );
+    }
+
     // LOG USER REGISTRATION
     await logActivity(ActionLog.ACCOUNT_SIGNUP, user.id, user.email);
-
-    // GENERATE AND SEND VERIFICATION EMAIL
-    const verification = await generateVerification(email);
-    await sendVerificationEmail(
-      verification.email,
-      verification.token,
-      verification.code,
-    );
 
     return NextResponse.json(
       { message: SuccessCode.AUTH_SIGNUP },

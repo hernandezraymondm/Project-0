@@ -64,16 +64,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // CHECK EMAIL VERIFICATION STATUS
-    if (!user.emailVerified) {
-      const verificationToken = await handleUnverifiedEmail(user.email);
-      return NextResponse.json(
-        {
-          error: ErrorCode.AUTH_EMAIL_UNVERIFIED,
-          verificationToken: verificationToken.token,
-        },
-        { status: HttpStatus.BAD_REQUEST },
-      );
+    // CHECK APP SETTINGS
+    const settings = await db.setting.findFirst({
+      select: { emailVerificationEnabled: true },
+    });
+    if (settings?.emailVerificationEnabled) {
+      // CHECK EMAIL VERIFICATION STATUS
+      if (!user.emailVerified) {
+        const verificationToken = await handleUnverifiedEmail(user.email);
+        return NextResponse.json(
+          {
+            error: ErrorCode.AUTH_EMAIL_UNVERIFIED,
+            verificationToken: verificationToken.token,
+          },
+          { status: HttpStatus.BAD_REQUEST },
+        );
+      }
     }
 
     // HANDLE 2FA IF ENABLED

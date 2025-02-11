@@ -1,4 +1,4 @@
-import { VerifyEmail } from "@/components/auth/verify-email";
+import { EmailVerificationForm } from "@/components/auth/email-verification-form";
 import Link from "next/link";
 
 export default async function VerifyEmailPage({
@@ -17,7 +17,7 @@ export default async function VerifyEmailPage({
         <h1 className="mb-6 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-center text-3xl font-bold text-transparent">
           Verify Email
         </h1>
-        <VerifyEmail token={token} />
+        <EmailVerificationForm token={token} />
         <p className="mt-6 text-center text-gray-300">
           Remember your password?{" "}
           <Link

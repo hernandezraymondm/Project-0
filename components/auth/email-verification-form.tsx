@@ -1,48 +1,45 @@
 "use client";
 
+import { verifyEmail as verifyEmailService } from "@/services/auth.service";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface VerifyEmailProps {
+interface EmailVerificationFormProps {
   token: string;
 }
 
-export function VerifyEmail({ token }: VerifyEmailProps) {
+export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     const verifyEmail = async () => {
-      try {
-        const response = await fetch("/api/auth/verify-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setIsVerified(true);
-          toast.success("Your email has been successfully verified.");
-        } else {
-          toast.error(
-            data.message || "An error occurred during email verification.",
-          );
+      startTransition(async () => {
+        try {
+          const response = await verifyEmailService(token);
+          const data = await response.json();
+          if (response.ok) {
+            setIsVerified(true);
+            toast.success("Your email has been successfully verified.");
+          } else {
+            toast.error(
+              data.error || "An error occurred during email verification.",
+            );
+          }
+        } catch {
+          toast.error("An error occurred during email verification.");
         }
-      } catch {
-        toast.error("An error occurred during email verification.");
-      } finally {
-        setIsLoading(false);
-      }
+      });
     };
 
     verifyEmail();
   }, [token]);
 
-  if (isLoading) {
+  if (isPending) {
     return <Loader size="lg" />;
   }
 

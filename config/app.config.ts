@@ -18,6 +18,7 @@ const appConfig = () => ({
   RESEND_KEY: process.env.RESEND_API_KEY!,
 
   API_BASE_PATH: "/api",
+  EMAIL_SUPPORT: "example.email@support.com",
 });
 
 export const Config = appConfig();

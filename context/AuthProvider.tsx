@@ -73,10 +73,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await logoutService();
       if (response.ok) {
-        sessionStorage.removeItem("accessToken");
         setUser(null);
-        toast.success("You have been successfully logged out.");
+        sessionStorage.removeItem("accessToken");
         router.push("/auth/login");
+        toast.success("You have been successfully logged out.");
       } else {
         throw new Error("Logout failed");
       }
@@ -88,10 +88,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshAccessToken = useCallback(async () => {
     try {
-      const { accessToken } = await refreshAccessTokenService();
-      if (accessToken) {
-        sessionStorage.setItem("accessToken", accessToken);
-        return accessToken;
+      const response = await refreshAccessTokenService();
+      const data = await response.json();
+      if (data.accessToken) {
+        sessionStorage.setItem("accessToken", data.accessToken);
+        return data.accessToken;
       }
       return null;
     } catch (error) {
@@ -125,15 +126,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        const userData = await fetchUserService(token);
-        setUser(userData);
+        const response = await fetchUserService(token);
+        const user = await response.json();
+        setUser(user);
       } catch (error: unknown) {
         const err = error as CustomError;
-        if (
-          err.message === "Fetching user failed" &&
-          err.response &&
-          err.response.status === 401
-        ) {
+        if (err.response && err.response.status === 401) {
           const newToken = await handleApiError({ response: err.response });
           if (newToken) {
             await fetchUser(newToken);

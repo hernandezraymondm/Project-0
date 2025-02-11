@@ -70,3 +70,7 @@ export const OtpSchema = z.object({
     .max(6, { message: "OTP must be exactly 6 digits" })
     .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
 });
+
+export const TokenSchema = z.object({
+  token: z.string(),
+});

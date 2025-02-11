@@ -1,18 +1,18 @@
 import VerificationEmail from "@/components/emails/email-verification";
 import ResetPasswordEmail from "@/components/emails/reset-password";
+import { Config } from "@/config/app.config";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const appName = process.env.NEXT_PUBLIC_APP_NAME;
-const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL;
-const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
+const resend = new Resend(Config.RESEND_KEY);
+const appName = Config.APP_NAME;
+const supportEmail = Config.EMAIL_SUPPORT;
 
 export const sendVerificationEmail = async (
   email: string,
   token: string,
   code: string,
 ) => {
-  const verificationLink = `${appBaseUrl}/auth/verification/${token}`;
+  const verificationLink = `${Config.DOMAIN}/auth/email-verification/${token}`;
 
   // Send verification email
   await resend.emails.send({
@@ -33,7 +33,7 @@ export const sendPasswordResetEmail = async (
   token: string,
   code: string,
 ) => {
-  const resetLink = `${appBaseUrl}/auth/reset/${token}`;
+  const resetLink = `${Config.DOMAIN}/auth/password-reset/${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",

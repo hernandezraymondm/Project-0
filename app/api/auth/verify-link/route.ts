@@ -1,23 +1,35 @@
-import { getVerificationByTokenAndCode } from "@/data/verification";
-import { logActivity } from "../../audit-trail/add-activity/route";
+import { getPasswordResetByToken } from "@/data/password-reset";
+import { getVerificationByToken } from "@/data/verification";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
-import { ActionLog } from "@/lib/enums/audit-log.enum";
 import { TokenSchema } from "@/schema/auth.schema";
 import { HttpStatus } from "@/config/http.config";
-import { getUserByEmail } from "@/data/user";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { token, code } = TokenSchema.parse(body);
+    const { token, target } = TokenSchema.parse(body);
+    let verification;
 
     // VERIFY TOKEN LINK
-    const verification = await getVerificationByTokenAndCode(token, code);
+    switch (target) {
+      case "password-reset":
+        verification = await getPasswordResetByToken(token);
+        break;
+      case "email-verification":
+        verification = await getVerificationByToken(token);
+        break;
+      default:
+        return NextResponse.json(
+          { error: ErrorCode.INVALID_LINK },
+          { status: HttpStatus.BAD_REQUEST },
+        );
+    }
+
     if (!verification) {
       return NextResponse.json(
-        { error: ErrorCode.INVALID_CODE },
+        { error: ErrorCode.INVALID_LINK },
         { status: HttpStatus.BAD_REQUEST },
       );
     }
@@ -26,22 +38,10 @@ export async function POST(req: Request) {
     const hasExpired = new Date(verification.expires) < new Date();
     if (hasExpired) {
       return NextResponse.json(
-        { error: ErrorCode.EXPIRED_CODE },
+        { error: ErrorCode.EXPIRED_LINK },
         { status: HttpStatus.BAD_REQUEST },
       );
     }
-
-    const user = await getUserByEmail(verification.email);
-
-    if (!user) {
-      return NextResponse.json(
-        { error: ErrorCode.AUTH_USER_NOT_FOUND },
-        { status: HttpStatus.UNAUTHORIZED },
-      );
-    }
-
-    // LOG ACTIVITY
-    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id, verification.email);
 
     // CONVERTS EXPIRATION TO MILLISECONDS
     const expires = verification.expires.getTime();

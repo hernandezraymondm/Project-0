@@ -21,7 +21,7 @@ export const register = async (values: any) => {
 export const logout = async () => {
   const response = await fetch(`${Config.API_BASE_PATH}/auth/logout`, {
     method: "POST",
-    credentials: "include",
+    credentials: "include", //includes cookie
   });
   return response;
 };
@@ -30,29 +30,22 @@ export const refreshAccessToken = async () => {
   const response = await fetch(`${Config.API_BASE_PATH}/auth/refresh`, {
     method: "POST",
   });
-  return response.json();
+  return response;
 };
 
 export const fetchUser = async (token: string) => {
   const response = await fetch(`${Config.API_BASE_PATH}/user/fetch-user`, {
-    headers: { Authorization: `Bearer ${token}` },
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` }, //includes token
   });
-  return response.json();
+  return response;
 };
 
-// try {
-//   const response = await fetch("/api/auth/logout", {
-//     method: "POST",
-//     credentials: "include", // This is important for including cookies in the request
-//   });
-//   if (response.ok) {
-//     toast.success("You have been successfully logged out.");
-//     router.push("/auth/login");
-//     router.refresh();
-//   } else {
-//     throw new Error("Logout failed");
-//   }
-// } catch (error) {
-//   console.error("Logout error:", error);
-//   toast.error("An error occurred while logging out.");
-// }
+export const verifyEmail = async (token: string) => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/verify-email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token }),
+  });
+  return response;
+};
