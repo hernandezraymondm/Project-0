@@ -15,12 +15,13 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isVerified, setIsVerified] = useState(false);
+  const code = "123456";
 
   useEffect(() => {
     const verifyEmail = async () => {
       startTransition(async () => {
         try {
-          const response = await verifyEmailService(token);
+          const response = await verifyEmailService(token, code);
           const data = await response.json();
           if (response.ok) {
             setIsVerified(true);

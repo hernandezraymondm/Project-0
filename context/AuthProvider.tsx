@@ -32,9 +32,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (response.ok && data.accessToken) {
         sessionStorage.setItem("accessToken", data.accessToken);
         await fetchUser(data.accessToken);
-        toast.success("You have been logged in successfully.");
         router.push("/dashboard");
         router.refresh();
+        toast.success("You have been logged in successfully.");
       }
       return data;
     } catch (error) {
@@ -58,8 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       const data = await response.json();
       if (response.ok) {
-        toast.info("Please check your email to verify your account.");
         router.refresh();
+        toast.info("Please check your email to verify your account.");
         return data;
       }
       return data;
@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         router.push("/auth/login");
         toast.success("You have been successfully logged out.");
       } else {
-        throw new Error("Logout failed");
+        toast.error("Logout failed. Please try again.");
       }
     } catch (error) {
       console.error("Logout error:", error);

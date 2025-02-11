@@ -129,11 +129,9 @@ export function LoginForm() {
         >
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white mb-2">
-              Login to your Account
+              Member Sign-In
             </h2>
-            <p className="text-gray-400">
-              Sign in to continue where you left off
-            </p>
+            <p className="text-gray-400">Fill in your credentials to sign in</p>
           </div>
 
           <Form {...form}>

@@ -57,11 +57,11 @@ export async function GET(req: NextRequest) {
     //   user: { ...user, lastLogin: log?.timestamp },
     // });
   } catch (error) {
-    console.error("Internal server error:", error);
+    console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
       {
         error: ErrorCode.INTERNAL_SERVER_ERROR,
-        message: "An internal server error occurred.",
+        message: "AN INTERNAL SERVER ERROR OCCURRED.",
       },
       { status: HttpStatus.INTERNAL_SERVER_ERROR },
     );

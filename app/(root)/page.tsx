@@ -33,7 +33,7 @@ export default function Home() {
         <div className="flex justify-center gap-4">
           <Button
             asChild
-            className="transform bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
+            className="transform bg-gradient-to-r from-purple-600 to-violet-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
           >
             <Link href="/auth/login">Login</Link>
           </Button>

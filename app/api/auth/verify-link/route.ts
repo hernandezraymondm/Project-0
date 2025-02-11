@@ -2,14 +2,14 @@ import { getPasswordResetByToken } from "@/data/password-reset";
 import { getVerificationByToken } from "@/data/verification";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
-import { TokenSchema } from "@/schema/auth.schema";
+import { VerifyLinkSchema } from "@/schema/auth.schema";
 import { HttpStatus } from "@/config/http.config";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { token, target } = TokenSchema.parse(body);
+    const { target, token } = VerifyLinkSchema.parse(body);
     let verification;
 
     // VERIFY TOKEN LINK
@@ -56,11 +56,11 @@ export async function POST(req: Request) {
       { status: HttpStatus.OK },
     );
   } catch (error) {
-    console.error("Internal server error:", error);
+    console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
       {
         error: ErrorCode.INTERNAL_SERVER_ERROR,
-        message: "An internal server error occurred.",
+        message: "AN INTERNAL SERVER ERROR OCCURRED.",
       },
       { status: HttpStatus.INTERNAL_SERVER_ERROR },
     );

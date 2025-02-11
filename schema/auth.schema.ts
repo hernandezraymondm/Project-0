@@ -71,6 +71,16 @@ export const OtpSchema = z.object({
     .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
 });
 
-export const TokenSchema = z.object({
+export const VerifyLinkSchema = z.object({
+  target: z.string(),
   token: z.string(),
+});
+
+export const VerifyEmailSchema = z.object({
+  token: z.string(),
+  code: z
+    .string({ required_error: "OTP code is required" })
+    .min(6, { message: "OTP must be exactly 6 digits" })
+    .max(6, { message: "OTP must be exactly 6 digits" })
+    .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
 });
