@@ -37,7 +37,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
           PROJECT
         </span>
         {/* Stylized line below */}
-        <div className="animate-line-expand-center absolute -bottom-[2px] h-1 bg-gradient-to-r from-purple-600 to-violet-600" />
+        <div className="animate-line-expand-center absolute -bottom-[1px] h-1 bg-gradient-to-r from-purple-600 to-violet-600" />
       </div>
     </div>
   );

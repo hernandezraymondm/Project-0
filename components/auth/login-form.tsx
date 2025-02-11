@@ -24,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ export function LoginForm() {
   const { login } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [lockTime, setLockTime] = useState<number | undefined>();
   const [verificationToken, setVerificationToken] = useState<
     string | undefined
@@ -74,6 +76,8 @@ export function LoginForm() {
           setError(response.error);
           setVerificationToken(response.verificationToken);
           toast.info("Please verify your email address to login.");
+        } else if (response.message === SuccessCode.AUTH_SIGNIN) {
+          setSuccess(response.message);
         } else {
           setError(response.error);
           toast.error("Login failed. Please try again.");
@@ -239,6 +243,7 @@ export function LoginForm() {
               </AnimatePresence>
 
               <FormAlert message={error} />
+              <FormAlert message={success} variant="success" />
 
               <Button
                 disabled={isPending}
