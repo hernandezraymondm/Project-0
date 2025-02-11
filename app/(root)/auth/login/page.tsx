@@ -1,3 +1,4 @@
+import { AppLogo } from "@/app/(protected)/_components/app-logo";
 import { LoginForm } from "@/components/auth/login-form";
 import Link from "next/link";
 
@@ -8,12 +9,12 @@ export default function LoginPage() {
       <div className="bg-radial-gradient absolute inset-0 animate-pulse from-purple-500/20 via-transparent to-transparent"></div>
 
       {/* Login container */}
-      <div className="relative z-10 w-full max-w-md rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-2xl backdrop-blur-md">
-        <h1 className="mb-6 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-center text-3xl font-bold text-transparent">
-          Login
-        </h1>
+      <div className="relative z-10 w-full max-w-4xl rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-2xl backdrop-blur-md">
+        <div className="mb-10">
+          <AppLogo size="sm" />
+        </div>
         <LoginForm />
-        <p className="mt-6 text-center text-gray-300">
+        <p className="text-sm mt-6 text-center text-gray-400">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/register"
