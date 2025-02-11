@@ -1,19 +1,24 @@
-import { getEnv } from "@/lib/utils/get-env";
-
 const appConfig = () => ({
-  NODE_ENV: getEnv("NODE_ENV", "development"),
-  APP_ORIGIN: getEnv("APP_ORIGIN", "localhost"),
-  PORT: getEnv("PORT", "5000"),
-  BASE_PATH: getEnv("BASE_PATH", "/api"),
-  MONGO_URI: getEnv("MONGO_URI"),
-  JWT: {
-    SECRET: getEnv("JWT_SECRET"),
-    EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m"),
-    REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET"),
-    REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "30d"),
-  },
-  // MAILER_SENDER: getEnv("MAILER_SENDER"),
-  // RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+  ACCESS_TOKEN_EXPIRY: "15m",
+  REFRESH_TOKEN_EXPIRY: "7d",
+  REFRESH_DB_SESSION_EXPIRY: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+  REFRESH_COOKIE_EXPIRY: 7 * 24 * 60 * 60, // 7 days
+  TOKEN_REFRESH_INTERVAL: 4 * 60 * 1000, // 4 minutes
+
+  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET!,
+  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET!,
+
+  // CURRENTLY USED
+  DOMAIN: process.env.NEXT_PUBLIC_APP_URL!,
+  APP_NAME: process.env.NEXT_PUBLIC_APP_NAME!,
+
+  RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+  RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY!,
+
+  RESEND_KEY: process.env.RESEND_API_KEY!,
+
+  API_BASE_PATH: "/api",
+  EMAIL_SUPPORT: "example.email@support.com",
 });
 
-export const config = appConfig();
+export const Config = appConfig();

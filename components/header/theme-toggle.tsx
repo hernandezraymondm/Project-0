@@ -3,13 +3,13 @@
 import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const themes = [
   { name: "light", icon: <Sun />, label: "Light" },

@@ -1,8 +1,8 @@
 "use client";
 
 import { Maximize, Minimize } from "lucide-react";
-import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 export const FullScreenToggle = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);

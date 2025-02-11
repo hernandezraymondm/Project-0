@@ -1,6 +1,12 @@
 "use client";
 
-import * as React from "react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@/components/ui/sidebar";
 import {
   BookOpen,
   Bot,
@@ -10,20 +16,14 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react";
-import { SiRiotgames } from "react-icons/si";
-import { SiRockstargames } from "react-icons/si";
 import { SiNintendogamecube } from "react-icons/si";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { SiRockstargames } from "react-icons/si";
 import { TeamSwitcher } from "./team-switcher";
-import { NavMain } from "./nav-main";
+import { SiRiotgames } from "react-icons/si";
 import { NavProjects } from "./nav-projects";
+import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
+import * as React from "react";
 
 // This is sample data.
 const data = {

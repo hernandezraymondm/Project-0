@@ -1,51 +1,95 @@
+import { getVerificationByTokenAndCode } from "@/data/verification";
+import { logActivity } from "../../audit-trail/add-activity/route";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { ActionLog } from "@/lib/enums/audit-log.enum";
+import { HttpStatus } from "@/config/http.config";
+import { getUserByEmail } from "@/data/user";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import * as z from "zod";
-import { logActivity } from "../../logs/add-activity/route";
-
-const prisma = new PrismaClient();
-
-const verifyEmailSchema = z.object({
-  token: z.string(),
-});
+import { db } from "@/lib/utils/prisma";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { token } = verifyEmailSchema.parse(body);
+    const { token, code } = body;
 
-    const user = await prisma.user.findFirst({
-      where: { verificationToken: token },
-    });
-
-    if (!user) {
+    // VERIFY TOKEN LINK
+    const verification = await getVerificationByTokenAndCode(token, code);
+    if (!verification) {
       return NextResponse.json(
-        { message: "Invalid verification token" },
-        { status: 400 },
+        { error: ErrorCode.INVALID_CODE },
+        { status: HttpStatus.BAD_REQUEST },
       );
     }
 
-    const result = await prisma.user.update({
+    // CHECK IF LINK HAS EXPIRED
+    const hasExpired = new Date(verification.expires) < new Date();
+    if (hasExpired) {
+      return NextResponse.json(
+        { error: ErrorCode.EXPIRED_CODE },
+        { status: HttpStatus.BAD_REQUEST },
+      );
+    }
+
+    // CHECK IF USER EXISTS
+    const user = await getUserByEmail(verification.email);
+    if (!user) {
+      return NextResponse.json(
+        { error: ErrorCode.AUTH_USER_NOT_FOUND },
+        { status: HttpStatus.UNAUTHORIZED },
+      );
+    }
+
+    // CHECK IF EMAIL IS ALREADY VERIFIED
+    if (user.emailVerified) {
+      await deleteVerificationTokens(verification.email);
+      return NextResponse.json(
+        { error: ErrorCode.EMAIL_ALREADY_VERIFIED },
+        { status: HttpStatus.BAD_REQUEST },
+      );
+    }
+
+    // UPDATE USER EMAIL TO VERIFIED
+    const verified = await db.user.update({
       where: { id: user.id },
       data: {
-        isEmailVerified: true,
-        verificationToken: null,
+        emailVerified: new Date(),
+        email: verification.email,
       },
     });
 
-    if (result) {
-      logActivity(user.id, "Verified email");
+    // DELETE ALL VERIFICATION TOKENS AFTER SUCCESSFUL VERIFICATION
+    if (verified) {
+      await deleteVerificationTokens(verification.email);
     }
 
+    // LOG ACTIVITY
+    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id, verification.email);
+
     return NextResponse.json(
-      { message: "Email verified successfully" },
-      { status: 200 },
+      { message: SuccessCode.VERIFICATION_SUCCESS },
+      { status: HttpStatus.OK },
     );
   } catch (error) {
-    console.error("Email verification error:", error);
+    console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
-      { message: "An error occurred during email verification" },
-      { status: 500 },
+      {
+        error: ErrorCode.INTERNAL_SERVER_ERROR,
+        message: "AN INTERNAL SERVER ERROR OCCURRED.",
+      },
+      { status: HttpStatus.INTERNAL_SERVER_ERROR },
     );
+  }
+}
+
+// REUSABLE FUNCTION TO DELETE VERIFICATION TOKENS
+async function deleteVerificationTokens(email: string) {
+  try {
+    await db.verification.deleteMany({
+      where: { email },
+    });
+    console.log(`DELETED ALL VERIFICATION TOKENS FOR ${email}.`);
+  } catch (error) {
+    console.error(`FAILED TO DELETE VERIFICATION TOKENS FOR ${email}:`, error);
   }
 }

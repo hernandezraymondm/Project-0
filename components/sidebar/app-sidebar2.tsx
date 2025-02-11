@@ -1,6 +1,16 @@
 "use client";
 
 import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import {
   LayoutDashboard,
   Table2,
   FileText,
@@ -13,16 +23,6 @@ import {
   Github,
   LogOut,
 } from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-} from "@/components/ui/sidebar";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -32,7 +32,7 @@ const menuItems = [
   { icon: Monitor, label: "Responsive", href: "/responsive" },
   { icon: Palette, label: "Styles", href: "/styles" },
   { icon: User, label: "Profile", href: "/profile" },
-  { icon: Lock, label: "Login", href: "/login" },
+  { icon: Lock, label: "Login", href: "/auth/login" },
   { icon: AlertCircle, label: "Error", href: "/error" },
   { icon: Github, label: "GitHub", href: "/github" },
 ];

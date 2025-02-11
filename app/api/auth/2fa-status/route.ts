@@ -1,7 +1,7 @@
+import { decrypt } from "@/lib/utils/basic-auth";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { PrismaClient } from "@prisma/client";
-import { decrypt } from "@/lib/utils/basic-auth";
 
 const prisma = new PrismaClient();
 

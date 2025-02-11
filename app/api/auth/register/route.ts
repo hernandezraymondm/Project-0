@@ -1,73 +1,81 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { generateVerification } from "@/lib/helpers/generate-verification";
+import { logActivity } from "../../audit-trail/add-activity/route";
+import { validateMethod } from "@/lib/utils/validate-method";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { sendVerificationEmail } from "@/lib/utils/mailer";
+import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { NextRequest, NextResponse } from "next/server";
+import { ActionLog } from "@/lib/enums/audit-log.enum";
+import { RegisterSchema } from "@/schema/auth.schema";
+import { HttpStatus } from "@/config/http.config";
+import { db } from "@/lib/utils/prisma";
 import bcrypt from "bcryptjs";
-import * as z from "zod";
-import { Resend } from "resend";
-import VerificationEmail from "@/components/emails/verification-email";
-import { logActivity } from "../../logs/add-activity/route";
 
-const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-export async function POST(req: Request) {
-  if (req.method !== "POST") {
-    return NextResponse.json(
-      { error: "Method Not Allowed" },
-      // { message: "Method Not Allowed" },
-      { status: 405 },
-    );
-  }
-
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { email, password } = registerSchema.parse(body);
+    // VALIDATE HTTP METHOD BEFORE PROCESSING
+    const methodError = validateMethod(req, "POST");
+    if (methodError) return methodError;
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) {
+    const body = await req.json();
+
+    // VALIDATE REQUEST BODY WITH ZOD
+    const { success, data, error } = RegisterSchema.safeParse(body);
+    if (!success) {
       return NextResponse.json(
-        { message: "User already in use" },
-        { status: 400 },
+        { error: ErrorCode.INVALID_DATA, details: error.format() },
+        { status: HttpStatus.BAD_REQUEST },
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.random().toString(36).substring(2, 15);
+    const { name, email, password } = data;
 
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        verificationToken,
-      },
-    });
-
-    if (user) {
-      logActivity(user.id, "Registered account");
+    // CHECK IF THE USER ALREADY EXISTS
+    const userStore = await db.user.findUnique({ where: { email } });
+    if (userStore) {
+      return NextResponse.json(
+        { error: ErrorCode.AUTH_EMAIL_ALREADY_EXISTS },
+        { status: HttpStatus.BAD_REQUEST },
+      );
     }
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email/${verificationToken}`;
-
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "Verify Your Email",
-      react: VerificationEmail({ verificationUrl }),
+    // HASH PASSWORD AND CREATE USER
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await db.user.create({
+      data: { name, email, password: hashedPassword },
     });
 
+    // LOG USER REGISTRATION
+    logActivity(ActionLog.ACCOUNT_SIGNUP, user.id, user.email);
+
+    // CHECK APP SETTINGS
+    const settings = await db.setting.findFirst({
+      select: { emailVerificationEnabled: true },
+    });
+    if (settings?.emailVerificationEnabled) {
+      // GENERATE AND SEND VERIFICATION EMAIL
+      const verification = await generateVerification(user.id, user.email);
+      await sendVerificationEmail(
+        verification.email,
+        verification.token,
+        verification.code,
+      );
+    }
+
+    console.log(body);
+
     return NextResponse.json(
-      { message: "User registered successfully" },
-      { status: 201 },
+      { message: SuccessCode.AUTH_SIGNUP },
+      { status: HttpStatus.CREATED },
     );
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
-      { message: "An error occurred during registration" },
-      { status: 500 },
+      {
+        error: ErrorCode.INTERNAL_SERVER_ERROR,
+        message: "AN INTERNAL SERVER ERROR OCCURRED.",
+      },
+      { status: HttpStatus.INTERNAL_SERVER_ERROR },
     );
   }
 }

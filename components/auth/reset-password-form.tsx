@@ -1,11 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -14,14 +8,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { MailIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { toast } from "sonner";
+import * as z from "zod";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
 export function ResetPasswordForm() {
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,63 +42,63 @@ export function ResetPasswordForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        toast({
-          title: "Reset password email sent",
-          description:
-            "Check your email for instructions to reset your password.",
-        });
+        toast.info("Check your email for instructions to reset your password.");
       } else {
-        toast({
-          title: "Reset password failed",
-          description:
-            data.message ||
+        toast.error(
+          data.message ||
             "An error occurred while sending the reset password email.",
-          variant: "destructive",
-        });
+        );
       }
     } catch {
-      toast({
-        title: "Reset password failed",
-        description:
-          "An error occurred while sending the reset password email.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while sending the reset password email.");
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Email Field */}
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-gray-300">Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter your email"
-                  {...field}
-                  className="border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
-                />
-              </FormControl>
-              <FormMessage className="text-red-400" />
-            </FormItem>
-          )}
-        />
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Email Field */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium text-gray-300">
+                  Email
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      disabled={isLoading}
+                      placeholder="Enter your email"
+                      {...field}
+                      className="pl-10 pr-3 py-2 border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 rounded-lg"
+                    />
+                    <MailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+                  </div>
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
 
-        {/* Reset Password Button */}
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
-        >
-          {isLoading ? "Sending..." : "Send Reset Link"}
-        </Button>
-      </form>
-    </Form>
+          {/* Reset Password Button */}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
+          >
+            {isLoading ? "Sending..." : "Send Reset Link"}
+          </Button>
+        </form>
+      </Form>
+    </motion.div>
   );
 }

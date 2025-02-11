@@ -1,12 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -15,7 +8,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { toast } from "sonner";
+import * as z from "zod";
 
 const formSchema = z
   .object({
@@ -34,7 +34,6 @@ interface NewPasswordFormProps {
 }
 
 export function NewPasswordForm({ token }: NewPasswordFormProps) {
-  const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,26 +55,17 @@ export function NewPasswordForm({ token }: NewPasswordFormProps) {
       });
       const data = await response.json();
       if (response.ok) {
-        toast({
-          title: "Password reset successful",
-          description:
-            "Your password has been reset. You can now log in with your new password.",
-        });
-        router.push("/login");
+        toast.success(
+          "Your password has been reset. You can now log in with your new password.",
+        );
+        router.push("/auth/login");
       } else {
-        toast({
-          title: "Password reset failed",
-          description:
-            data.message || "An error occurred while resetting your password.",
-          variant: "destructive",
-        });
+        toast.error(
+          data.message || "An error occurred while resetting your password.",
+        );
       }
     } catch {
-      toast({
-        title: "Password reset failed",
-        description: "An error occurred while resetting your password.",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while resetting your password.");
     } finally {
       setIsLoading(false);
     }

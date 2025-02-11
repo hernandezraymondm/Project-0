@@ -7,30 +7,124 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                String    @id @default(cuid())
-  email             String    @unique
-  password          String
-  name              String?
-  bio               String?
-  isEmailVerified   Boolean   @default(false)
-  verificationToken String?
-  resetToken        String?
-  resetTokenExpiry  DateTime?
-  twoFactorSecret   String?
-  twoFactorEnabled  Boolean   @default(false)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  ActivityLog Log[]
+enum UserRole {
+  ADMIN
+  SUPERADMIN
+  USER
+  GUEST
+  MODERATOR
+  EDITOR
+  VIEWER
+  CONTRIBUTOR
+  MANAGER
+  DEVELOPER
+  SUPPORT
+  ANALYST
+  AUDITOR
+  VENDOR
+  CUSTOMER
+  STUDENT
+  TEACHER
 }
 
-model Log {
+model User {
+  id               String    @id @default(cuid())
+  name             String
+  email            String    @unique
+  emailVerified    DateTime? @map("email_verified")
+  image            String?
+  password         String?
+  role             UserRole  @default(USER)
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Session       Session[]
+  AuditTrail    AuditTrail[]
+  Verification  Verification[]
+  PasswordReset PasswordReset[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  refreshToken String   @unique
+  userAgent    String
+  ipAddress    String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model AuditTrail {
   id        String   @id @default(cuid())
   userId    String
+  email     String?
   action    String
   timestamp DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, action])
+  @@map("audit_trail")
+}
+
+model Verification {
+  id      String   @id @default(cuid())
+  userId  String
+  email   String
+  token   String   @unique
+  code    String   @map("verification_code")
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([email, token])
+  @@map("verification")
+}
+
+model PasswordReset {
+  id      String   @id @default(cuid())
+  userId  String
+  email   String
+  token   String   @unique
+  code    String   @map("reset_code")
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([email, token])
+  @@map("password_reset")
+}
+
+model Setting {
+  // Security Settings
+  id                       String  @id @default(cuid())
+  emailVerificationEnabled Boolean @default(true)
+  qrCodeEnabled            Boolean @default(true)
+  webAuthnEnabled          Boolean @default(true)
+
+  // Notification Settings
+  emailNotificationsEnabled Boolean @default(true)
+  smsNotificationsEnabled   Boolean @default(false)
+  pushNotificationsEnabled  Boolean @default(false)
+  notificationFrequency     String  @default("daily") // "instant", "daily", "weekly"
+
+  // Appearance Settings
+  theme                String  @default("light")
+  seasonalThemeEnabled Boolean @default(false)
+  language             String  @default("en") // Default language
+
+  // System Settings
+  maxUsers              Int    @default(100) // Maximum number of users
+  backupFrequency       String @default("daily") // Data backup frequency
+  auditLogRetentionDays Int    @default(365) // Retention period for audit logs
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
 }

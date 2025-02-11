@@ -7,17 +7,17 @@ import {
   LayoutGrid,
   SquareDashedMousePointer,
 } from "lucide-react";
-import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
-import { ThemeToggle } from "@/components/header/theme-toggle";
-import { LogoutButton } from "@/components/logout-button";
-import { Button } from "./ui/button";
-import { BreadCrumb } from "@/app/_components/breadcrumb";
-import { useState, useEffect } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { BreadCrumb } from "@/app/(protected)/_components/breadcrumb";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { ThemeToggle } from "@/components/header/theme-toggle";
+import { LogoutButton } from "@/components/logout-button";
+import { useState, useEffect } from "react";
+import { Button } from "./ui/button";
 
 export function Navbar() {
   const [isFullscreen, setIsFullscreen] = useState(false);

@@ -1,43 +1,48 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { LogOut } from "lucide-react";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function LogoutButton() {
-  const { toast } = useToast();
-  const router = useRouter();
+  const { logout } = useAuth();
+  const [isPending, startTransition] = useTransition();
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include", // This is important for including cookies in the request
-      });
-      if (response.ok) {
-        toast({
-          title: "Logged out",
-          description: "You have been successfully logged out.",
-        });
-        router.push("/login");
-        router.refresh();
-      } else {
-        throw new Error("Logout failed");
+    startTransition(async () => {
+      try {
+        await logout();
+      } catch {
+        toast.error("An error occurred during logout. Please try again.");
       }
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast({
-        title: "Error",
-        description: "An error occurred while logging out.",
-        variant: "destructive",
-      });
-    }
+    });
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={handleLogout}>
-      <LogOut className="h-5 w-5" />
-    </Button>
+    <>
+      <Button variant="ghost" size="icon" onClick={handleLogout}>
+        <LogOut className="h-5 w-5" />
+      </Button>
+
+      <AlertDialog open={isPending}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Logging Out</AlertDialogTitle>
+            <AlertDialogDescription>
+              Logging out your account, please wait...
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

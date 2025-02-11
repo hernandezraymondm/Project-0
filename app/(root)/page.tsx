@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { TextCrawl } from "../(protected)/_components/text-crawl";
+import { AppLogo } from "../(protected)/_components/app-logo";
 import { Button } from "@/components/ui/button";
-import { AppLogo } from "../_components/app-logo";
-import { TextCrawl } from "../_components/text-crawl";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -33,16 +33,16 @@ export default function Home() {
         <div className="flex justify-center gap-4">
           <Button
             asChild
-            className="transform bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
+            className="transform bg-gradient-to-r from-purple-600 to-violet-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
           >
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </Button>
           <Button
             asChild
             variant="outline"
             className="transform border-purple-500 text-purple-500 transition-all duration-300 hover:scale-105 hover:border-purple-600 hover:bg-purple-500/10 hover:text-purple-600"
           >
-            <Link href="/register">Register</Link>
+            <Link href="/auth/register">Register</Link>
           </Button>
         </div>
       </div>

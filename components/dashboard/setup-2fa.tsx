@@ -1,17 +1,16 @@
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { OutlineInput } from "../ui/outline-input";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Download } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import QRCode from "qrcode";
+import { toast } from "sonner";
 import Link from "next/link";
-import { OutlineInput } from "../ui/outline-input";
+import QRCode from "qrcode";
 
 export function Setup2FA() {
-  const { toast } = useToast();
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
   const [secret, setSecret] = useState("");
   const [otpauth, setOtpauth] = useState("");
@@ -35,19 +34,11 @@ export function Setup2FA() {
         const qr = await QRCode.toDataURL(data.otpauth);
         setQrCode(qr);
       } else {
-        toast({
-          title: "Error",
-          description: data.error || "An error occurred while enabling 2FA",
-          variant: "destructive",
-        });
+        toast.error(data.error || "An error occurred while enabling 2FA");
       }
     } catch (error) {
       console.error("Enable 2FA error:", error);
-      toast({
-        title: "Error",
-        description: "An error occurred while enabling 2FA",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while enabling 2FA");
     }
   };
 
@@ -65,24 +56,13 @@ export function Setup2FA() {
         setOtpauth("");
         setQrCode("");
         setToken("");
-        toast({
-          title: "Success",
-          description: "2FA has been enabled for your account",
-        });
+        toast.success("2FA has been enabled for your account");
       } else {
-        toast({
-          title: "Error",
-          description: data.error || "An error occurred while verifying 2FA",
-          variant: "destructive",
-        });
+        toast.error(data.error || "An error occurred while verifying 2FA");
       }
     } catch (error) {
       console.error("Verify 2FA error:", error);
-      toast({
-        title: "Error",
-        description: "An error occurred while verifying 2FA",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while verifying 2FA");
     }
   };
 
@@ -92,24 +72,13 @@ export function Setup2FA() {
       const data = await response.json();
       if (response.ok) {
         setIs2FAEnabled(false);
-        toast({
-          title: "Success",
-          description: "2FA has been disabled for your account",
-        });
+        toast.success("2FA has been disabled for your account");
       } else {
-        toast({
-          title: "Error",
-          description: data.error || "An error occurred while disabling 2FA",
-          variant: "destructive",
-        });
+        toast.error(data.error || "An error occurred while disabling 2FA");
       }
     } catch (error) {
       console.error("Disable 2FA error:", error);
-      toast({
-        title: "Error",
-        description: "An error occurred while disabling 2FA",
-        variant: "destructive",
-      });
+      toast.error("An error occurred while disabling 2FA");
     }
   };
 

@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { cookies } from "next/headers";
-import { logActivity } from "../../logs/add-activity/route";
+import { logActivity } from "../../audit-trail/add-activity/route";
 import { decrypt } from "@/lib/utils/basic-auth";
+import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
@@ -28,7 +28,7 @@ export async function POST() {
     });
 
     if (result) {
-      logActivity(decoded.userId, "Disabled 2FA");
+      logActivity("Disabled 2FA", decoded.userId);
     }
 
     return NextResponse.json({ message: "2FA has been disabled" });
