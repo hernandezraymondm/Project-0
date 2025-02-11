@@ -1,4 +1,4 @@
-import { logActivity } from "../../logs/add-activity/route";
+import { logActivity } from "../../audit-trail/add-activity/route";
 import { decrypt } from "@/lib/utils/basic-auth";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";

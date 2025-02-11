@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DateTimeDisplay } from "@/components/dashboard/date-time-display";
-import { BreadCrumb } from "@/app/_components/breadcrumb";
+import { BreadCrumb } from "@/app/(protected)/_components/breadcrumb";
 import { Bell, Moon, Sun, User } from "lucide-react";
 import { SearchBar } from "../header/search-box";
 import { Button } from "@/components/ui/button";

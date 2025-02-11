@@ -1,6 +1,6 @@
-import { logActivity } from "@/app/api/logs/add-activity/route";
+import { logActivity } from "@/app/api/audit-trail/add-activity/route";
 import { sendLockoutEmailAlert } from "../utils/mailer";
-import { ActionLog } from "../enums/action-log.enum";
+import { ActionLog } from "../enums/audit-log.enum";
 import bcrypt from "bcryptjs";
 
 export const loginAttempts = new Map<

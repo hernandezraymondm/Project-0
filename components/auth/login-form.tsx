@@ -8,28 +8,23 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter, useSearchParams } from "next/navigation";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DEFAULT_LOGIN_REDIRECT } from "@/lib/routes";
-import { loginUser } from "@/services/auth.service";
 import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { FormAlert } from "../form-alert";
-import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import Link from "next/link";
 import * as z from "zod";
 
 export function LoginForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
+  const { login } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [lockTime, setLockTime] = useState<number | undefined>();
@@ -52,55 +47,34 @@ export function LoginForm() {
     setError("");
     startTransition(async () => {
       try {
-        const response = await loginUser(values);
-        const data = await response.json();
-        if (response.ok) {
-          handleResponse(data, setTwoFactor);
+        const response = await login(
+          values.email,
+          values.password,
+          values.code,
+        );
+
+        if (response.twoFactor) {
+          setTwoFactor(true);
+          toast.info("Please enter your 2FA code to complete login.");
+        } else if (response.error === ErrorCode.AUTH_ACCOUNT_LOCKED) {
+          setLockTime(response.lockTime);
+          setError(response.error);
+          toast.warning(
+            `Your account has been locked due to multiple failed attempts. Please try again in ${response.lockTime} seconds.`,
+          );
+        } else if (response.verificationToken) {
+          setError(response.error);
+          setVerificationToken(response.verificationToken);
+          toast.info("Please verify your email address to login.");
         } else {
-          handleErrorResponse(data, setVerificationToken, setError);
+          setError(response.error);
         }
-      } catch (error) {
-        console.error("Login error:", error);
-        toast.error("An error occurred during login.");
+      } catch {
+        setError("An error occurred during login. Please try again.");
       }
     });
   };
 
-  const navigateToDashboard = () => {
-    router.push("/dashboard");
-    router.refresh();
-  };
-
-  const handleResponse = (
-    data: any,
-    setTwoFactor: (state: boolean) => void,
-  ) => {
-    if (data.twoFactor) {
-      setTwoFactor(true);
-      toast.info("Please enter your 2FA code to complete login.");
-    } else if (data.message === SuccessCode.AUTH_SIGNIN) {
-      toast.success("You have been logged in successfully.");
-      navigateToDashboard();
-    }
-  };
-
-  const handleErrorResponse = (
-    data: any,
-    setVerificationToken: (token: string) => void,
-    setError: (error: string) => void,
-  ) => {
-    if (data.message === ErrorCode.AUTH_ACCOUNT_LOCKED) {
-      setLockTime(data.lockTime);
-      toast.warning(
-        `Your account has been locked due to multiple failed attempts. Please try again in ${lockTime} seconds.`,
-      );
-    }
-    if (data.verificationToken) {
-      setVerificationToken(data.verificationToken);
-      toast.info("Please verify your email address to login.");
-    }
-    setError(data.message || "An error occurred during login.");
-  };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -118,6 +92,7 @@ export function LoginForm() {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     placeholder="Enter your email"
                     {...field}
                     className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
@@ -142,18 +117,19 @@ export function LoginForm() {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     {...field}
                     className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                   />
                   <Button
+                    disabled={isPending}
                     type="button"
                     variant="ghost"
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
-                    disabled={isPending}
                   >
                     {showPassword ? (
                       <EyeOffIcon
@@ -187,6 +163,7 @@ export function LoginForm() {
                 <FormLabel className="text-gray-300">2FA Code</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     placeholder="Enter your 2FA code"
                     {...field}
                     className="border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
@@ -203,8 +180,8 @@ export function LoginForm() {
 
         {/* LOGIN BUTTON */}
         <Button
-          type="submit"
           disabled={isPending}
+          type="submit"
           className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
         >
           {isPending ? "Logging in..." : "Login"}

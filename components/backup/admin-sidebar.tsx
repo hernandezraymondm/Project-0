@@ -23,7 +23,7 @@ import {
   FileText,
   CheckSquare,
 } from "lucide-react";
-import { AppLogo } from "@/app/_components/app-logo";
+import { AppLogo } from "@/app/(protected)/_components/app-logo";
 import { useSidebar } from "@/components/ui/sidebar"; // Import useSidebar hook
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";

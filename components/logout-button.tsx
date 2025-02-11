@@ -1,37 +1,48 @@
 "use client";
 
-// import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { useAuth } from "@/hooks/use-auth";
 import { LogOut } from "lucide-react";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function LogoutButton() {
-  // const router = useRouter();
+  const { logout } = useAuth();
+  const [isPending, startTransition] = useTransition();
 
   const handleLogout = async () => {
-    signOut();
-    // try {
-    //   const response = await fetch("/api/auth/logout", {
-    //     method: "POST",
-    //     credentials: "include", // This is important for including cookies in the request
-    //   });
-    //   if (response.ok) {
-    //     toast.success("You have been successfully logged out.");
-    //     router.push("/auth/login");
-    //     router.refresh();
-    //   } else {
-    //     throw new Error("Logout failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Logout error:", error);
-    //   toast.error("An error occurred while logging out.");
-    // }
+    startTransition(async () => {
+      try {
+        await logout();
+      } catch {
+        toast.error("An error occurred during logout. Please try again.");
+      }
+    });
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={handleLogout}>
-      <LogOut className="h-5 w-5" />
-    </Button>
+    <>
+      <Button variant="ghost" size="icon" onClick={handleLogout}>
+        <LogOut className="h-5 w-5" />
+      </Button>
+
+      <AlertDialog open={isPending}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Logging Out</AlertDialogTitle>
+            <AlertDialogDescription>
+              Logging out your account, please wait...
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

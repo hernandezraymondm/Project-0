@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { db } from "@/lib/utils/prisma";
 
 export async function logActivity(
   action: string,
@@ -8,7 +6,7 @@ export async function logActivity(
   email?: string,
 ) {
   try {
-    await prisma.log.create({
+    await db.auditTrail.create({
       data: {
         userId,
         email,

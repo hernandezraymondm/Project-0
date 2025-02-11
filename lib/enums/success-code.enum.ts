@@ -1,6 +1,7 @@
 const enum SuccessCode {
   AUTH_SIGNUP = "USER REGISTRATION SUCCESSFUL",
   AUTH_SIGNIN = "USER LOGIN SUCCESSFUL",
+  AUTH_LOGOUT = "USER LOGOUT SUCCESSFUL",
 }
 
 export { SuccessCode };

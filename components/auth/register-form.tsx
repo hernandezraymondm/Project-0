@@ -8,23 +8,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { EyeIcon, EyeOffIcon, IdCard } from "lucide-react";
-import { registerUser } from "@/services/auth.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schema/auth.schema";
 import { FormAlert } from "@/components/form-alert";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
 export const RegisterForm = () => {
-  const router = useRouter();
+  const { register } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -40,18 +41,22 @@ export const RegisterForm = () => {
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
+    setSuccess("");
     startTransition(async () => {
       try {
-        const response = await registerUser(values);
-        const data = await response.json();
-        if (response.ok) {
-          toast.info("Please check your email to verify your account.");
-          router.push("/auth/login");
-        } else {
-          setError(data.message || "An error occurred during registration.");
+        const response = await register(
+          values.name,
+          values.email,
+          values.password,
+          values.confirmPassword,
+        );
+        if (response.message === SuccessCode.AUTH_SIGNUP) {
+          setSuccess(response.message);
+        } else if (response.error) {
+          setError(response.error || "An error occurred during registration.");
         }
       } catch {
-        toast.error("An error occurred during registration.");
+        toast.error("An error occurred during registration. Please try again.");
       }
     });
   };
@@ -77,6 +82,7 @@ export const RegisterForm = () => {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     type="text"
                     placeholder="Enter your name"
                     {...field}
@@ -101,6 +107,7 @@ export const RegisterForm = () => {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     type="email"
                     placeholder="Enter your email"
                     {...field}
@@ -115,7 +122,6 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         {/* PASSWORD FIELD */}
         <FormField
           control={form.control}
@@ -126,18 +132,19 @@ export const RegisterForm = () => {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     {...field}
                     className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                   />
                   <Button
+                    disabled={isPending}
                     type="button"
                     variant="ghost"
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={togglePasswordVisibility}
-                    disabled={isPending}
                   >
                     {showPassword ? (
                       <EyeOffIcon
@@ -160,7 +167,6 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         {/* CONFIRM PASSWORD FIELD */}
         <FormField
           control={form.control}
@@ -171,18 +177,19 @@ export const RegisterForm = () => {
               <FormControl>
                 <div className="relative">
                   <Input
+                    disabled={isPending}
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm your password"
                     {...field}
                     className="border-gray-700 bg-gray-800 pr-10 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
                   />
                   <Button
+                    disabled={isPending}
                     type="button"
                     variant="ghost"
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={toggleConfirmPasswordVisibility}
-                    disabled={isPending}
                   >
                     {showConfirmPassword ? (
                       <EyeOffIcon
@@ -205,14 +212,15 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         {/* FORM ALERT */}
+
         <FormAlert message={error} />
+        <FormAlert message={success} variant="success" />
 
         {/* REGISTER BUTTON */}
         <Button
-          type="submit"
           disabled={isPending}
+          type="submit"
           className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700"
         >
           {isPending ? "Registering..." : "Register"}

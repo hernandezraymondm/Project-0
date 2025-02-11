@@ -1,5 +1,5 @@
-import { TextCrawl } from "../_components/text-crawl";
-import { AppLogo } from "../_components/app-logo";
+import { TextCrawl } from "../(protected)/_components/text-crawl";
+import { AppLogo } from "../(protected)/_components/app-logo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

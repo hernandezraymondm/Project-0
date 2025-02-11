@@ -12,9 +12,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { BreadCrumb } from "@/app/(protected)/_components/breadcrumb";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 import { ThemeToggle } from "@/components/header/theme-toggle";
-import { BreadCrumb } from "@/app/_components/breadcrumb";
 import { LogoutButton } from "@/components/logout-button";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";

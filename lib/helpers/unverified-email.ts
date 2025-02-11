@@ -1,4 +1,4 @@
-import { getVerificationByEmail } from "@/data/verification-token";
+import { getVerificationByEmail } from "@/data/verification";
 import { generateVerification } from "./generate-verification";
 import { sendVerificationEmail } from "../utils/mailer";
 

@@ -1,5 +1,6 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Inter, Audiowide, Jura } from "next/font/google";
+import { AuthProvider } from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -42,10 +43,16 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          {/* <DisableDevToolsProvider /> */}
-          {children}
-
-          <Toaster richColors position="bottom-center" />
+          <AuthProvider>
+            {/* <DisableDevToolsProvider /> */}
+            {children}
+            <Toaster
+              richColors
+              position="bottom-center"
+              duration={20000}
+              closeButton
+            />
+          </AuthProvider>
         </NextThemesProvider>
       </body>
     </html>

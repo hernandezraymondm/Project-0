@@ -1,3 +1,5 @@
+"use client";
+
 import {
   UsersRound,
   ShoppingCart,
@@ -12,13 +14,34 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import FloatingIconCard from "@/components/floating-icon-card";
 import { ClientDateTimeDisplay } from "@/components/date-time";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
-import { UserStats } from "../../_components/user-stats";
+import { UserStats } from "../_components/user-stats";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 import { MdTimeline } from "react-icons/md";
+import { useAuth } from "@/hooks/use-auth";
 import { FaGithub } from "react-icons/fa";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      console.log("ProtectedRoute: No access token, redirecting...");
+      router.push("/auth/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="flex-1 space-y-4">
       <div className="flex items-center justify-between">
