@@ -2,14 +2,13 @@ import { getPasswordResetByToken } from "@/data/password-reset";
 import { getVerificationByToken } from "@/data/verification";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
-import { VerifyLinkSchema } from "@/schema/auth.schema";
 import { HttpStatus } from "@/config/http.config";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { target, token } = VerifyLinkSchema.parse(body);
+    const { target, token } = body;
     let verification;
 
     // VERIFY TOKEN LINK
@@ -47,12 +46,11 @@ export async function POST(req: Request) {
     const expires = verification.expires.getTime();
 
     // RETURN THE DATA
-    const data = {
-      email: verification.email,
-      expires,
-    };
     return NextResponse.json(
-      { message: SuccessCode.VALID_LINK, data },
+      {
+        message: SuccessCode.VALID_LINK,
+        payload: { email: verification.email, expires },
+      },
       { status: HttpStatus.OK },
     );
   } catch (error) {

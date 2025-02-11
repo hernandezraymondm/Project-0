@@ -6,6 +6,7 @@ import { db } from "@/lib/utils/prisma";
  * CREATE OR UPDATE A NEW VERIFICATION CODE.
  */
 export const generateVerification = async (
+  userId: string,
   email: string,
   token?: string,
 ): Promise<Verification> => {
@@ -16,7 +17,7 @@ export const generateVerification = async (
   const verification = await db.verification.upsert({
     where: { token: newToken },
     update: { code, expires },
-    create: { email, token: newToken, code, expires },
+    create: { userId, email, token: newToken, code, expires },
   });
 
   return verification;

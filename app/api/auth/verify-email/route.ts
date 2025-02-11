@@ -1,7 +1,6 @@
 import { getVerificationByTokenAndCode } from "@/data/verification";
 import { logActivity } from "../../audit-trail/add-activity/route";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
-import { VerifyEmailSchema } from "@/schema/auth.schema";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { ActionLog } from "@/lib/enums/audit-log.enum";
 import { HttpStatus } from "@/config/http.config";
@@ -12,7 +11,7 @@ import { db } from "@/lib/utils/prisma";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { token, code } = VerifyEmailSchema.parse(body);
+    const { token, code } = body;
 
     // VERIFY TOKEN LINK
     const verification = await getVerificationByTokenAndCode(token, code);
@@ -65,11 +64,7 @@ export async function POST(req: Request) {
     }
 
     // LOG ACTIVITY
-    await logActivity(
-      ActionLog.ACCOUNT_LOGOUT,
-      verification.id,
-      verification.email,
-    );
+    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id, verification.email);
 
     return NextResponse.json(
       { message: SuccessCode.VERIFICATION_SUCCESS },

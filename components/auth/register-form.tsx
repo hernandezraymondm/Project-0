@@ -14,7 +14,6 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type * as z from "zod";
-import Link from "next/link";
 
 import {
   Form,
@@ -62,12 +61,9 @@ export const RegisterForm = () => {
         );
         if (response.message === SuccessCode.AUTH_SIGNUP) {
           setSuccess(response.message);
-          toast.success("Registration successful!");
         } else if (response.error) {
-          setError(response.error || "An error occurred during registration.");
-          toast.error(
-            response.error || "Registration failed. Please try again.",
-          );
+          setError(response.error);
+          toast.error("Registration failed. Please try again.");
         }
       } catch {
         toast.error("An error occurred during registration. Please try again.");

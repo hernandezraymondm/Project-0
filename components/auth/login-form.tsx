@@ -63,7 +63,7 @@ export function LoginForm() {
 
         if (response.twoFactor) {
           setTwoFactor(true);
-          toast.info("Please enter your 2FA code to complete login.");
+          toast("Please enter your 2FA code to complete login.");
         } else if (response.error === ErrorCode.AUTH_ACCOUNT_LOCKED) {
           setLockTime(response.lockTime);
           setError(response.error);
@@ -76,6 +76,7 @@ export function LoginForm() {
           toast.info("Please verify your email address to login.");
         } else {
           setError(response.error);
+          toast.error("Login failed. Please try again.");
         }
       } catch {
         setError("An error occurred during login. Please try again.");

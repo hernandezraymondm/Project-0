@@ -56,6 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
         confirmPassword,
       });
+
       const data = await response.json();
       if (response.ok) {
         router.refresh();

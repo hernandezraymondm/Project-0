@@ -42,7 +42,7 @@ export const fetchUser = async (token: string) => {
 };
 
 export const verifyLink = async (target: string, token: string) => {
-  const response = await fetch(`${Config.API_BASE_PATH}/auth/verify-email`, {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/verify-link`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ target, token }),

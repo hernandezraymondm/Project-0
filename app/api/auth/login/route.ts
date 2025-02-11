@@ -71,7 +71,10 @@ export async function POST(req: NextRequest) {
     if (settings?.emailVerificationEnabled) {
       // CHECK EMAIL VERIFICATION STATUS
       if (!user.emailVerified) {
-        const verificationToken = await handleUnverifiedEmail(user.email);
+        const verificationToken = await handleUnverifiedEmail(
+          user.id,
+          user.email,
+        );
         return NextResponse.json(
           {
             error: ErrorCode.AUTH_EMAIL_UNVERIFIED,

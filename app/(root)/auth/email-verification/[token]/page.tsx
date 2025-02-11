@@ -14,11 +14,11 @@ export default async function VerifyEmailPage({
 
       {/* Reset Password container */}
       <div className="relative z-10 w-full max-w-md rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-2xl backdrop-blur-md">
-        <h1 className="mb-6 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-center text-3xl font-bold text-transparent">
-          Verify Email
+        <h1 className="mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-center text-3xl font-bold text-transparent">
+          Email Verification
         </h1>
         <EmailVerificationForm token={token} />
-        <p className="mt-6 text-center text-gray-300">
+        <p className="mt-6 text-sm text-center text-gray-400">
           Remember your password?{" "}
           <Link
             href="/auth/login"
