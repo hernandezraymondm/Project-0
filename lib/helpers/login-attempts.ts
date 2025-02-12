@@ -46,7 +46,7 @@ export const handleLoginAttempts = async (
         userAttempts.emailSent = true;
 
         // Log activity
-        logActivity(ActionLog.ACCOUNT_LOCKED, user.id, user.email);
+        logActivity(ActionLog.ACCOUNT_LOCKED, user.id);
       }
     }
 

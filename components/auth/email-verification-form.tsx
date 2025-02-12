@@ -87,6 +87,8 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           const formattedMessage =
             message.charAt(0).toUpperCase() + message.slice(1);
           toast.success(formattedMessage);
+        } else if (response.status === 401) {
+          router.push("/auth/unauthorized");
         } else {
           setError(data.error);
           toast.error(data.error || "Verification failed. Please try again");

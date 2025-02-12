@@ -11,9 +11,12 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function UnauthorizedPage() {
+  const router = useRouter();
   const [showRetry, setShowRetry] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -102,10 +105,10 @@ export default function UnauthorizedPage() {
                 size="lg"
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg"
               >
-                <a href="/auth/login">
+                <Link href="/auth/login">
                   Go to Login
                   <ArrowRight className="w-5 h-5 ml-2" />
-                </a>
+                </Link>
               </Button>
 
               <div className="grid grid-cols-2 gap-4">
@@ -119,13 +122,15 @@ export default function UnauthorizedPage() {
                   Home
                 </Button>
                 <Button
+                  asChild
                   variant="outline"
                   size="lg"
                   className="w-full text-lg"
-                  onClick={() => (window.location.href = "/help")}
                 >
-                  <HelpCircle className="w-5 h-5 mr-2" />
-                  Help
+                  <Link href="/contact-us">
+                    <HelpCircle className="w-5 h-5 mr-2" />
+                    Help
+                  </Link>
                 </Button>
               </div>
 
@@ -141,7 +146,7 @@ export default function UnauthorizedPage() {
                       variant="secondary"
                       size="lg"
                       className="w-full text-lg"
-                      onClick={() => window.location.reload()}
+                      onClick={() => router.back()}
                     >
                       Retry
                       <RefreshCw className="w-5 h-5 ml-2" />

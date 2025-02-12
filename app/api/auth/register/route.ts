@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     });
 
     // LOG USER REGISTRATION
-    logActivity(ActionLog.ACCOUNT_SIGNUP, user.id, user.email);
+    logActivity(ActionLog.ACCOUNT_SIGNUP, user.id);
 
     // CHECK APP SETTINGS
     const settings = await db.setting.findFirst({
@@ -61,8 +61,6 @@ export async function POST(req: NextRequest) {
         verification.code,
       );
     }
-
-    console.log(body);
 
     return NextResponse.json(
       { message: SuccessCode.AUTH_SIGNUP },

@@ -75,9 +75,9 @@ export function LoginForm() {
         } else if (response.verificationToken) {
           setError(response.error);
           setVerificationToken(response.verificationToken);
-          toast.info("Please verify your email address to login.");
+          toast.info("Please check your email to verify your account.");
         } else if (response.message === SuccessCode.AUTH_SIGNIN) {
-          setSuccess(response.message);
+          setSuccess("Getting things ready...");
         } else {
           setError(response.error);
           toast.error("Login failed. Please try again.");

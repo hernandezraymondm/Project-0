@@ -22,13 +22,13 @@ import { useAuth } from "@/hooks/use-auth";
 import { FaGithub } from "react-icons/fa";
 
 export default function DashboardPage() {
-  const { user, loading } = useAuth();
+  const { session, loading } = useAuth();
 
   if (loading) {
     return <p className="text-center mt-10">Loading...</p>;
   }
 
-  if (!user) {
+  if (!session) {
     return null;
   }
 

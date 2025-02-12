@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       });
 
       if (result) {
-        logActivity("Enabled 2FA", user.id, user.email);
+        logActivity("Enabled 2FA", user.id);
       }
       return NextResponse.json({ success: true });
     } else {

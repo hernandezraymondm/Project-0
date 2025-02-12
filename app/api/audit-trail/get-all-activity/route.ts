@@ -17,7 +17,6 @@ export async function GET(req: Request) {
 
   try {
     const auditTrails = await db.auditTrail.findMany({
-      where: { userId: decoded.userId },
       orderBy: { timestamp: "desc" },
       skip: offset,
       take: limit,
@@ -30,17 +29,7 @@ export async function GET(req: Request) {
       },
     });
 
-    // FRONT END CODE
-    // const formattedAuditTrails = auditTrails.map((auditTrail) => ({
-    //   ...auditTrail,
-    //   email: auditTrail.user.email,
-    // }));
-
-    // res.json(formattedAuditTrails);
-
-    const totalActivities = await db.auditTrail.count({
-      where: { userId: decoded.userId },
-    });
+    const totalActivities = await db.auditTrail.count();
 
     const totalPages = Math.ceil(totalActivities / limit);
 

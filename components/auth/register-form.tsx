@@ -60,7 +60,7 @@ export const RegisterForm = () => {
           values.confirmPassword,
         );
         if (response.message === SuccessCode.AUTH_SIGNUP) {
-          setSuccess(response.message);
+          setSuccess("Success! You're now officially registered.");
         } else if (response.error) {
           setError(response.error);
           toast.error("Registration failed. Please try again.");

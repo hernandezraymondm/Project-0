@@ -34,6 +34,7 @@ export async function POST(req: Request) {
     // CHECK IF USER EXISTS
     const user = await getUserByEmail(verification.email);
     if (!user) {
+      await deleteVerificationTokens(verification.email);
       return NextResponse.json(
         { error: ErrorCode.AUTH_USER_NOT_FOUND },
         { status: HttpStatus.UNAUTHORIZED },
@@ -64,7 +65,7 @@ export async function POST(req: Request) {
     }
 
     // LOG ACTIVITY
-    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id, verification.email);
+    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id);
 
     return NextResponse.json(
       { message: SuccessCode.VERIFICATION_SUCCESS },

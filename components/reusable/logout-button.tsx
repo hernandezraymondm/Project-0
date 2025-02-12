@@ -21,6 +21,7 @@ export function LogoutButton() {
     startTransition(async () => {
       try {
         await logout();
+        toast.info("You've been logged out. Come back soon!");
       } catch {
         toast.error("An error occurred during logout. Please try again.");
       }
