@@ -23,9 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { FormAlert } from "@/components/reusable/form-alert";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { RegisterSchema } from "@/schema/auth.schema";
-import { FormAlert } from "@/components/form-alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";

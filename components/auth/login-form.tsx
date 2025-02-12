@@ -26,11 +26,11 @@ import {
 } from "@/components/ui/form";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { FormAlert } from "../reusable/form-alert";
 import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
-import { FormAlert } from "../form-alert";
 
 export function LoginForm() {
   const { login } = useAuth();

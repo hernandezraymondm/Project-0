@@ -1,7 +1,7 @@
 import { BreadCrumb } from "@/app/(protected)/_components/breadcrumb";
+import { LogoutButton } from "@/components/reusable/logout-button";
 import { ThemeToggle } from "@/components/header/theme-toggle";
 import { SearchBox } from "@/components/header/search-box";
-import { LogoutButton } from "@/components/logout-button";
 import { FullScreenToggle } from "./fullscreen-toggle";
 import { SidebarToggle } from "./sidebar-toggle";
 import { RelatedApps } from "./related-apps";

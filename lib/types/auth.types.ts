@@ -12,5 +12,5 @@ export interface AuthContextType {
     confirmPassword: string,
   ) => Promise<any>;
   loading: boolean;
-  fetchUser: (token?: string) => Promise<void>;
+  // fetchUser: (token?: string) => Promise<void>;
 }

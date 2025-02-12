@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/popover";
 import { BreadCrumb } from "@/app/(protected)/_components/breadcrumb";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { LogoutButton } from "@/components/reusable/logout-button";
 import { ThemeToggle } from "@/components/header/theme-toggle";
-import { LogoutButton } from "@/components/logout-button";
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 export function Navbar() {
   const [isFullscreen, setIsFullscreen] = useState(false);
