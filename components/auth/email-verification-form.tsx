@@ -22,10 +22,10 @@ import { useEffect, useState, useTransition } from "react";
 import { ResendCodeSection } from "./resend-code-section";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
+import RiseLoader from "react-spinners/RiseLoader";
 import { FormAlert } from "../reusable/form-alert";
 import { OtpSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
 import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -40,7 +40,6 @@ interface EmailVerificationFormProps {
 export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [isValidLink, setIsValidLink] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
   const [expires, setExpires] = useState(0);
@@ -58,7 +57,6 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
       const data = await response.json();
       try {
         if (response.ok && data.message === SuccessCode.VALID_LINK) {
-          setIsValidLink(true);
           setEmail(data.payload.email);
           setExpires(data.payload.expires);
         } else {
@@ -92,7 +90,6 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           router.push("/auth/unauthorized");
         } else {
           setError(data.error);
-          toast.error(data.error || "Verification failed. Please try again");
         }
       } catch {
         toast.error(
@@ -111,7 +108,12 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center justify-center space-y-4"
       >
-        <Loader size="lg" className="text-purple-600" />
+        <RiseLoader
+          color="hsl(var(--tertiary))"
+          size={15}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
         <p className="text-center text-gray-600 dark:text-gray-300">
           Please wait while we process your request...
         </p>
