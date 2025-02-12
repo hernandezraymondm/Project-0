@@ -10,6 +10,6 @@ export async function logActivity(action: string, userId: string) {
       },
     });
   } catch (error) {
-    console.error("Error logging activity:", error);
+    console.error("ERROR LOGGING ACTIVITY:", error);
   }
 }

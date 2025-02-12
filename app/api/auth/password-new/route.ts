@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
-    console.error("New password error:", error);
+    console.error("NEW PASSWORD ERROR:", error);
     return NextResponse.json(
       { message: "An error occurred while resetting your password" },
       { status: 500 },

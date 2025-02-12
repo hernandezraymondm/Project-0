@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid code" }, { status: 400 });
     }
   } catch (error) {
-    console.error("Verify 2FA error:", error);
+    console.error("VERIFY 2FA ERROR:", error);
     return NextResponse.json(
       { error: "An error occurred while verifying 2FA" },
       { status: 500 },

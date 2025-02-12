@@ -46,7 +46,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ auditTrails, totalPages });
   } catch (error) {
-    console.error("Error fetching activity logs:", error);
-    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+    console.error("ERROR FETCHING ACTIVITY LOGS:", error);
+    return NextResponse.json({ error: "AN ERROR OCCURRED" }, { status: 500 });
   }
 }

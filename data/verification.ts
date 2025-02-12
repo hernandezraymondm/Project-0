@@ -11,6 +11,7 @@ export const getVerificationByEmail = async (
   try {
     const verification = await db.verification.findFirst({
       where: { email },
+      orderBy: { updatedAt: "desc" },
     });
 
     return verification;

@@ -1,8 +1,10 @@
+import { logActivity } from "../../audit-trail/add-activity/route";
 import { generateExpirationDate, generateOTP } from "@/lib/utils";
 import { getVerificationByEmail } from "@/data/verification";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { sendVerificationEmail } from "@/lib/utils/mailer";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { ActionLog } from "@/lib/enums/audit-log.enum";
 import { verifyReCAPTCHA } from "@/lib/utils/captcha";
 import { HttpStatus } from "@/config/http.config";
 import { NextResponse } from "next/server";
@@ -44,6 +46,9 @@ export async function POST(req: Request) {
       verification.token,
       verification.code,
     );
+
+    // LOG ACTIVITY
+    logActivity(ActionLog.RESEND_EMAIL, verification.userId);
 
     // RETURN THE DATA
     return NextResponse.json(

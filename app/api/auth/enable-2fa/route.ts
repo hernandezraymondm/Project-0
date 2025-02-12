@@ -49,7 +49,7 @@ export async function POST() {
 
     return NextResponse.json({ secret, otpauth });
   } catch (error) {
-    console.error("Enable 2FA error:", error);
+    console.error("ENABLING 2FA ERROR:", error);
     return NextResponse.json(
       { error: "An error occurred while enabling 2FA" },
       { status: 500 },

@@ -57,21 +57,13 @@ export const ResendCodeCountdown = ({
   initialCount,
   onComplete,
 }: ResendCodeCountdownProps) => {
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const storedEndTime = localStorage.getItem("resendCodeEndTime");
-    const now = Math.floor(Date.now() / 1000);
-
-    if (storedEndTime) {
-      const remainingTime = parseInt(storedEndTime) - now;
-      return remainingTime > 0 ? remainingTime : initialCount;
-    }
-
-    return initialCount;
-  });
+  const [timeLeft, setTimeLeft] = useState<number | null>(null); // Start with `null` to avoid SSR mismatch
 
   useEffect(() => {
-    const storedEndTime = localStorage.getItem("resendCodeEndTime");
+    if (typeof window === "undefined") return; // Ensure client-side execution
+
     const now = Math.floor(Date.now() / 1000);
+    const storedEndTime = localStorage.getItem("resendCodeEndTime");
     let endTime: number;
 
     if (storedEndTime) {
@@ -94,11 +86,15 @@ export const ResendCodeCountdown = ({
       }
     };
 
-    updateCountdown(); // Call immediately to sync with stored time
+    updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
   }, [initialCount, onComplete]);
+
+  if (timeLeft === null) {
+    return <p>Loading...</p>; // Prevent SSR mismatch by rendering placeholder first
+  }
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;

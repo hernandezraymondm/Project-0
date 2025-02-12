@@ -78,7 +78,6 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
     startTransition(async () => {
       const response = await verifyEmailService(token, values.code);
       const data = await response.json();
-      console.log(data);
       try {
         if (response.ok && data.message === SuccessCode.VERIFICATION_SUCCESS) {
           setIsVerified(true);

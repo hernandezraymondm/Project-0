@@ -82,6 +82,9 @@ model Verification {
   expires DateTime
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([email, token])
   @@map("verification")
 }
@@ -94,6 +97,9 @@ model PasswordReset {
   code    String   @map("reset_code")
   expires DateTime
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([email, token])
   @@map("password_reset")

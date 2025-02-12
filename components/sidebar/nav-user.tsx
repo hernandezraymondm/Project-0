@@ -27,11 +27,12 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
+import { Skeleton } from "../ui/skeleton";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function NavUser() {
-  const { session, logout } = useAuth();
+  const { session, logout, loading } = useAuth();
   const { isMobile } = useSidebar();
   const [isLoggingOut, startTransition] = useTransition();
 
@@ -44,6 +45,23 @@ export function NavUser() {
       }
     });
   };
+
+  if (loading) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" className="w-full">
+            <Skeleton className="h-8 w-8 rounded-lg" />
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-3 w-32 mt-1" />
+            </div>
+            <Skeleton className="h-4 w-4 ml-auto" />
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
 
   return (
     <SidebarMenu>

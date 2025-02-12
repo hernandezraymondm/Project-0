@@ -3,7 +3,7 @@ export interface User {
   email: string;
   name: string;
   role: string;
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface Session {

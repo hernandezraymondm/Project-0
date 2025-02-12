@@ -23,8 +23,8 @@ export async function POST(req: Request) {
     }
 
     // CHECK IF LINK HAS EXPIRED
-    const hasExpired = new Date(verification.expires) < new Date();
-    if (hasExpired) {
+    const isExpired = new Date(verification.expires) < new Date();
+    if (isExpired) {
       return NextResponse.json(
         { error: ErrorCode.EXPIRED_CODE },
         { status: HttpStatus.BAD_REQUEST },
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
     }
 
     // LOG ACTIVITY
-    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id);
+    logActivity(ActionLog.VERIFIED_EMAIL, user.id);
 
     return NextResponse.json(
       { message: SuccessCode.VERIFICATION_SUCCESS },

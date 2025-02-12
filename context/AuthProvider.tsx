@@ -32,6 +32,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
+function getAccessToken() {
+  return sessionStorage.getItem("accessToken");
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<Session | null>(null);
@@ -45,15 +49,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (response.ok && data.accessToken) {
         sessionStorage.setItem("accessToken", data.accessToken);
-        await fetchUser(data.accessToken);
+        await fetchSession(data.accessToken);
         router.push("/dashboard");
         router.refresh();
-        toast.success("You're all set! Enjoy your session.");
+        toast.success("Welcome back! Enjoy your session.");
         return data;
       }
       return data;
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("LOGIN ERROR:", error);
       throw error;
     }
   };
@@ -80,37 +84,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       return data;
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("REGISTRATION ERROR:", error);
       throw error;
     }
   };
 
   const logout = useCallback(async () => {
-    setIsLoggingOut(true);
-    const token = sessionStorage.getItem("accessToken");
-    await logoutService(token);
-    sessionStorage.removeItem("accessToken");
-    setSession(null);
-    setTimeout(() => {
-      router.push("/auth/login");
-      setIsLoggingOut(false);
-    }, 1000);
+    try {
+      setIsLoggingOut(true);
+      const token = getAccessToken();
+      await logoutService(token);
+      sessionStorage.removeItem("accessToken");
+      setSession(null);
+      setTimeout(() => {
+        router.push("/auth/login");
+        setIsLoggingOut(false);
+      }, 1000);
+    } catch (error) {
+      console.error("LOGOUT ERROR:", error);
+    }
   }, [router]);
 
   const refreshAccessToken = useCallback(async () => {
     try {
       const response = await refreshAccessTokenService();
-      if (!response.ok) throw new Error();
-      const { accessToken } = await response.json();
-      sessionStorage.setItem("accessToken", accessToken);
-      return accessToken;
-    } catch {
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`FAILED TO REFRESH ACCESS TOKEN: ${data.error}`);
+      }
+      sessionStorage.setItem("accessToken", data.accessToken);
+      return data.accessToken;
+    } catch (error) {
+      console.error("ACCESS TOKEN REFRESH ERROR:", error);
       await logout();
       return null;
     }
   }, [logout]);
 
-  const fetchUser = useCallback(
+  const fetchSession = useCallback(
     async (token?: string, retryCount = 3) => {
       if (!token) {
         setLoading(false);
@@ -119,19 +130,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         sessionStorage.setItem("accessToken", token);
         const response = await fetchSessionService(token);
-        if (!response.ok) throw new Error();
+        if (!response.ok) {
+          const { error } = await response.json();
+          throw new Error(`FAILED TO FETCH SESSION: ${error}`);
+        }
         const session = await response.json();
         setSession(session);
-      } catch {
+      } catch (error: any) {
+        console.error("FETCH SESSION ERROR:", error);
         if (retryCount > 0) {
           const newToken = await refreshAccessToken();
           if (newToken) {
-            await fetchUser(newToken, retryCount - 1);
+            await fetchSession(newToken, retryCount - 1);
           }
         } else {
-          toast.error(
-            "Failed to fetch user data. Please try logging in again.",
-          );
+          toast.error(`FAILED TO FETCH SESSION DATA: ${error.message}`);
           await logout();
         }
       } finally {
@@ -142,12 +155,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    const token = sessionStorage.getItem("accessToken");
-    fetchUser(token ?? undefined);
+    const token = getAccessToken();
+    fetchSession(token ?? undefined);
 
     const interval = setInterval(async () => {
-      if (sessionStorage.getItem("accessToken")) {
-        await refreshAccessToken();
+      if (getAccessToken()) {
+        try {
+          await refreshAccessToken();
+        } catch (error) {
+          console.error("INTERVAL REFRESH ERROR:", error);
+        }
       }
     }, Config.TOKEN_REFRESH_INTERVAL);
 
@@ -155,7 +172,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearInterval(interval);
       sessionStorage.removeItem("accessToken");
     };
-  }, [fetchUser, refreshAccessToken]);
+  }, [fetchSession, refreshAccessToken]);
 
   return (
     <AuthContext.Provider
