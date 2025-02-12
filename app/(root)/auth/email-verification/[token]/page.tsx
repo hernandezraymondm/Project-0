@@ -1,5 +1,4 @@
 import { EmailVerificationForm } from "@/components/auth/email-verification-form";
-import Link from "next/link";
 
 export default async function VerifyEmailPage({
   params,
@@ -18,15 +17,6 @@ export default async function VerifyEmailPage({
           Email Verification
         </h1>
         <EmailVerificationForm token={token} />
-        <p className="mt-6 text-sm text-center text-gray-400">
-          Remember your password?{" "}
-          <Link
-            href="/auth/login"
-            className="text-purple-400 transition-all duration-300 hover:text-pink-500"
-          >
-            Login here
-          </Link>
-        </p>
       </div>
     </div>
   );

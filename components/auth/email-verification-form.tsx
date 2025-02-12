@@ -17,11 +17,12 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { ExpirationCountdown } from "../reusable/countdown";
 import { useEffect, useState, useTransition } from "react";
+import { ResendCodeSection } from "./resend-code-section";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormAlert } from "../reusable/form-alert";
-import { Countdown } from "../reusable/countdown";
 import { OtpSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -189,7 +190,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
             <p className="text-gray-600 dark:text-gray-300">
               This code will expire in{" "}
               <strong>
-                <Countdown expiration={expires} />
+                <ExpirationCountdown expiration={expires} />
               </strong>
               .
             </p>
@@ -225,6 +226,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           </Button>
         </form>
       </Form>
+      <ResendCodeSection email={email} setError={setError} />
     </motion.div>
   );
 }
