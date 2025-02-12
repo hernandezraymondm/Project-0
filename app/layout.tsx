@@ -48,7 +48,7 @@ export default function RootLayout({
             {children}
             <Toaster
               richColors
-              position="bottom-center"
+              position="top-center"
               duration={20000}
               closeButton
             />

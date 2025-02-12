@@ -1,5 +1,22 @@
 import { Config } from "@/config/app.config";
 
+export const refreshAccessToken = async () => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/refresh`, {
+    method: "POST",
+  });
+
+  return response;
+};
+
+export const fetchSession = async (token: string) => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/session`, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` }, //includes token
+  });
+
+  return response;
+};
+
 export const login = async (values: any) => {
   const response = await fetch(`${Config.API_BASE_PATH}/auth/login`, {
     method: "POST",
@@ -18,25 +35,11 @@ export const register = async (values: any) => {
   return response;
 };
 
-export const logout = async () => {
+export const logout = async (token: string | null) => {
   const response = await fetch(`${Config.API_BASE_PATH}/auth/logout`, {
     method: "POST",
-    credentials: "include", //includes cookie
-  });
-  return response;
-};
-
-export const refreshAccessToken = async () => {
-  const response = await fetch(`${Config.API_BASE_PATH}/auth/refresh`, {
-    method: "POST",
-  });
-  return response;
-};
-
-export const fetchUser = async (token: string) => {
-  const response = await fetch(`${Config.API_BASE_PATH}/user/fetch-user`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` }, //includes token
+    headers: { Authorization: `Bearer ${token}` }, //includes accessToken
+    // credentials: "include", //includes cookie
   });
   return response;
 };
@@ -57,4 +60,13 @@ export const verifyEmail = async (token: string, code: string) => {
     body: JSON.stringify({ token, code }),
   });
   return response;
+};
+
+export const resendCode = async (email: string, captchaToken: string) => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/resend-code`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, captchaToken }),
+  });
+  return response.json();
 };

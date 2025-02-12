@@ -17,17 +17,18 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { ExpirationCountdown } from "../reusable/countdown";
 import { useEffect, useState, useTransition } from "react";
+import { ResendCodeSection } from "./resend-code-section";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
+import RiseLoader from "react-spinners/RiseLoader";
+import { FormAlert } from "../reusable/form-alert";
 import { OtpSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
 import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { FormAlert } from "../form-alert";
-import { Countdown } from "../countdown";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import type * as z from "zod";
@@ -39,7 +40,6 @@ interface EmailVerificationFormProps {
 export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [isValidLink, setIsValidLink] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
   const [expires, setExpires] = useState(0);
@@ -57,7 +57,6 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
       const data = await response.json();
       try {
         if (response.ok && data.message === SuccessCode.VALID_LINK) {
-          setIsValidLink(true);
           setEmail(data.payload.email);
           setExpires(data.payload.expires);
         } else {
@@ -87,9 +86,10 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           const formattedMessage =
             message.charAt(0).toUpperCase() + message.slice(1);
           toast.success(formattedMessage);
+        } else if (response.status === 401) {
+          router.push("/auth/unauthorized");
         } else {
           setError(data.error);
-          toast.error(data.error || "Verification failed. Please try again");
         }
       } catch {
         toast.error(
@@ -108,7 +108,12 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center justify-center space-y-4"
       >
-        <Loader size="lg" className="text-purple-600" />
+        <RiseLoader
+          color="hsl(var(--tertiary))"
+          size={15}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
         <p className="text-center text-gray-600 dark:text-gray-300">
           Please wait while we process your request...
         </p>
@@ -187,7 +192,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
             <p className="text-gray-600 dark:text-gray-300">
               This code will expire in{" "}
               <strong>
-                <Countdown expiration={expires} />
+                <ExpirationCountdown expiration={expires} />
               </strong>
               .
             </p>
@@ -223,6 +228,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           </Button>
         </form>
       </Form>
+      <ResendCodeSection email={email} setError={setError} />
     </motion.div>
   );
 }

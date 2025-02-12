@@ -8,11 +8,11 @@ import {
 } from "lucide-react";
 import { SecurityOverview } from "../../../components/dashboard/security-overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
+import FloatingIconCard from "@/components/reusable/floating-icon-card";
 import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
+import { ClientDateTimeDisplay } from "@/components/reusable/date-time";
 import { QuickActions } from "@/components/dashboard/quick-actions";
-import FloatingIconCard from "@/components/floating-icon-card";
-import { ClientDateTimeDisplay } from "@/components/date-time";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
 import { UserStats } from "../_components/user-stats";
 import { Button } from "@/components/ui/button";
@@ -22,13 +22,13 @@ import { useAuth } from "@/hooks/use-auth";
 import { FaGithub } from "react-icons/fa";
 
 export default function DashboardPage() {
-  const { user, loading } = useAuth();
+  const { session, loading } = useAuth();
 
   if (loading) {
     return <p className="text-center mt-10">Loading...</p>;
   }
 
-  if (!user) {
+  if (!session) {
     return null;
   }
 

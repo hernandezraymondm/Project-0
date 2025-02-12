@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/reusable/navbar";
 import React from "react";
 // import { cookies } from "next/headers";
 

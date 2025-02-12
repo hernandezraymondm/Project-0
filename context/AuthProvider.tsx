@@ -5,12 +5,17 @@ import {
   logout as logoutService,
   refreshAccessToken as refreshAccessTokenService,
   register as registerService,
-  fetchUser as fetchUserService,
+  fetchSession as fetchSessionService,
 } from "@/services/auth.service";
-import { useState, useEffect, useCallback, createContext } from "react";
-import { AuthContextType } from "@/lib/types/auth.types";
-import { CustomError } from "@/lib/types/error.types";
-import { User } from "@/lib/types/user.types";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+  type ReactNode,
+} from "react";
+import type { AuthContextType } from "@/lib/types/auth.types";
+import type { Session } from "@/lib/types/session.types";
 import { Config } from "@/config/app.config";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -19,9 +24,9 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
 
   const login = async (email: string, password: string, code?: string) => {
@@ -34,7 +39,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         await fetchUser(data.accessToken);
         router.push("/dashboard");
         router.refresh();
-        toast.success("You have been logged in successfully.");
+        toast.success("You're all set! Enjoy your session.");
+        return data;
       }
       return data;
     } catch (error) {
@@ -70,113 +76,82 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const logout = async () => {
-    try {
-      const response = await logoutService();
-      if (response.ok) {
-        setUser(null);
-        sessionStorage.removeItem("accessToken");
-        router.push("/auth/login");
-        toast.success("You have been successfully logged out.");
-      } else {
-        toast.error("Logout failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast.error("Logout failed. Please try again.");
-    }
-  };
+  const logout = useCallback(async () => {
+    const token = sessionStorage.getItem("accessToken");
+    await logoutService(token);
+    sessionStorage.removeItem("accessToken");
+    setSession(null);
+    router.push("/auth/login");
+  }, [router]);
 
   const refreshAccessToken = useCallback(async () => {
     try {
       const response = await refreshAccessTokenService();
-      const data = await response.json();
-      if (data.accessToken) {
-        sessionStorage.setItem("accessToken", data.accessToken);
-        return data.accessToken;
-      }
-      return null;
-    } catch (error) {
-      console.error("Token refresh error:", error);
+      if (!response.ok) throw new Error();
+      const { accessToken } = await response.json();
+      sessionStorage.setItem("accessToken", accessToken);
+      return accessToken;
+    } catch {
+      await logout();
       return null;
     }
-  }, []);
-
-  const handleApiError = useCallback(
-    async (error: any) => {
-      if (error.response && error.response.status === 401) {
-        const newToken = await refreshAccessToken();
-        if (newToken) {
-          return newToken;
-        } else {
-          sessionStorage.removeItem("accessToken");
-          setUser(null);
-          router.push("/login");
-        }
-      }
-      return null;
-    },
-    [router, refreshAccessToken],
-  );
+  }, [logout]);
 
   const fetchUser = useCallback(
-    async (token?: string) => {
+    async (token?: string, retryCount = 3) => {
       if (!token) {
         setLoading(false);
         return;
       }
-
       try {
-        const response = await fetchUserService(token);
-        const user = await response.json();
-        setUser(user);
-      } catch (error: unknown) {
-        const err = error as CustomError;
-        if (err.response && err.response.status === 401) {
-          const newToken = await handleApiError({ response: err.response });
+        const response = await fetchSessionService(token);
+        if (!response.ok) throw new Error();
+        const session = await response.json();
+        setSession(session);
+      } catch {
+        if (retryCount > 0) {
+          const newToken = await refreshAccessToken();
           if (newToken) {
-            await fetchUser(newToken);
+            await fetchUser(newToken, retryCount - 1);
           }
+        } else {
+          toast.error(
+            "Failed to fetch user data. Please try logging in again.",
+          );
+          await logout();
         }
-        console.error("Error fetching user:", error);
       } finally {
         setLoading(false);
       }
     },
-    [handleApiError],
+    [refreshAccessToken, logout],
   );
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
-    if (token) {
-      fetchUser(token);
-    } else {
-      setLoading(false);
-    }
+    fetchUser(token ?? undefined);
 
-    const refreshTokenPeriodically = setInterval(async () => {
-      const currentToken = sessionStorage.getItem("accessToken");
-      if (currentToken) {
-        const newToken = await refreshAccessToken();
-        if (newToken) {
-          await fetchUser(newToken);
-        }
+    const interval = setInterval(async () => {
+      if (sessionStorage.getItem("accessToken")) {
+        await refreshAccessToken();
       }
     }, Config.TOKEN_REFRESH_INTERVAL);
 
-    return () => clearInterval(refreshTokenPeriodically);
+    return () => {
+      clearInterval(interval);
+      sessionStorage.removeItem("accessToken");
+    };
   }, [fetchUser, refreshAccessToken]);
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        session,
         login,
         logout,
         refreshAccessToken,
         register,
         loading,
-        fetchUser,
       }}
     >
       {children}

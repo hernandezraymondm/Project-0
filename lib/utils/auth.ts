@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 export async function generateAccessToken(userId: string) {
   return await new SignJWT({ userId })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("15m")
+    .setExpirationTime(Config.ACCESS_TOKEN_EXPIRY)
     .setJti(randomBytes(16).toString("hex"))
     .sign(new TextEncoder().encode(Config.ACCESS_TOKEN_SECRET));
 }
@@ -16,7 +16,7 @@ export async function generateAccessToken(userId: string) {
 export async function generateRefreshToken(req: NextRequest, userId: string) {
   const token = await new SignJWT({ userId })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("7d")
+    .setExpirationTime(Config.REFRESH_TOKEN_EXPIRY)
     .setJti(randomBytes(16).toString("hex"))
     .sign(new TextEncoder().encode(Config.REFRESH_TOKEN_SECRET));
 
@@ -85,7 +85,6 @@ export async function getAuthenticatedUser(req: NextRequest) {
   const accessToken = req.headers.get("Authorization")?.split(" ")[1];
   if (accessToken) {
     const user = await verifyAccessToken(accessToken);
-
     if (user) return user;
   }
   const cookieStore = await cookies();
@@ -93,8 +92,7 @@ export async function getAuthenticatedUser(req: NextRequest) {
   if (refreshToken) {
     const user = await verifyRefreshToken(refreshToken);
     if (user) {
-      const newAccessToken = await generateAccessToken(user.id);
-      return { userId: user.id, newAccessToken };
+      return { userId: user.id };
     }
   }
 

@@ -1,7 +1,7 @@
-import { User } from "./user.types";
+import { Session } from "@/lib/types/session.types";
 
 export interface AuthContextType {
-  user: User | null;
+  session: Session | null;
   login: (email: string, password: string, code?: string) => Promise<any>;
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<string | null>;
@@ -12,5 +12,5 @@ export interface AuthContextType {
     confirmPassword: string,
   ) => Promise<any>;
   loading: boolean;
-  fetchUser: (token?: string) => Promise<void>;
+  // fetchUser: (token?: string) => Promise<void>;
 }

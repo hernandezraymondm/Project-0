@@ -26,21 +26,19 @@ import {
 } from "@/components/ui/form";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { FormAlert } from "../reusable/form-alert";
 import { LoginSchema } from "@/schema/auth.schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
-import { FormAlert } from "../form-alert";
 
 export function LoginForm() {
+  const router = useRouter();
   const { login } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [lockTime, setLockTime] = useState<number | undefined>();
-  const [verificationToken, setVerificationToken] = useState<
-    string | undefined
-  >("");
   const [twoFactor, setTwoFactor] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,6 +53,7 @@ export function LoginForm() {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
+    setSuccess("");
     startTransition(async () => {
       try {
         const response = await login(
@@ -67,17 +66,15 @@ export function LoginForm() {
           setTwoFactor(true);
           toast("Please enter your 2FA code to complete login.");
         } else if (response.error === ErrorCode.AUTH_ACCOUNT_LOCKED) {
-          setLockTime(response.lockTime);
-          setError(response.error);
+          setError(`${response.error} FOR ${response.lockTime} SECONDS`);
           toast.warning(
             `Your account has been locked due to multiple failed attempts. Please try again in ${response.lockTime} seconds.`,
           );
         } else if (response.verificationToken) {
-          setError(response.error);
-          setVerificationToken(response.verificationToken);
-          toast.info("Please verify your email address to login.");
+          router.push(`/auth/email-verification/${response.verificationToken}`);
+          toast.info("Please check your email to verify your account.");
         } else if (response.message === SuccessCode.AUTH_SIGNIN) {
-          setSuccess(response.message);
+          setSuccess("Getting things ready...");
         } else {
           setError(response.error);
           toast.error("Login failed. Please try again.");

@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
     });
 
     // LOG ACTIVITY
-    logActivity(ActionLog.ACCOUNT_SIGNIN, user.id, user.email);
+    logActivity(ActionLog.ACCOUNT_SIGNIN, user.id);
 
     // RETURN THE RESPONSE OBJECT
     return response;

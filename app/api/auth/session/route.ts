@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     // CHECK USER FROM DB
     const user = await db.user.findUnique({
       where: { id: auth.userId },
-      select: { id: true, email: true, name: true },
+      select: { id: true, email: true, name: true, role: true },
     });
 
     if (!user) {
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
     }
 
     // RETURN USER INFO
-    return NextResponse.json(user);
+    return NextResponse.json({ user });
   } catch (error) {
     console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
