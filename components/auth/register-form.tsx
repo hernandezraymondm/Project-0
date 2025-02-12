@@ -63,7 +63,6 @@ export const RegisterForm = () => {
           setSuccess("Success! You're now officially registered.");
         } else if (response.error) {
           setError(response.error);
-          toast.error("Registration failed. Please try again.");
         }
       } catch {
         toast.error("An error occurred during registration. Please try again.");

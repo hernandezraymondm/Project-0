@@ -27,10 +27,23 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function NavUser() {
-  const { session } = useAuth();
+  const { session, logout } = useAuth();
   const { isMobile } = useSidebar();
+  const [isLoggingOut, startTransition] = useTransition();
+
+  const handleLogout = async () => {
+    startTransition(async () => {
+      try {
+        await logout();
+      } catch {
+        toast.error("An error occurred during logout. Please try again.");
+      }
+    });
+  };
 
   return (
     <SidebarMenu>
@@ -119,7 +132,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={() => alert("Logout clicked")}>
+            <DropdownMenuItem onSelect={handleLogout} disabled={isLoggingOut}>
               <LogOut className="mr-2" />
               Log out
             </DropdownMenuItem>

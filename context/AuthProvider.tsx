@@ -7,6 +7,14 @@ import {
   register as registerService,
   fetchSession as fetchSessionService,
 } from "@/services/auth.service";
+
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   useState,
   useEffect,
@@ -27,6 +35,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<Session | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
 
   const login = async (email: string, password: string, code?: string) => {
@@ -77,11 +86,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = useCallback(async () => {
+    setIsLoggingOut(true);
     const token = sessionStorage.getItem("accessToken");
     await logoutService(token);
     sessionStorage.removeItem("accessToken");
     setSession(null);
-    router.push("/auth/login");
+    setTimeout(() => {
+      router.push("/auth/login");
+      setIsLoggingOut(false);
+    }, 1000);
   }, [router]);
 
   const refreshAccessToken = useCallback(async () => {
@@ -104,6 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
       try {
+        sessionStorage.setItem("accessToken", token);
         const response = await fetchSessionService(token);
         if (!response.ok) throw new Error();
         const session = await response.json();
@@ -155,6 +169,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
+      <AlertDialog open={isLoggingOut}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Logging Out</AlertDialogTitle>
+            <AlertDialogDescription>
+              Logging out your account, please wait...
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
     </AuthContext.Provider>
   );
 }

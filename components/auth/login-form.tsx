@@ -77,7 +77,6 @@ export function LoginForm() {
           setSuccess("Getting things ready...");
         } else {
           setError(response.error);
-          toast.error("Login failed. Please try again.");
         }
       } catch {
         setError("An error occurred during login. Please try again.");
