@@ -14,62 +14,39 @@ export function TextCrawl() {
             </div>
 
             <p className="mb-8 text-6xl leading-tight">
-              It is a period of rapid development. Rebel developers, striking
-              from a hidden base, have won their first victory against the evil
-              Galactic Empire of legacy systems.
+              It is a period of restless innovation. Rebel developers, striking
+              from hidden offices, have won their first victory against the evil
+              Corporate Empire. During the battle, rebel spies managed to steal
+              secret blueprints of the Empire’s ultimate weapon, THE MONOLITHIC
+              LEGACY SYSTEM, a legacy project with enough complexity to cause
+              endless bugs and spaghetti code.
             </p>
 
             <p className="mb-8 text-6xl leading-tight">
-              During the battle, Rebel spies managed to steal secret plans to
-              the Empire&apos;s ultimate weapon, Unknown Project, an advanced
-              starter kit with enough power to revolutionize an entire
-              development process.
+              Pursued by the Empire&apos;s sinister agents, the rebellious
+              developers race to their terminals, hoping to deploy the secret
+              blueprints and bring peace and clean code to the galaxy. Braving
+              countless errors, deprecated libraries, and cryptic documentation,
+              these brave heroes wield the power of open-source collaboration
+              and agile methodologies.
             </p>
 
             <p className="mb-8 text-6xl leading-tight">
-              Pursued by the Empire&apos;s sinister agents, the project races to
-              deliver the stolen technologies to the Rebel Alliance,
-              technologies that can save development time and bring freedom to
-              the galaxy....
+              As the Empire’s relentless updates and patches threaten to
+              obliterate their progress, the developers must unify their IDEs
+              and deliver a microservices architecture capable of dismantling
+              the monolithic menace. Little do they know, the Dark Lord of
+              Corporate Bureaucracy is already plotting their downfall with
+              endless meetings and ever-changing requirements.
             </p>
 
             {/* Additional content starts here */}
             <p className="mb-8 text-6xl leading-tight">
-              As the Rebel Alliance grows stronger, the Empire strikes back with
-              outdated frameworks and monolithic architectures. But the Rebels
-              remain undeterred, leveraging the agility of modern tools to stay
-              one step ahead.
-            </p>
-
-            <p className="mb-8 text-6xl leading-tight">
-              The Unknown Project team works tirelessly, integrating
-              cutting-edge libraries and frameworks to ensure the Rebel Alliance
-              remains at the forefront of innovation. Their mission is clear: to
-              empower developers everywhere with the tools they need to build
-              the future.
-            </p>
-
-            <p className="mb-8 text-6xl leading-tight">
-              In the shadows, the Empire plots its next move. Rumors of a new
-              superweapon, capable of crippling even the most advanced
-              development workflows, spread fear across the galaxy. But the
-              Rebels are prepared, ready to face any challenge with the power of
-              the Unknown Project.
-            </p>
-
-            <p className="mb-8 text-6xl leading-tight">
-              The battle for the future of development rages on. With every line
-              of code, the Rebel Alliance grows stronger, inching closer to a
-              galaxy free from the tyranny of legacy systems. The Unknown
-              Project is their beacon of hope, a symbol of what can be achieved
-              when innovation and determination come together.
-            </p>
-
-            <p className="mb-8 text-6xl leading-tight">
-              As the code fades into the stars, one thing is certain: the Rebel
-              Alliance will never stop fighting for a better future. The Unknown
-              Project is their greatest weapon, and with it, they will bring
-              freedom to the galaxy.
+              In this epic struggle, only the true coders can harness the force
+              of innovation to refactor chaos into harmony, ensuring that clean,
+              scalable code triumphs over technical debt. It is a battle for the
+              future of the digital universe, where every commit counts and
+              every sprint brings them closer to the ultimate deployment...
             </p>
           </div>
         </div>

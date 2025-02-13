@@ -246,7 +246,7 @@ Scroll bar
 
 .crawl-text {
   @apply relative w-full;
-  animation: text-crawl-scroll 150s linear infinite;
+  animation: text-crawl-scroll 120s linear infinite;
 }
 
 /* APP LOGO */

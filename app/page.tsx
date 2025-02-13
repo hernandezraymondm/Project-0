@@ -1,5 +1,6 @@
 import { TextCrawl } from "../components/landing/text-crawl";
 import { AppLogo } from "../components/reusable/app-logo";
+import { Navbar } from "@/components/reusable/navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function Home() {
     <main className="via-space-800 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 to-[#2e2838]">
       {/* Glowing background effect */}
       <div className="bg-radial-gradient absolute inset-0 animate-pulse from-purple-500/20 via-transparent to-transparent"></div>
-
+      <Navbar />
       {/* Content */}
       <div className="relative z-10 max-w-2xl space-y-8 text-center">
         {/* Futuristic title with gradient text */}
