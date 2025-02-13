@@ -105,7 +105,7 @@ export default function UnauthorizedPage() {
                 size="lg"
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg"
               >
-                <Link href="/auth/login">
+                <Link href="/login">
                   Go to Login
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>

@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (response.ok && data.accessToken) {
         sessionStorage.setItem("accessToken", data.accessToken);
         await fetchSession(data.accessToken);
-        router.push("/dashboard");
+        router.push("/home");
         router.refresh();
         toast.success("Welcome back! Enjoy your session.");
         return data;
@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       sessionStorage.removeItem("accessToken");
       setSession(null);
       setTimeout(() => {
-        router.push("/auth/login");
+        router.push("/login");
         setIsLoggingOut(false);
       }, 1000);
     } catch (error) {

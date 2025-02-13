@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
         <p className="text-sm mt-6 text-center text-gray-300">
           Remember your password?{" "}
           <Link
-            href="/auth/login"
+            href="/login"
             className="text-purple-400 transition-all duration-300 hover:text-pink-500"
           >
             Login here

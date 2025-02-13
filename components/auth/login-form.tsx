@@ -71,7 +71,7 @@ export function LoginForm() {
             `Your account has been locked due to multiple failed attempts. Please try again in ${response.lockTime} seconds.`,
           );
         } else if (response.verificationToken) {
-          router.push(`/auth/email-verification/${response.verificationToken}`);
+          router.push(`/email-verification/${response.verificationToken}`);
           toast.info("Please check your email to verify your account.");
         } else if (response.message === SuccessCode.AUTH_SIGNIN) {
           setSuccess("Getting things ready...");
@@ -291,7 +291,7 @@ export function LoginForm() {
           <div className="mt-6 flex items-center justify-center">
             <motion.div whileHover={{ scale: 1.05 }} className="text-sm">
               <Link
-                href="/auth/password-reset"
+                href="/password-reset"
                 className="font-medium text-purple-400 hover:text-indigo-400 transition-colors duration-200"
               >
                 Forgot your password?

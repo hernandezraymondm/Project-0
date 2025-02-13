@@ -14,7 +14,7 @@ import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { ClientDateTimeDisplay } from "@/components/reusable/date-time";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
-import { UserStats } from "../_components/user-stats";
+import { UserStats } from "../../../components/dashboard/user-stats";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MdTimeline } from "react-icons/md";

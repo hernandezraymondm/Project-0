@@ -86,7 +86,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
             message.charAt(0).toUpperCase() + message.slice(1);
           toast.success(formattedMessage);
         } else if (response.status === 401) {
-          router.push("/auth/unauthorized");
+          router.push("/unauthorized");
         } else {
           setError(data.error);
         }
@@ -165,7 +165,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           account is now ready for use.
         </p>
         <Button
-          onClick={() => router.push("/auth/login")}
+          onClick={() => router.push("/login")}
           className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
         >
           Go to Login

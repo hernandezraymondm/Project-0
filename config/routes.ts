@@ -5,8 +5,8 @@
  */
 export const publicRoutes: string[] = [
   "/",
-  "/auth/email-verification*",
-  "/auth/unauthorized",
+  "/email-verification*",
+  "/unauthorized",
 ];
 
 /**
@@ -14,11 +14,7 @@ export const publicRoutes: string[] = [
  * These routes will redirect logged in users to /settings
  * @type {string[]}
  */
-export const authRoutes: string[] = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/password-reset*",
-];
+export const authRoutes: string[] = ["/login", "/register", "/password-reset*"];
 
 /**
  * The prefix for API authentication routes
@@ -31,4 +27,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/dashboard";
+export const DEFAULT_LOGIN_REDIRECT: string = "/home";

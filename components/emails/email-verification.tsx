@@ -78,7 +78,7 @@ export const VerificationEmail = ({
 VerificationEmail.PreviewProps = {
   verificationCode: "144833",
   verificationLink:
-    "https://example.com/auth/email-verification/a3f8b58a-7d3a-49b2-ba3b-0d5211bba0ad",
+    "https://example.com/email-verification/a3f8b58a-7d3a-49b2-ba3b-0d5211bba0ad",
   appName: "VeriSafe",
   supportEmail: "support@verisafe.com",
 } as VerificationEmailProps;
