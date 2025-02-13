@@ -40,10 +40,10 @@ interface EmailVerificationFormProps {
 export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
   const [expires, setExpires] = useState(0);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<boolean | undefined>(false);
   const form = useForm({
     resolver: zodResolver(OtpSchema),
     defaultValues: {
@@ -80,7 +80,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
       const data = await response.json();
       try {
         if (response.ok && data.message === SuccessCode.VERIFICATION_SUCCESS) {
-          setIsVerified(true);
+          setSuccess(true);
           const message = data.message.toLowerCase();
           const formattedMessage =
             message.charAt(0).toUpperCase() + message.slice(1);
@@ -109,7 +109,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
       >
         <RiseLoader
           color="hsl(var(--tertiary))"
-          size={15}
+          size={12}
           aria-label="Loading Spinner"
           data-testid="loader"
         />
@@ -148,7 +148,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   }
 
   // SUCCESS STATE
-  if (isVerified) {
+  if (success) {
     return (
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -196,7 +196,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
               .
             </p>
           </div>
-
+          {/* OTP Field */}
           <FormField
             control={form.control}
             name="code"
@@ -216,8 +216,10 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
             )}
           />
 
+          {/* Form Alert */}
           <FormAlert message={error} />
 
+          {/* Verify button */}
           <Button
             type="submit"
             disabled={isPending}

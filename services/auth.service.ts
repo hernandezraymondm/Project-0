@@ -70,3 +70,12 @@ export const resendCode = async (email: string, captchaToken: string) => {
   });
   return response.json();
 };
+
+export const resetPassword = async (email: string) => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/password-reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  return response;
+};

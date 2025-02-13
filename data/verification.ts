@@ -56,3 +56,5 @@ export const getVerificationByTokenAndCode = async (
     return null;
   }
 };
+
+// TODO: CHECK IF THERE ARE UNUSED

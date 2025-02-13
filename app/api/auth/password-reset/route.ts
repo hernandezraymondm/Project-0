@@ -1,56 +1,62 @@
-import ResetPasswordEmail from "@/components/emails/reset-password-email";
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { generatePasswordReset } from "@/lib/helpers/generate-password-reset";
+import { validateMethod } from "@/lib/utils/validate-method";
+import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { sendPasswordResetEmail } from "@/lib/utils/mailer";
+import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { NextRequest, NextResponse } from "next/server";
+import { HttpStatus } from "@/config/http.config";
+import { getUserByEmail } from "@/data/user";
 import * as z from "zod";
-
-const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const resetPasswordSchema = z.object({
   email: z.string().email(),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    // VALIDATE HTTP METHOD
+    const methodError = validateMethod(req, "POST");
+    if (methodError) return methodError;
+
+    // PARSE AND VALIDATE REQUEST BODY WITH ZOD
     const body = await req.json();
-    const { email } = resetPasswordSchema.parse(body);
-
-    const user = await prisma.user.findUnique({ where: { email } });
-
+    const { success, data, error } = resetPasswordSchema.safeParse(body);
+    if (!success) {
+      return NextResponse.json(
+        { error: ErrorCode.INVALID_DATA, details: error.format() },
+        { status: HttpStatus.BAD_REQUEST },
+      );
+    }
+    const { email } = data;
+    // CHECK IF USER EXISTS
+    const user = await getUserByEmail(email);
     if (!user) {
       return NextResponse.json(
-        { message: "If the email exists, a reset link has been sent." },
-        { status: 200 },
+        { error: ErrorCode.AUTH_USER_NOT_FOUND },
+        { status: HttpStatus.BAD_REQUEST },
       );
     }
 
-    const resetToken = Math.random().toString(36).substring(2, 15);
-    const resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour from now
-
-    await prisma.user.update({
-      where: { email },
-      data: { resetToken, resetTokenExpiry },
-    });
-
-    const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password/${resetToken}`;
-
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "Reset Your Password",
-      react: ResetPasswordEmail({ resetUrl }),
-    });
+    // GENERATE AND SEND PASSWORD RESET
+    const passwordReset = await generatePasswordReset(user.id, user.email);
+    await sendPasswordResetEmail(
+      passwordReset.email,
+      passwordReset.token,
+      passwordReset.code,
+    );
 
     return NextResponse.json(
-      { message: "If the email exists, a reset link has been sent." },
-      { status: 200 },
+      { message: SuccessCode.PASSWORD_RESET },
+      { status: HttpStatus.OK },
     );
   } catch (error) {
-    console.error("RESET PASSWORD ERROR:", error);
+    console.error("INTERNAL SERVER ERROR:", error);
     return NextResponse.json(
-      { message: "An error occurred while processing your request" },
-      { status: 500 },
+      {
+        error: ErrorCode.INTERNAL_SERVER_ERROR,
+        message: "AN INTERNAL SERVER ERROR OCCURRED.",
+      },
+      { status: HttpStatus.INTERNAL_SERVER_ERROR },
     );
   }
 }

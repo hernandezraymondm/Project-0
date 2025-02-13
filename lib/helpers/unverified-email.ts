@@ -8,10 +8,10 @@ export const handleUnverifiedEmail = async (userId: string, email: string) => {
 
   // CHECK IF RECORD EXIST OR EXPIRED
   if (!verification || new Date(verification.expires) < new Date()) {
-    // Generate verification token
+    // GENERATE VERIFICATION
     const newVerification = await generateVerification(userId, email);
 
-    // Send verification email
+    // SEND VERIFICATION EMAIL
     await sendVerificationEmail(
       newVerification.email,
       newVerification.token,

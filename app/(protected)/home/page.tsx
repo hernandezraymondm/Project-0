@@ -8,13 +8,13 @@ import {
 } from "lucide-react";
 import { SecurityOverview } from "../../../components/dashboard/security-overview";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
-import FloatingIconCard from "@/components/reusable/floating-icon-card";
 import { SalesAnalytics } from "@/components/dashboard/sales-analytics";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { ClientDateTimeDisplay } from "@/components/reusable/date-time";
+import { UserStats } from "../../../components/dashboard/user-stats";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { Setup2FA } from "@/components/dashboard/setup-2fa";
-import { UserStats } from "../../../components/dashboard/user-stats";
+import TallyCard from "@/components/reusable/tally-card";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MdTimeline } from "react-icons/md";
@@ -56,7 +56,7 @@ export default function DashboardPage() {
         <div className="space-y-5 lg:col-span-3">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-4">
-            <FloatingIconCard
+            <TallyCard
               icon={UsersRound}
               title="Clients"
               value="512"
@@ -65,7 +65,7 @@ export default function DashboardPage() {
               iconColor="text-white"
               iconBgColor="bg-emerald-400"
             />
-            <FloatingIconCard
+            <TallyCard
               icon={ShoppingCart}
               title="Sales"
               value="$7,770"
@@ -74,7 +74,7 @@ export default function DashboardPage() {
               iconColor="text-white"
               iconBgColor="bg-sky-400"
             />
-            <FloatingIconCard
+            <TallyCard
               icon={ChartNoAxesCombined}
               title="Performance"
               value="256"
@@ -83,7 +83,7 @@ export default function DashboardPage() {
               iconColor="text-white"
               iconBgColor="bg-purple-400"
             />
-            <FloatingIconCard
+            <TallyCard
               icon={TriangleAlert}
               title="Alerts"
               value="24"
