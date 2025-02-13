@@ -5,7 +5,7 @@ import { AppLogo } from "./app-logo";
 
 export function Navbar() {
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-[#1e293b] bg-transparent text-white">
+    <header className="fixed top-0 w-full border-b border-[#1e293b] bg-transparent text-white z-10">
       <div className="flex h-14 items-center gap-4 px-8">
         <AppLogo size="xs" />
         <div className="ml-auto flex items-center gap-2">

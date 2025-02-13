@@ -10,7 +10,7 @@ export default function RegisterPage() {
 
       {/* Register container */}
       <div className="relative z-10 w-full max-w-4xl rounded-xl border border-gray-800 bg-gray-900/80 p-8 shadow-2xl backdrop-blur-md">
-        <div className="mb-10">
+        <div className="mb-8">
           <AppLogo size="sm" />
         </div>
         <RegisterForm />

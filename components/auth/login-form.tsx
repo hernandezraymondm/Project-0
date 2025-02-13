@@ -87,7 +87,7 @@ export function LoginForm() {
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
-    <div className="flex">
+    <div className="flex z-20">
       {/* Animated Background */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900">
         <motion.div
@@ -126,7 +126,7 @@ export function LoginForm() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md space-y-8"
+          className="w-full max-w-md space-y-6"
         >
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white mb-2">

@@ -9,7 +9,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({ size = "xs" }) => {
   // Define scaling based on the size prop
   const scale = {
     xs: "scale(1)",
-    sm: "scale(1.7)",
+    sm: "scale(1.5)",
     md: "scale(3)",
     lg: "scale(4)",
     xl: "scale(10)",

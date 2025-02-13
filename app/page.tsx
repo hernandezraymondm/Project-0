@@ -53,19 +53,30 @@ export default function Home() {
 
       {/* Floating stars animation */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="animate-star absolute h-[1px] w-[1px] rounded-full bg-white"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${Math.random() * 5 + 5}s`,
-              animationDelay: `${Math.random() * 2}s`,
-              opacity: `${Math.random() * 0.5 + 0.2}`, // Random opacity for subtlety
-            }}
-          ></div>
-        ))}
+        {[...Array(150)].map((_, i) => {
+          const colors = [
+            "#ffffff",
+            // "#ffcc00",
+            // "#ff6699",
+            // "#66ff66",
+            // "#66ccff",
+          ];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          return (
+            <div
+              key={i}
+              className="animate-star absolute h-[1px] w-[1px] rounded-ful"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 50}%`,
+                backgroundColor: randomColor,
+                animationDuration: `${Math.random() * 5 + 5}s`,
+                animationDelay: `${Math.random() * 2}s`,
+                opacity: `${Math.random() * 0.5 + 0.2}`,
+              }}
+            ></div>
+          );
+        })}
       </div>
     </main>
   );

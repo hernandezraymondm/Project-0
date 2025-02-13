@@ -228,7 +228,7 @@ Scroll bar
 
 .fade-overlay {
   @apply pointer-events-none absolute inset-0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.596) 1%, transparent 50%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.796) 1%, transparent 50%);
 }
 
 .crawl {
@@ -314,5 +314,5 @@ Scroll bar
 }
 
 .wiggle-on-hover:hover .wiggle-icon {
-  animation: wiggle 0.3s infinite;
+  animation: wiggle 0.4s infinite;
 }
