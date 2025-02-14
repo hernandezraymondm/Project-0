@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 
+// UNUSED
 export function UserNav() {
   return (
     <DropdownMenu>

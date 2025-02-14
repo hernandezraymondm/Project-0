@@ -29,7 +29,36 @@ export const LoginSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(8, { message: "Password must be more than 8 characters" })
     .max(32, { message: "Password must be less than 32 characters" }),
-  code: z.optional(z.string()),
+  code: z.string().optional(),
+});
+
+export const OtpSchema = z.object({
+  code: z
+    .string({ required_error: "OTP code is required" })
+    .min(6, { message: "OTP must be exactly 6 digits" })
+    .max(6, { message: "OTP must be exactly 6 digits" })
+    .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
+});
+
+export const VerifyLinkSchema = z.object({
+  target: z.string({ required_error: "Target is required" }),
+  token: z.string({ required_error: "Token is required" }),
+});
+
+export const VerifyEmailSchema = z.object({
+  token: z.string({ required_error: "Token is required" }),
+  code: z
+    .string({ required_error: "OTP code is required" })
+    .min(6, { message: "OTP must be exactly 6 digits" })
+    .max(6, { message: "OTP must be exactly 6 digits" })
+    .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
+});
+
+export const ResetPasswordSchema = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email" }),
 });
 
 export const NewPasswordSchema = z
@@ -55,18 +84,3 @@ export const NewPasswordSchema = z
       });
     }
   });
-
-export const ResetPasswordSchema = z.object({
-  email: z
-    .string({ required_error: "Email is required" })
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email" }),
-});
-
-export const OtpSchema = z.object({
-  code: z
-    .string({ required_error: "OTP code is required" })
-    .min(6, { message: "OTP must be exactly 6 digits" })
-    .max(6, { message: "OTP must be exactly 6 digits" })
-    .regex(/^\d{6}$/, { message: "OTP must be a 6-digit number" }),
-});

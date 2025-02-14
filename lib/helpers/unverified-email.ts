@@ -6,11 +6,12 @@ import { sendVerificationEmail } from "../utils/mailer";
 export const handleUnverifiedEmail = async (userId: string, email: string) => {
   const verification = await getVerificationByEmail(email);
 
-  if (!verification) {
-    // Generate verification token
+  // CHECK IF RECORD EXIST OR EXPIRED
+  if (!verification || new Date(verification.expires) < new Date()) {
+    // GENERATE VERIFICATION
     const newVerification = await generateVerification(userId, email);
 
-    // Send verification email
+    // SEND VERIFICATION EMAIL
     await sendVerificationEmail(
       newVerification.email,
       newVerification.token,

@@ -1,12 +1,5 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { LogOut } from "lucide-react";
@@ -21,7 +14,6 @@ export function LogoutButton() {
     startTransition(async () => {
       try {
         await logout();
-        toast.info("You've been logged out. Come back soon!");
       } catch {
         toast.error("An error occurred during logout. Please try again.");
       }
@@ -30,20 +22,14 @@ export function LogoutButton() {
 
   return (
     <>
-      <Button variant="ghost" size="icon" onClick={handleLogout}>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleLogout}
+        disabled={isPending}
+      >
         <LogOut className="h-5 w-5" />
       </Button>
-
-      <AlertDialog open={isPending}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Logging Out</AlertDialogTitle>
-            <AlertDialogDescription>
-              Logging out your account, please wait...
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }

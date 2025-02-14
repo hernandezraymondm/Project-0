@@ -71,13 +71,12 @@ export function LoginForm() {
             `Your account has been locked due to multiple failed attempts. Please try again in ${response.lockTime} seconds.`,
           );
         } else if (response.verificationToken) {
-          router.push(`/auth/email-verification/${response.verificationToken}`);
+          router.push(`/email-verification/${response.verificationToken}`);
           toast.info("Please check your email to verify your account.");
         } else if (response.message === SuccessCode.AUTH_SIGNIN) {
           setSuccess("Getting things ready...");
         } else {
           setError(response.error);
-          toast.error("Login failed. Please try again.");
         }
       } catch {
         setError("An error occurred during login. Please try again.");
@@ -88,7 +87,7 @@ export function LoginForm() {
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
-    <div className="flex">
+    <div className="flex z-20">
       {/* Animated Background */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900">
         <motion.div
@@ -127,7 +126,7 @@ export function LoginForm() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md space-y-8"
+          className="w-full max-w-md space-y-6"
         >
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white mb-2">
@@ -292,7 +291,7 @@ export function LoginForm() {
           <div className="mt-6 flex items-center justify-center">
             <motion.div whileHover={{ scale: 1.05 }} className="text-sm">
               <Link
-                href="/auth/password-reset"
+                href="/password-reset"
                 className="font-medium text-purple-400 hover:text-indigo-400 transition-colors duration-200"
               >
                 Forgot your password?

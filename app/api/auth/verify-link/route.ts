@@ -1,14 +1,29 @@
 import { getPasswordResetByToken } from "@/data/password-reset";
+import { validateMethod } from "@/lib/utils/validate-method";
 import { getVerificationByToken } from "@/data/verification";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { VerifyLinkSchema } from "@/schema/auth.schema";
+import { NextRequest, NextResponse } from "next/server";
 import { HttpStatus } from "@/config/http.config";
-import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    // VALIDATE HTTP METHOD
+    const methodError = validateMethod(req, "POST");
+    if (methodError) return methodError;
+
+    // PARSE AND VALIDATE REQUEST BODY WITH ZOD
     const body = await req.json();
-    const { target, token } = body;
+    const { success, data, error } = VerifyLinkSchema.safeParse(body);
+    if (!success) {
+      return NextResponse.json(
+        { error: ErrorCode.INVALID_DATA, details: error.format() },
+        { status: HttpStatus.BAD_REQUEST },
+      );
+    }
+
+    const { target, token } = data;
     let verification;
 
     // VERIFY TOKEN LINK

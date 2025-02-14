@@ -33,7 +33,7 @@ export async function POST() {
 
     return NextResponse.json({ message: "2FA has been disabled" });
   } catch (error) {
-    console.error("Disable 2FA error:", error);
+    console.error("DISABLING 2FA ERROR:", error);
     return NextResponse.json(
       { error: "An error occurred while disabling 2FA" },
       { status: 500 },

@@ -12,7 +12,7 @@ export const sendVerificationEmail = async (
   token: string,
   code: string,
 ) => {
-  const verificationLink = `${Config.DOMAIN}/auth/email-verification/${token}`;
+  const verificationLink = `${Config.DOMAIN}/email-verification/${token}`;
 
   // Send verification email
   await resend.emails.send({
@@ -33,7 +33,7 @@ export const sendPasswordResetEmail = async (
   token: string,
   code: string,
 ) => {
-  const resetLink = `${Config.DOMAIN}/auth/password-reset/${token}`;
+  const resetLink = `${Config.DOMAIN}/password-reset/${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",

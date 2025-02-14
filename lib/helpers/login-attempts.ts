@@ -41,7 +41,7 @@ export const handleLoginAttempts = async (
     if (userAttempts.attempts >= MAX_ATTEMPTS) {
       userAttempts.lockoutUntil = now + LOCKOUT_DURATION;
       if (!userAttempts.emailSent) {
-        console.log(`Lockout Email Sent to ${email}!`);
+        console.log(`LOCKOUT EMAIL SENT TO: ${email}!`);
         await sendLockoutEmailAlert(email);
         userAttempts.emailSent = true;
 

@@ -1,19 +1,33 @@
 import { getVerificationByTokenAndCode } from "@/data/verification";
 import { logActivity } from "../../audit-trail/add-activity/route";
+import { validateMethod } from "@/lib/utils/validate-method";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
+import { VerifyEmailSchema } from "@/schema/auth.schema";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import { NextRequest, NextResponse } from "next/server";
 import { ActionLog } from "@/lib/enums/audit-log.enum";
 import { HttpStatus } from "@/config/http.config";
 import { getUserByEmail } from "@/data/user";
-import { NextResponse } from "next/server";
 import { db } from "@/lib/utils/prisma";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { token, code } = body;
+    // VALIDATE HTTP METHOD
+    const methodError = validateMethod(req, "POST");
+    if (methodError) return methodError;
 
-    // VERIFY TOKEN LINK
+    // PARSE AND VALIDATE REQUEST BODY
+    const body = await req.json();
+    const { success, data, error } = VerifyEmailSchema.safeParse(body);
+    if (!success) {
+      return NextResponse.json(
+        { error: ErrorCode.INVALID_DATA, details: error.format() },
+        { status: HttpStatus.BAD_REQUEST },
+      );
+    }
+
+    const { token, code } = data;
+    // VERIFY TOKEN CODE
     const verification = await getVerificationByTokenAndCode(token, code);
     if (!verification) {
       return NextResponse.json(
@@ -23,8 +37,8 @@ export async function POST(req: Request) {
     }
 
     // CHECK IF LINK HAS EXPIRED
-    const hasExpired = new Date(verification.expires) < new Date();
-    if (hasExpired) {
+    const isExpired = new Date(verification.expires) < new Date();
+    if (isExpired) {
       return NextResponse.json(
         { error: ErrorCode.EXPIRED_CODE },
         { status: HttpStatus.BAD_REQUEST },
@@ -65,7 +79,7 @@ export async function POST(req: Request) {
     }
 
     // LOG ACTIVITY
-    logActivity(ActionLog.ACCOUNT_LOGOUT, verification.id);
+    logActivity(ActionLog.VERIFIED_EMAIL, user.id);
 
     return NextResponse.json(
       { message: SuccessCode.VERIFICATION_SUCCESS },

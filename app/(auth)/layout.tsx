@@ -7,9 +7,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   // const token = (await cookieStore).get("session")?.value;
 
   return (
-    <div>
+    <div className="flex h-screen flex-1 flex-col overflow-hidden">
       <Navbar />
-      {children}
+      <div className="flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 };

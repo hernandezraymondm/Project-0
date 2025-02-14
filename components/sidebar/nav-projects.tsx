@@ -56,9 +56,16 @@ export function NavProjects({
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild isActive={pathname === item.url}>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname === item.url}
+              className={"wiggle-on-hover"}
+            >
               <Link href={item.url}>
-                <item.icon />
+                {" "}
+                <div className="wiggle-icon drop-shadow-lg">
+                  <item.icon className="transition-transform duration-300 h-4 w-4" />
+                </div>
                 <span>{item.name}</span>
               </Link>
             </SidebarMenuButton>

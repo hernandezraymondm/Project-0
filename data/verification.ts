@@ -11,6 +11,7 @@ export const getVerificationByEmail = async (
   try {
     const verification = await db.verification.findFirst({
       where: { email },
+      orderBy: { updatedAt: "desc" },
     });
 
     return verification;
@@ -55,3 +56,5 @@ export const getVerificationByTokenAndCode = async (
     return null;
   }
 };
+
+// TODO: CHECK IF THERE ARE UNUSED

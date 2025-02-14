@@ -32,9 +32,9 @@ export async function GET() {
 
     return NextResponse.json({ enabled: user.twoFactorEnabled });
   } catch (error) {
-    console.error("2FA status error:", error);
+    console.error("2FA STATUS ERROR:", error);
     return NextResponse.json(
-      { error: "An error occurred while fetching 2FA status" },
+      { error: "AN ERROR OCCURRED WHILE FETCHING 2FA STATUS" },
       { status: 500 },
     );
   }

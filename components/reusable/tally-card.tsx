@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import type { LucideIcon } from "lucide-react";
 
-interface FloatingIconCardProps {
+interface TallyCardProps {
   icon: LucideIcon;
   title: string;
   value: string;
@@ -11,7 +11,7 @@ interface FloatingIconCardProps {
   iconBgColor?: string;
 }
 
-export default function FloatingIconCard({
+const TallyCard = ({
   icon: Icon,
   title,
   value,
@@ -19,7 +19,7 @@ export default function FloatingIconCard({
   changeType,
   iconColor = "text-white",
   iconBgColor = "bg-purple-600",
-}: FloatingIconCardProps) {
+}: TallyCardProps) => {
   const textColor = {
     increase: "text-emerald-400",
     decrease: "text-red-400",
@@ -48,4 +48,6 @@ export default function FloatingIconCard({
       </CardContent>
     </Card>
   );
-}
+};
+
+export default TallyCard;

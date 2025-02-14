@@ -9,7 +9,7 @@ const relatedApplications = [
     name: "Facebook Page",
     icon: <FaFacebookF className="h-6 w-6" />,
     color: "text-blue-500",
-    link: "/dashboard/home",
+    link: "/home/home",
   },
   {
     name: "Instagram Page",

@@ -1,5 +1,6 @@
-import { TextCrawl } from "../(protected)/_components/text-crawl";
-import { AppLogo } from "../(protected)/_components/app-logo";
+import { TextCrawl } from "../components/landing/text-crawl";
+import { AppLogo } from "../components/reusable/app-logo";
+import { Navbar } from "@/components/reusable/navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function Home() {
     <main className="via-space-800 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 to-[#2e2838]">
       {/* Glowing background effect */}
       <div className="bg-radial-gradient absolute inset-0 animate-pulse from-purple-500/20 via-transparent to-transparent"></div>
-
+      <Navbar />
       {/* Content */}
       <div className="relative z-10 max-w-2xl space-y-8 text-center">
         {/* Futuristic title with gradient text */}
@@ -35,14 +36,14 @@ export default function Home() {
             asChild
             className="transform bg-gradient-to-r from-purple-600 to-violet-600 text-white transition-all duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-700"
           >
-            <Link href="/auth/login">Login</Link>
+            <Link href="/login">Login</Link>
           </Button>
           <Button
             asChild
             variant="outline"
             className="transform border-purple-500 text-purple-500 transition-all duration-300 hover:scale-105 hover:border-purple-600 hover:bg-purple-500/10 hover:text-purple-600"
           >
-            <Link href="/auth/register">Register</Link>
+            <Link href="/register">Register</Link>
           </Button>
         </div>
       </div>
@@ -52,19 +53,30 @@ export default function Home() {
 
       {/* Floating stars animation */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="animate-star absolute h-[1px] w-[1px] rounded-full bg-white"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${Math.random() * 5 + 5}s`,
-              animationDelay: `${Math.random() * 2}s`,
-              opacity: `${Math.random() * 0.5 + 0.2}`, // Random opacity for subtlety
-            }}
-          ></div>
-        ))}
+        {[...Array(150)].map((_, i) => {
+          const colors = [
+            "#ffffff",
+            // "#ffcc00",
+            // "#ff6699",
+            // "#66ff66",
+            // "#66ccff",
+          ];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          return (
+            <div
+              key={i}
+              className="animate-star absolute h-[1px] w-[1px] rounded-ful"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 50}%`,
+                backgroundColor: randomColor,
+                animationDuration: `${Math.random() * 5 + 5}s`,
+                animationDelay: `${Math.random() * 2}s`,
+                opacity: `${Math.random() * 0.5 + 0.2}`,
+              }}
+            ></div>
+          );
+        })}
       </div>
     </main>
   );

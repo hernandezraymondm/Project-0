@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const methodError = validateMethod(req, "POST");
     if (methodError) return methodError;
 
-    // PARSE AND VALIDATE REQUEST BODY
+    // PARSE AND VALIDATE REQUEST BODY WITH ZOD
     const body = await req.json();
     const { success, data, error } = LoginSchema.safeParse(body);
     if (!success) {

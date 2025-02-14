@@ -58,7 +58,7 @@ export function NewPasswordForm({ token }: NewPasswordFormProps) {
         toast.success(
           "Your password has been reset. You can now log in with your new password.",
         );
-        router.push("/auth/login");
+        router.push("/login");
       } else {
         toast.error(
           data.message || "An error occurred while resetting your password.",

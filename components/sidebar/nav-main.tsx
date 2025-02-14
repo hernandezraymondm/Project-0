@@ -65,9 +65,14 @@ export function NavMain({
                       tooltip={item.title}
                       asChild
                       isActive={pathname.startsWith(item.url)}
+                      className={"wiggle-on-hover hover:scale-125"}
                     >
                       <div>
-                        {item.icon && <item.icon />}
+                        <div className="wiggle-icon drop-shadow-lg">
+                          {item.icon && (
+                            <item.icon className="transition-transform duration-300 h-4 w-4" />
+                          )}
+                        </div>
                         <span>{item.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                       </div>
@@ -102,9 +107,14 @@ export function NavMain({
                       tooltip={item.title}
                       asChild
                       isActive={pathname.startsWith(item.url)}
+                      className={"wiggle-on-hover"}
                     >
                       <div>
-                        {item.icon && <item.icon />}
+                        <div className="wiggle-icon drop-shadow-lg">
+                          {item.icon && (
+                            <item.icon className="transition-transform duration-300 h-4 w-4" />
+                          )}
+                        </div>
                         <span>{item.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                       </div>
