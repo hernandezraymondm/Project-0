@@ -8,16 +8,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  ArrowRightIcon,
-  CheckCircle,
-  MailIcon,
-  MailQuestion,
-} from "lucide-react";
 import { resetPassword as resetPasswordService } from "@/services/auth.service";
-import { SuccessCode } from "@/lib/enums/success-code.enum";
-import { ExpirationCountdown } from "../reusable/countdown";
+import { ArrowRightIcon, CheckCircle, MailIcon } from "lucide-react";
 import { ResetPasswordSchema } from "@/schema/auth.schema";
+import { useResendEmail } from "@/hooks/use-resend-email";
 import { zodResolver } from "@hookform/resolvers/zod";
 import RiseLoader from "react-spinners/RiseLoader";
 import { FormAlert } from "../reusable/form-alert";
@@ -32,10 +26,14 @@ import * as z from "zod";
 
 export function ResetPasswordForm() {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-  const [email, setEmail] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<boolean | undefined>(false);
+
+  const { onCooldown, timeLeft, startResendCooldown } = useResendEmail({
+    prefixKey: "resendResetEndTime",
+  });
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
@@ -45,14 +43,15 @@ export function ResetPasswordForm() {
   });
 
   const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
-    setError("");
+    setError(undefined);
     startTransition(async () => {
-      const response = await resetPasswordService(values.email);
-      const data = await response.json();
       try {
+        const response = await resetPasswordService(values.email);
+        const data = await response.json();
         if (response.ok) {
-          setEmail(values.email);
           setSuccess(true);
+          setEmail(values.email);
+          startResendCooldown(data.resendCooldown);
           toast.success("Password reset instruction sent.");
         } else {
           setError(data.error);
@@ -97,16 +96,9 @@ export function ResetPasswordForm() {
         className="text-center space-y-4"
       >
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
-        <p className="text-gray-800 dark:text-white">
+        <p className="text-gray-800 dark:text-white py-3">
           An email has been sent to {email}. Check your inbox or spam folder for
           instructions to reset your password.
-        </p>
-        <p className="text-gray-600 dark:text-gray-300">
-          This code will expire in{" "}
-          <strong>
-            <ExpirationCountdown expiration={Date.now() + 60 * 60 * 1000} />
-          </strong>
-          .
         </p>
         <Button
           onClick={() => router.push("/login")}
@@ -161,50 +153,54 @@ export function ResetPasswordForm() {
           <FormAlert message={error} />
 
           {/* Reset Password Button */}
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
-          >
-            {isPending ? (
-              <motion.div
-                className="flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+          {onCooldown ? (
+            <p className="text-gray-400 text-center">Resend in {timeLeft}s</p>
+          ) : (
+            <Button
+              type="submit"
+              disabled={onCooldown}
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
+            >
+              {isPending ? (
+                <motion.div
+                  className="flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                 >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Sending...
-              </motion.div>
-            ) : (
-              <motion.div
-                className="flex items-center justify-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Send Reset Link
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </motion.div>
-            )}
-          </Button>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Sending...
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="flex items-center justify-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Send Reset Link
+                  <ArrowRightIcon className="ml-2 h-5 w-5" />
+                </motion.div>
+              )}
+            </Button>
+          )}
         </form>
       </Form>
     </motion.div>

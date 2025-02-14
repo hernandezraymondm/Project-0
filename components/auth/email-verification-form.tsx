@@ -17,10 +17,10 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { SuccessCode } from "@/lib/enums/success-code.enum";
-import { ExpirationCountdown } from "../reusable/countdown";
 import { useEffect, useState, useTransition } from "react";
-import { ResendCodeSection } from "./resend-code-section";
+import { useCountdownTimer } from "@/hooks/use-countdown";
 import { ErrorCode } from "@/lib/enums/error-code.enum";
+import ResendEmailSection from "./resend-email-section";
 import { zodResolver } from "@hookform/resolvers/zod";
 import RiseLoader from "react-spinners/RiseLoader";
 import { FormAlert } from "../reusable/form-alert";
@@ -37,13 +37,15 @@ interface EmailVerificationFormProps {
   token: string;
 }
 
-export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
+const EmailVerificationForm = ({ token }: EmailVerificationFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [email, setEmail] = useState("");
-  const [expires, setExpires] = useState(0);
+  const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  const { formattedTime } = useCountdownTimer(expiresAt ?? 0);
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<boolean | undefined>(false);
+
   const form = useForm({
     resolver: zodResolver(OtpSchema),
     defaultValues: {
@@ -53,12 +55,13 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
 
   useEffect(() => {
     const verifyLink = async () => {
-      const response = await verifyLinkService("email-verification", token);
-      const data = await response.json();
       try {
+        const response = await verifyLinkService("email-verification", token);
+        const data = await response.json();
+
         if (response.ok && data.message === SuccessCode.VALID_LINK) {
           setEmail(data.payload.email);
-          setExpires(data.payload.expires);
+          setExpiresAt(data.payload.expires);
         } else {
           setError(data.error);
         }
@@ -66,6 +69,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
         toast.error("An error occurred during email verification.");
       }
     };
+
     if (token) {
       verifyLink();
     } else {
@@ -76,15 +80,13 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
   const onSubmit = (values: z.infer<typeof OtpSchema>) => {
     setError("");
     startTransition(async () => {
-      const response = await verifyEmailService(token, values.code);
-      const data = await response.json();
       try {
+        const response = await verifyEmailService(token, values.code);
+        const data = await response.json();
+
         if (response.ok && data.message === SuccessCode.VERIFICATION_SUCCESS) {
           setSuccess(true);
-          const message = data.message.toLowerCase();
-          const formattedMessage =
-            message.charAt(0).toUpperCase() + message.slice(1);
-          toast.success(formattedMessage);
+          toast.success("Your email has been successfully verified.");
         } else if (response.status === 401) {
           router.push("/unauthorized");
         } else {
@@ -107,13 +109,8 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center justify-center space-y-4"
       >
-        <RiseLoader
-          color="hsl(var(--tertiary))"
-          size={12}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-        <p className="text-center text-gray-600 dark:text-gray-300">
+        <RiseLoader color="hsl(var(--tertiary))" size={12} />
+        <p className="text-gray-600 dark:text-gray-300">
           Please wait while we process your request...
         </p>
       </motion.div>
@@ -137,10 +134,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           Email verification failed. Please try again or contact support.
         </p>
         <FormAlert message={error} />
-        <Button
-          onClick={() => router.push("/")}
-          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition-all duration-300 hover:from-purple-700 hover:to-indigo-700"
-        >
+        <Button onClick={() => router.push("/")} className="w-full">
           Go to Home
         </Button>
       </motion.div>
@@ -161,13 +155,9 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           Your email has been successfully verified.
         </p>
         <p className="text-sm text-gray-600 dark:text-gray-300">
-          Thank you for your support. We are pleased to inform you that your
-          account is now ready for use.
+          Your account is now ready for use.
         </p>
-        <Button
-          onClick={() => router.push("/login")}
-          className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
-        >
+        <Button onClick={() => router.push("/login")} className="w-full">
           Go to Login
         </Button>
       </motion.div>
@@ -188,14 +178,13 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
               Enter the 6-digit code we sent to <strong>{email}</strong> to
               continue.
             </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              This code will expire in{" "}
-              <strong>
-                <ExpirationCountdown expiration={expires} />
-              </strong>
-              .
-            </p>
+            {expiresAt && (
+              <p className="text-gray-600 dark:text-gray-300">
+                This code will expire in {formattedTime}
+              </p>
+            )}
           </div>
+
           {/* OTP Field */}
           <FormField
             control={form.control}
@@ -220,16 +209,14 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
           <FormAlert message={error} />
 
           {/* Verify button */}
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white transition-all duration-300 hover:from-purple-600 hover:to-indigo-700"
-          >
+          <Button type="submit" disabled={isPending} className="w-full">
             Verify Email
           </Button>
         </form>
       </Form>
-      <ResendCodeSection email={email} setError={setError} />
+      <ResendEmailSection email={email} setError={setError} />
     </motion.div>
   );
-}
+};
+
+export default EmailVerificationForm;

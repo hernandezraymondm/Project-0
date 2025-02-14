@@ -62,13 +62,13 @@ export const verifyEmail = async (token: string, code: string) => {
   return response;
 };
 
-export const resendCode = async (email: string, captchaToken: string) => {
-  const response = await fetch(`${Config.API_BASE_PATH}/auth/resend-code`, {
+export const resendEmail = async (email: string, captchaToken: string) => {
+  const response = await fetch(`${Config.API_BASE_PATH}/auth/resend-email`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, captchaToken }),
   });
-  return response.json();
+  return response;
 };
 
 export const resetPassword = async (email: string) => {

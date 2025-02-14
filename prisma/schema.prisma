@@ -74,13 +74,14 @@ model AuditTrail {
 }
 
 model Verification {
-  id      String   @id @default(cuid())
-  userId  String
-  email   String
-  token   String   @unique
-  code    String   @map("verification_code")
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  userId      String
+  email       String
+  token       String   @unique
+  code        String   @map("verification_code")
+  expires     DateTime
+  resendCount Int      @default(0)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,13 +91,14 @@ model Verification {
 }
 
 model PasswordReset {
-  id      String   @id @default(cuid())
-  userId  String
-  email   String
-  token   String   @unique
-  code    String   @map("reset_code")
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  userId      String
+  email       String
+  token       String   @unique
+  code        String   @map("reset_code")
+  expires     DateTime
+  resendCount Int      @default(0)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,4 +1,4 @@
-import { EmailVerificationForm } from "@/components/auth/email-verification-form";
+import EmailVerificationForm from "@/components/auth/email-verification-form";
 
 export default async function VerifyEmailPage({
   params,

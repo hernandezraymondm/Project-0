@@ -29,7 +29,7 @@ export const LoginSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(8, { message: "Password must be more than 8 characters" })
     .max(32, { message: "Password must be less than 32 characters" }),
-  code: z.optional(z.string()),
+  code: z.string().optional(),
 });
 
 export const OtpSchema = z.object({
